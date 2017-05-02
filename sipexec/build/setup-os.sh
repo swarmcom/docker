@@ -1,3 +1,7 @@
 #!/bin/sh -e
-yum install -y git make automake libtool rpm-build
+yum update -y
+yum install -y wget vim
+
 useradd -s /bin/bash -m user
+
+mkdir -p /usr/local/sipx && chown user:user /usr/local/sipx
