@@ -1,23 +1,30 @@
 #!/bin/sh -e
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
-NAME=${NAME:-"reach.$NETWORK"}
+MONGODB=${MONGODB:-"mongodb.$NETWORK"}
+REDIS=${REDIS:-"redis.$NETWORK"}
+SIPXCOM=${SIPXCOM:-"sipxcom.$NETWORK"}
+HOSTNAME=${HOSTNAME:-"reach.$NETWORK"}
+FSNODE=${FSNODE:-"freeswitch@freeswitch.$NETWORK"}
+NODE=${NODE:-"reach@$HOSTNAME"}
 
-if [ -n "$(docker ps -aq -f name=$NAME)" ]
+if [ -n "$(docker ps -aq -f name=$HOSTNAME)" ]
 then
 	echo -n "stopping: "
-	docker stop -t 1 $NAME
+	docker stop -t 1 $HOSTNAME
 	echo -n "removing: "
-	docker rm -f $NAME
+	docker rm -f $HOSTNAME
 fi
 
-echo -n "starting: $NAME "
+echo -n "starting: $HOSTNAME "
 docker run $FLAGS \
 	--net $NETWORK \
-	-h $NAME \
-	--name $NAME \
+	-h $HOSTNAME \
+	--name $HOSTNAME \
 	--env NETWORK=$NETWORK \
-	--env MONGODB=mongodb.$NETWORK \
-	--env REDIS=redis.$NETWORK \
-	--env NODE=reach@$NAME \
+	--env MONGODB=$MONGODB \
+	--env REDIS=$REDIS \
+	--env SIPXCOM=$SIPXCOM \
+	--env NODE=$NODE \
+	--env FSNODE=$FSNODE \
 	$NETWORK/reach

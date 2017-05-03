@@ -3,9 +3,11 @@ MAINTAINER Roman Galeev <jamhedd@gmail.com>
 
 # override on run with --env option
 ENV NETWORK=ezuce
-ENV NODE_NAME=reach@reach.$NETWORK
+ENV NODE=reach@reach.$NETWORK
 ENV MONGODB=mongodb.$NETWORK
 ENV REDIS=redis.$NETWORK
+ENV SIPXCOM=sipxcom.$NETWORK
+ENV FSNODE=freeswitch@freeswitch.$NETWORK
 
 # override on build with --build-arg option
 ARG REPO=git@github.com:ezuce/reach-app.git
