@@ -10,8 +10,17 @@ COPY build/setup-deps.sh build/setup-deps.sh
 RUN build/setup-deps.sh
 
 USER user
+
 COPY build/setup.sh build/setup.sh
 RUN build/setup.sh
 
 COPY build/build.sh build/build.sh
 RUN build/build.sh
+
+USER root
+
+COPY build/after-build.sh build/after-build.sh
+RUN build/after-build.sh
+
+USER user
+WORKDIR /home/user
