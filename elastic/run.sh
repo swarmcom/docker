@@ -3,6 +3,9 @@ FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"elastic.$NETWORK"}
 
+# Required by ES
+sudo sysctl -w vm.max_map_count=262144
+
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
 	echo -n "stopping: "
