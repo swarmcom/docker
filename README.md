@@ -22,6 +22,14 @@ You need to have Docker version at least 1.9.0 (as this setup relies on docker n
 ./hosts.sh >> /etc/hosts
 ```
 
+Meta container
+==============
+
+There is a docker meta container intended to build other containers in controlled environment named `ezuce-ci`.
+In theory it should be possible to build all components with it, the only thing you need to provide is
+access to hosts docker socket, see [run.sh](ezuce-ci/run.sh), and GitHub auth token to have
+access to private repo's.
+
 Environment variables
 =====================
 
@@ -30,5 +38,4 @@ The intent is to specify `docker build` flags e.g. to pass --no-cache to forcefu
 ```sh
 BUILD_FLAGS -- flags to pass to `docker build` command.
 ```
-
 
