@@ -1,5 +1,3 @@
 #!/bin/sh -e
-. erlang/activate
-cd reach
-make site
-make release
+. ~/erlang/activate
+cd reach && make devel

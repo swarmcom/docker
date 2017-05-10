@@ -1,12 +1,10 @@
 #!/bin/sh -e
-git clone $REPO reach
+. ~/erlang/activate
 
-. erlang/activate
-
-cd reach
+git clone $REPO reach && cd reach
 
 git fetch origin $BRANCH:build_branch
 git checkout build_branch
 git clean -d -f
 
-bin/rebar get-deps
+rebar3 get-deps
