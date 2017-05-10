@@ -1,10 +1,19 @@
 FROM ezuce/base
 MAINTAINER Roman Galeev <jamhedd@gmail.com>
 
-COPY build/setup-os.sh build/setup-os.sh
-RUN build/setup-os.sh
+COPY build/os.sh build/os.sh
+RUN build/os.sh
 
 USER user
+WORKDIR /home/user
+ENV PATH="${PATH}:/home/user"
 
-COPY build/setup-erlang.sh build/setup-erlang.sh
-RUN build/setup-erlang.sh
+COPY build/erlang.sh build/erlang.sh
+RUN build/erlang.sh
+
+COPY build/rebar3.sh build/rebar3.sh
+RUN build/rebar3.sh
+
+COPY build/env.sh build/env.sh
+RUN build/env.sh
+
