@@ -3,7 +3,7 @@
 <context name="reachme">
 <extension name="Catch all extension">
   <condition field="destination_number" expression="^.*$">
-    <action application="answer"/>
+<!-- <action application="answer"/> -->
     <action application="set" data="domain_name=$${domain}"/>
     <action application="set" data="brand=1"/>
     <action application="set" data="queue=MyQueue"/>

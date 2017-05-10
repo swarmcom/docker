@@ -3,6 +3,7 @@ FLAGS=${1:-"-td"}
 IMAGE=${2:-"ezuce/freeswitch"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"freeswitch.$NETWORK"}
+REACHME_NODE=${REACHME_NODE:-"reachme@reachme.$NETWORK"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -18,4 +19,5 @@ docker run $FLAGS \
 	-h $NAME \
 	--name $NAME \
 	--env NODE=freeswitch@$NAME \
+	--env REACHME_NODE=$REACHME_NODE \
 	$IMAGE

@@ -1,12 +1,19 @@
 #!/bin/sh -e
+
+TARGET=/usr/local/freeswitch
+
 cd freeswitch
 make install
 
 groupadd freeswitch
+adduser --disabled-password  --quiet --system --home $TARGET --ingroup freeswitch freeswitch
 
-adduser --disabled-password  --quiet --system --home /usr/local/freeswitch --ingroup freeswitch freeswitch
+rm -rf $TARGET/conf
+cp -a ../build/conf $TARGET/conf
 
-chown -R freeswitch:freeswitch /usr/local/freeswitch/
-chmod -R ug=rwX,o= /usr/local/freeswitch/
-chmod -R u=rwx,g=rx /usr/local/freeswitch/bin/*
+rm -rf $TARGET/sounds
+mv ../build/sounds $TARGET/sounds
 
+chown -R freeswitch:freeswitch $TARGET
+chmod -R ug=rwX,o= $TARGET
+chmod -R u=rwx,g=rx $TARGET/bin/*

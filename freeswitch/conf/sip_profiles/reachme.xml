@@ -7,11 +7,13 @@
             <param name="message-threads" value="10"/>
 
             <!-- ACL -->
-            <param name="auth-calls" value="true"/>
+            <param name="auth-calls" value="false"/>
+            <!--
             <param name="apply-nat-acl" value="rfc1918.auto"/>
             <param name="apply-inbound-acl" value="trusted"/>
             <param name="apply-proxy-acl" value="authoritative"/>
             <param name="local-network-acl" value="localnet.auto"/>
+            -->
 
             <param name="accept-blind-auth" value="true"/>
             <param name="enforce-blind-auth-result" value="true"/>
@@ -66,8 +68,6 @@
 
 
             <!-- Codecs -->
-            <param name="inbound-codec-prefs" value="$${codecs}"/>
-            <param name="outbound-codec-prefs" value="$${codecs}"/>
             <param name="inbound-codec-negotiation" value="greedy"/>
             <param name="inbound-late-negotiation" value="true"/>
             <param name="disable-transcoding" value="false"/>
@@ -92,7 +92,7 @@
 
             <!-- Logging / Events -->
             <param name="debug" value="info"/>
-            <param name="sip-trace" value="true"/>
+            <param name="sip-trace" value="false"/>
             <param name="log-auth-failures" value="true"/>
             <param name="fire-transfer-events" value="true"/>
             <param name="channel-xml-fetch-on-nightmare-transfer" value="true"/>
