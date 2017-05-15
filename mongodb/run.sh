@@ -18,3 +18,5 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	$NETWORK/mongodb
+
+docker exec -it mongodb.ezuce /tmp/init-db.sh
