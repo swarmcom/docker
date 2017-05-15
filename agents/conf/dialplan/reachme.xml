@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<include>
+<context name="reachme">
+<extension name="Catch all extension">
+  <condition field="destination_number" expression="^.*$">
+    <action application="answer"/>
+    <action application="park"/>
+  </condition>
+</extension>
+</context>
+</include>
