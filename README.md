@@ -22,6 +22,12 @@ You need to have Docker version at least 1.9.0 (as this setup relies on docker n
 ./hosts.sh >> /etc/hosts
 ```
 
+ReachMe
+=======
+
+Please see [ReachMe README](reach/README.md) how to run ReachMe.
+
+
 Meta container
 ==============
 
