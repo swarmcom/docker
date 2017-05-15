@@ -27,6 +27,8 @@ RUN build/setup.sh
 COPY build/compile-js.sh build/compile-js.sh
 RUN build/compile-js.sh
 
+
+COPY etc/commit commit
 COPY build/compile.sh build/compile.sh
 RUN build/compile.sh
 

@@ -1,3 +1,9 @@
 #!/bin/sh -e
 . ~/erlang/activate
-cd reach && make devel
+COMMIT=$(cat commit)
+cd reach
+git fetch
+git reset --hard $COMMIT
+git clean -fd
+make reach-key
+make devel

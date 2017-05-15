@@ -5,6 +5,8 @@ then
 	exit 1
 fi
 REPO=${1:-"https://$TOKEN@github.com/ezuce/reach-app.git"}
+COMMIT=${2:-"$(git ls-remote $REPO | grep standalone | sed 's/refs.*//')"}
+echo $COMMIT > etc/commit
 
 BRANCH=${BRANCH:-"standalone"}
 NETWORK=${NETWORK:-"ezuce"}
