@@ -8,7 +8,7 @@ xmlstarlet edit --inplace -u '/configuration/settings/param[@name="shortname"]/@
 echo Setting ReachMe Erlang node name to $REACHME_NODE
 
 xmlstarlet edit --inplace -u '/include/context/extension/condition/action[@application="erlang_sendmsg"]/@data' \
-	-v "freeswitch_media_manager $REACHME_NODE inivr \${uuid}" \
+	-v "freeswitch_media_manager $REACHME_NODE inivr $NODE \${uuid}" \
 	conf/dialplan/reachme.xml
 
 xmlstarlet edit --inplace -u '/include/context/extension/condition/action[@application="erlang"]/@data' \

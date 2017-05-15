@@ -3,12 +3,11 @@
 <context name="reachme">
 <extension name="Catch all extension">
   <condition field="destination_number" expression="^.*$">
-<!-- <action application="answer"/> -->
     <action application="set" data="domain_name=$${domain}"/>
     <action application="set" data="brand=1"/>
-    <action application="set" data="queue=MyQueue"/>
+    <action application="set" data="queue=homer"/>
     <action application="set" data="allow_voicemail=true"/>
-    <action application="erlang_sendmsg" data="freeswitch_media_manager reach@reach.ezuce inivr ${uuid}"/>
+    <action application="erlang_sendmsg" data="freeswitch_media_manager reach@reach.ezuce inivr freeswitch@freeswitch.ezuce ${uuid}"/>
     <action application="erlang" data="freeswitch_media_manager:! reach@reach.ezuce"/>
   </condition>
 </extension>
