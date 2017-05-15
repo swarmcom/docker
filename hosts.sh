@@ -1,6 +1,6 @@
 #!/bin/sh -e
 NETWORK=${1:-"ezuce"}
-for CONTAINER in mongodb sipxcom redis freeswitch elastic
+for CONTAINER in mongodb sipxcom redis freeswitch elastic reach
 do
 	if [ "$(docker inspect -f {{.State.Running}} $CONTAINER.$NETWORK)" = "true" ]
 	then
