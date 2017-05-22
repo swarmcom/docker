@@ -1,3 +1,3 @@
 #!/bin/sh -e
 #NETWORK=${NETWORK:-"ezuce"}
-docker build $BUILD_FLAGS -t swarmcom/redis .
+docker build $BUILD_FLAGS -t ezuce/redis .

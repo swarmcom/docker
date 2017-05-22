@@ -9,5 +9,8 @@ branches:
   - master
   - travis
 install:
+  - ./build.sh
 deploy:
 after_success:
+  - docker push ezuce/redis
+  - docker push ezuce/mongodb
