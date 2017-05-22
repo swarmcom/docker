@@ -9,8 +9,13 @@ branches:
   - master
   - travis
 install:
-  - ./build.sh
+- "./build.sh"
 deploy:
 after_success:
-  - docker push ezuce/redis
-  - docker push ezuce/mongodb
+- docker login -u $DOCKER_U -p $DOCKER_P -e $DOCKER_E
+- docker push ezuce/redis
+- docker push ezuce/mongodb
+env:
+  secure: VHXFLxqKvpkSjz5f9cGf/9W7zQgMvRhhKTdMkhsQ6lJT+ehZTXPXn9Ac/mLr5SmovEXmqncIM8MvqbDuVJYzHx85zfRcCDfzk7xAof98FU9IMQHSIKjXXY3PiCCDQtV3MdtWgAK1PUK0nFYGR9izplJRT1+GGWEk2pxo2e7vqTMhMLAUqA98Lfg/qCbgNiBLSaMc+TskQyZReDNms+rp3rPT96cXykl07mvkdddJ3wyorm5uxLnmju6x3rndRIrt+2RA5HZ6CeHn33opMBozZvpJq9ZNFHJcMrGj6Gdipw2XXBInjnXnxemcvfi2geGsNvRDYv8b8T8KpFnPoZR9MqueEo8pkT+3Wgyo94GCAImzntPfnyV/FjQsRKk7ySPW7KlsqQmVgqYUpyi9x1EdmwEzR2tsE+AeM410+QA+LcTb7Ic181eVpYMYyO/G4aPFlNtZhxrGcRowPewARmD16ZuHtCYnQT6D8I84lEWeTgWtxhBJ8fGUNWEtubr/8DkqSnVPqjH7Efedl5Cmb5FHTd8zRCsGBgaOCbFphfKMYkiMGXIElzs5Qia7wNX8biT2v2ppRobHHOc5H0QNYc51xDNm2bG50NdX4Ohk4CQjwoXHJzq6tbo7wthQGX7RYfycjnLPPxQg45B+Jt3pPeLoWH9/rTPUPWK9alIuGLDeFYY=
+  matrix:
+    secure: DdRBSme+131/2al0k5T7mCJmoZ6WXr5C4qpYHnB/iAKUH9Dd41yO7oJq617uUjduLM+dmkbzDoTXACUrllXoSLXfQEXQHGIrEvcpi5whmbdpP6B3uFn+Ex6JExotZVv1twzxtRCt+qOpq1L87GOIkmou7Hd6eCCpVCR1KE8W+Fl+GdwRY3l1taAoT+byGTGlaPu4aKSKVYOeJ36ndPBKD7YoXwk/Eqx8tlMXrqAwwoZVUdW8fYh/7guVL6jPT5SQ8whd/lbDwSwkuAHMaKGU4zutRfZEObq13cRig8oaq+s4MCZgOUkct3iqzkwCeZxS129sHlsFDaEwe/MLzVdgXCO/uX+j8mNEcbWAvNTH2XCCCWy9xHvLxPbxZi4vZmVVVgeHE9WPsd9q/ENKuXauAclM4d3/j9uj1bdKnLgBz4GFQrF2+sLjvWHo/4z0st8vTU3kXEDBewE6kuRrQ8yjVg2jf06jAaFF0BBfCaicsC+DHXgyiNdAnEbhWxxvQnw9vHOx1aW5EmQ/Yi68Q6AblePZL5wQfKuifV/cFRUVrZjN5UlIBkIqHOrVpOLgg2CGg11LuJEbWS6ADQM/h5mL3e5bkQfX0eBM47GtKFP/oNFmbY/YcEg0XP3e7D1hfmhg7qr+0UiBQns+/XNPPiqAYEPreJLjP2+VvMdta+yaYw4=
