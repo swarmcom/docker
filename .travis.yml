@@ -12,9 +12,12 @@ install:
 - "./build.sh"
 deploy:
 after_success:
-- docker login -u $DOCKER_U -p $DOCKER_P -e $DOCKER_E
-- docker push ezuce/redis
-- docker push ezuce/mongodb
+  - echo $DOCKER_U
+  - echo $DOCKER_P
+  - echo $DOCKER_E
+  - docker login -u $DOCKER_U -p $DOCKER_P -e $DOCKER_E
+  - docker push ezuce/redis
+  - docker push ezuce/mongodb
 env:
   secure: VHXFLxqKvpkSjz5f9cGf/9W7zQgMvRhhKTdMkhsQ6lJT+ehZTXPXn9Ac/mLr5SmovEXmqncIM8MvqbDuVJYzHx85zfRcCDfzk7xAof98FU9IMQHSIKjXXY3PiCCDQtV3MdtWgAK1PUK0nFYGR9izplJRT1+GGWEk2pxo2e7vqTMhMLAUqA98Lfg/qCbgNiBLSaMc+TskQyZReDNms+rp3rPT96cXykl07mvkdddJ3wyorm5uxLnmju6x3rndRIrt+2RA5HZ6CeHn33opMBozZvpJq9ZNFHJcMrGj6Gdipw2XXBInjnXnxemcvfi2geGsNvRDYv8b8T8KpFnPoZR9MqueEo8pkT+3Wgyo94GCAImzntPfnyV/FjQsRKk7ySPW7KlsqQmVgqYUpyi9x1EdmwEzR2tsE+AeM410+QA+LcTb7Ic181eVpYMYyO/G4aPFlNtZhxrGcRowPewARmD16ZuHtCYnQT6D8I84lEWeTgWtxhBJ8fGUNWEtubr/8DkqSnVPqjH7Efedl5Cmb5FHTd8zRCsGBgaOCbFphfKMYkiMGXIElzs5Qia7wNX8biT2v2ppRobHHOc5H0QNYc51xDNm2bG50NdX4Ohk4CQjwoXHJzq6tbo7wthQGX7RYfycjnLPPxQg45B+Jt3pPeLoWH9/rTPUPWK9alIuGLDeFYY=
   matrix:
