@@ -1,0 +1,13 @@
+sudo: required
+services:
+- docker
+language: node_js
+node_js:
+- 6.10.2
+branches:
+  only:
+  - master
+  - travis
+install:
+deploy:
+after_success:
