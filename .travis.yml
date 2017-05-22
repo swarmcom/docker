@@ -6,16 +6,8 @@ node_js:
 - 6.10.2
 branches:
   only:
+  - master
   - travis
 install:
 deploy:
-- provider: s3
-  bucket: iotsyst.releases
-  access_key_id: "$AWS_ACCESS_KEY_ID"
-  secret_access_key: "$AWS_SECRET_ACCESS_KEY"
-  skip_cleanup: true
-  on:
-    all_branches: true
-  local_dir: release-$NEW_TAG
-  upload-dir: "$NEW_TAG"
 after_success:
