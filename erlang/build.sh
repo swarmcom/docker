@@ -1,3 +1,3 @@
 #!/bin/sh -e
-NETWORK=${NETWORK:-"ezuce"}
-docker build $BUILD_FLAGS -t $NETWORK/erlang .
+#NETWORK=${NETWORK:-"ezuce"}
+docker build $BUILD_FLAGS -t ezuce/erlang .
