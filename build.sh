@@ -14,4 +14,4 @@ cd mongodb && ./build.sh
 cd ../redis &&./build.sh
 cd ../freeswitch && ./build.sh
 #cd ../reach && ./build.sh
-cd ../sipxcom && ./build.sh
+#cd ../sipxcom && ./build.sh
