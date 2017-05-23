@@ -1,3 +1,3 @@
 #!/bin/sh -e
-NETWORK=${NETWORK:-"ezuce"}
-docker build $BUILD_FLAGS -t $NETWORK/sipxcom .
+#NETWORK=${NETWORK:-"ezuce"}
+docker build $BUILD_FLAGS -t ezuce/sipxcom .
