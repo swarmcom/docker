@@ -5,4 +5,4 @@
 #
 # echo $COMMIT > etc/commit
 
-docker build $BUILD_FLAGS --build-arg -t ezuce/freeswitch .
+docker build $BUILD_FLAGS -t ezuce/freeswitch .
