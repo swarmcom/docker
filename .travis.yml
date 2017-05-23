@@ -15,6 +15,7 @@ install:
 - "./build.sh"
 after_success:
 - docker login -u="$DOCKER_U" -p="$DOCKER_P"
+- docker push ezuce/base
 - docker push ezuce/redis
 - docker push ezuce/mongodb
 - docker push ezuce/freeswitch
