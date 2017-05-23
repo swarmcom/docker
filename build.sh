@@ -9,7 +9,7 @@ fi
 # This is the default network segment
 #docker network create ezuce
 #cd base-os && ./build.sh
-cd erlang && ./build.sh
+cd ./erlang && ./build.sh
 cd ../mongodb && ./build.sh
 cd ../redis && ./build.sh
 cd ../freeswitch && ./build.sh
