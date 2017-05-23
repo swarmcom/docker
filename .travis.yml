@@ -19,6 +19,7 @@ after_success:
 - docker push ezuce/mongodb
 - docker push ezuce/freeswitch
 - docker push ezuce/sipxcom
+- docker push ezuce/erlang
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_7e5a0af6f023_key -iv $encrypted_7e5a0af6f023_iv
   -in travis.pem.enc -out /tmp/travis.pem -d
