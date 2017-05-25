@@ -9,6 +9,11 @@ RUN build/setup-os.sh
 COPY build/setup-deps.sh build/setup-deps.sh
 RUN build/setup-deps.sh
 
+USER root
+
+COPY src/sipxecs /home/user/sipxecs
+RUN chown -R user:user /home/user/sipxecs
+
 USER user
 
 COPY build/setup.sh build/setup.sh

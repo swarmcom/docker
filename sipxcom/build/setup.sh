@@ -1,7 +1,5 @@
 #!/bin/sh -e
-cd ~
-git clone --depth 1 git://github.com/sipXcom/sipxecs.git
-cd sipxecs
+cd ~/sipxecs
 
 autoreconf -if
 
