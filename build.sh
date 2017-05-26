@@ -15,3 +15,4 @@ cd ../redis &&./build.sh
 cd ../freeswitch && ./build.sh
 cd ../reach && ./build.sh
 cd ../sipxcom && ./build.sh
+cd ../sipxconfig && ./build.sh
