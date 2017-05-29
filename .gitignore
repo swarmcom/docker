@@ -2,3 +2,4 @@
 sipxcom/src/sipxecs
 freeswitch/etc/commit
 sipxconfig/src/sipxecs
+mongodb-sipxconfig/mongo-data/data
