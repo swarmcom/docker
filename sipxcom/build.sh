@@ -1,10 +1,13 @@
 #!/bin/sh -e
-cd src
-if [ ! -d sipxecs ]; then
-  git clone --depth 1 git://github.com/sipXcom/sipxecs.git
-fi
-cd sipxecs && git pull
-cd ../..
-echo `pwd`
+REPO=git://github.com/sipXcom/sipxecs.git
 NETWORK=${NETWORK:-"ezuce"}
-docker build $BUILD_FLAGS -t $NETWORK/sipxcom .
+SKIP_BUILD=${SKIP_BUILD:-""}
+
+UID=$(id -u)
+GID=$(id -g)
+
+docker build $BUILD_FLAGS \
+	--build-arg SKIP_BUILD=$SKIP_BUILD \
+	--build-arg UID=$UID \
+	--build-arg GID=$GID \
+	-t $NETWORK/sipxcom .
