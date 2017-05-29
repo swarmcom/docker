@@ -4,7 +4,8 @@ NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"mongodb.$NETWORK"}
 
 docker run $FLAGS \
-	--name $NAME \
+	--name mongo \
+  -h $NAME \
   -p 27017:27017 \
   -v `pwd`/etc/mongodb.conf:/etc/mongo.config \
   -v `pwd`/mongo-data/data:/data/db \
