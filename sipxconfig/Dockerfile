@@ -27,5 +27,10 @@ USER root
 COPY build/after-build.sh build/after-build.sh
 RUN build/after-build.sh
 
-USER user
 WORKDIR /home/user
+COPY conf/sipxconfig.properties /usr/local/sipx/etc/sipxpbx/
+COPY conf/postgres-pwd.properties /usr/local/sipx/etc/sipxpbx/
+COPY conf/mongo-client.ini /usr/local/sipx/etc/sipxpbx/
+COPY conf/ssl-web.keystore /usr/local/sipx/etc/sipxpbx/ssl/
+COPY conf/sipxconfig.sh sipxconfig.sh
+ENTRYPOINT ["/home/user/sipxconfig.sh"]
