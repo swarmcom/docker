@@ -8,11 +8,6 @@ then
 fi
 # This is the default network segment
 docker network create ezuce
-cd base-os && ./build.sh
-cd ../erlang && ./build.sh
-cd ../mongodb && ./build.sh
-cd ../redis &&./build.sh
-cd ../freeswitch && ./build.sh
-cd ../reach && ./build.sh
-cd ../sipxcom && ./build.sh
+cd mongodb-sipxconfig && ./run.sh
+cd postgres-sipxconfig && ./build.sh
 cd ../sipxconfig && ./build.sh
