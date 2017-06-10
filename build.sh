@@ -8,6 +8,5 @@ then
 fi
 # This is the default network segment
 docker network create ezuce
-cd mongodb-sipxconfig && ./run.sh
 cd postgres-sipxconfig && ./build.sh
 cd ../sipxconfig && ./build.sh
