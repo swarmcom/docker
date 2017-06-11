@@ -2,7 +2,7 @@
 cd src
 if [ ! -d sipxecs ]; then
   git clone --depth 1 https://github.com/sipXcom/sipxecs.git
-  cd sipxecs && git checkout docker-sipxconfig
+  cd sipxecs && git fetch && git checkout docker-sipxconfig
   cd ../
 fi
 cd ../
