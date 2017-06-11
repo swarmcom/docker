@@ -1,7 +1,7 @@
 #!/bin/sh -e
 cd src
 if [ ! -d sipxecs ]; then
-  git clone --depth 1 https://github.com/swarmcom/docker.git
+  git clone --depth 1 https://github.com/sipXcom/sipxecs.git
   cd sipxecs && git checkout docker-sipxconfig
   cd ../
 fi
