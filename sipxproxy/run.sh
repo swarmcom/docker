@@ -1,15 +1,15 @@
 #!/bin/sh -e
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
-NAME=${NAME:-"sipxregistrar.$NETWORK"}
+NAME=${NAME:-"sipxproxy.$NETWORK"}
 
 docker run $FLAGS \
- --name sipxregistrar \
+ --name sipxproxy \
+ --link sipxregistrar:sipxregistrar.ezuce\
  --link mongo:mongodb.ezuce \
  --link postgres:postgres.ezuce \
  --link sipxconfig:sipxconfig.ezuce \
  -h $NAME \
- -p 5070:5070 \
- -p 5075:5075 \
- -p 5077:5077 \
- $NETWORK/sipxregistrar
+ -p 5060:5060 \
+ -p 5061:5061 \
+ $NETWORK/sipxproxy

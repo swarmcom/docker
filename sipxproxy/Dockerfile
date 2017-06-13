@@ -30,7 +30,6 @@ COPY build/after-build.sh build/after-build.sh
 RUN build/after-build.sh
 
 WORKDIR /home/user
-COPY conf/sipxregistrar.properties /usr/local/sipx/etc/sipxpbx/sipxregistrar/
 COPY conf/mongo-client.ini /usr/local/sipx/etc/sipxpbx/
-COPY conf/registrar-config /usr/local/sipx/etc/sipxpbx/registrar-config
-CMD ["/usr/local/sipx/usr/bin/sipregistrar", "--pid-file /usr/local/sipx/var/run/sipxpbx/sipxregistrar.pid"]
+COPY conf/sipXproxy-config /usr/local/sipx/etc/sipxpbx/sipXproxy-config
+CMD ["/usr/local/sipx/usr/bin/sipXproxy", " --pid-file /var/run/sipxpbx/sipxproxy.pid"]
