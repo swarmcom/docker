@@ -10,3 +10,5 @@ fi
 docker network create ezuce
 cd postgres-sipxconfig && ./build.sh
 cd ../sipxconfig && ./build.sh
+cd ../sipxregistrar && ./build.sh
+cd ../sipxproxy && ./build.sh
