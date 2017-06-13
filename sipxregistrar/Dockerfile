@@ -33,4 +33,4 @@ WORKDIR /home/user
 COPY conf/sipxregistrar.properties /usr/local/sipx/etc/sipxpbx/sipxregistrar/
 COPY conf/mongo-client.ini /usr/local/sipx/etc/sipxpbx/
 COPY conf/registrar-config /usr/local/sipx/etc/sipxpbx/registrar-config
-CMD ["/usr/local/sipx/usr/bin/sipregistrar", "--pid-file /usr/local/sipx/var/run/sipxpbx/sipxregistrar.pid"]
+CMD ["/usr/local/sipx/bin/sipregistrar"]

@@ -16,4 +16,5 @@ yum install -y \
 	java-1.7.0-openjdk-devel `# sipXconfig` \
 	libxslt \
 	openfire `# sipXopenfire` \
-	ruby ruby-dbi ruby-devel rubygem-net-sftp rubygems ruby-libs ruby-postgres  `# sipXcdr`
+	ruby ruby-dbi ruby-devel rubygem-net-sftp rubygems ruby-libs ruby-postgres  `# sipXcdr` \
+	oss_core-devel oss_core 

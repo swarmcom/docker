@@ -32,4 +32,4 @@ RUN build/after-build.sh
 WORKDIR /home/user
 COPY conf/mongo-client.ini /usr/local/sipx/etc/sipxpbx/
 COPY conf/sipXproxy-config /usr/local/sipx/etc/sipxpbx/sipXproxy-config
-CMD ["/usr/local/sipx/usr/bin/sipXproxy", " --pid-file /var/run/sipxpbx/sipxproxy.pid"]
+CMD ["/usr/local/sipx/bin/sipXproxy"]
