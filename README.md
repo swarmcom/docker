@@ -26,13 +26,13 @@ Structure of each folder used to build images
   -- etc
      --- storing the rpm repository used for yum installs
   -- src
-     --- in this folder the source code will be downlaoded from sipxcom repository.At the time of this instruction we are using branch release-17.08
+     --- in this folder the source code will be downloaded from sipxcom repository.At the time of this instruction we are using branch release-17.08
   -- Dokcerfile     used to create docker image   
   -- build.sh       used to build docker image based on Dockerfile
   -- run.sh         used to start a container independently (you can also use .install.sh from swarmcom/docker-init)
      
 ```
-As a developer your time will be maynly spent under build folder and on the main sipxcom repository where you will commit changes to the code from which docker images are build
+As a developer your time will be mainly spent under build folder and on the main sipxcom repository where you will commit changes to the code from which docker images are build
 
 Automatic build notes under travis branch
 =====
