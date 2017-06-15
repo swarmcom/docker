@@ -1,57 +1,19 @@
 eZuce containers
 ================
 
-Notes
-=====
-
-In order to build ReachMe container it is required to have access to ReachMe repo, therefore
-an access token must be provided (https://github.com/settings/tokens) in form of TOKEN env variable.
-
-This is work in progress, see [TODO](TODO.md)
-
-Init
-====
-
-You need to have Docker version at least 1.9.0 (as this setup relies on docker network heavily).
-
-```sh
-./build.sh
-./run.sh
-
-# You know what are you doing, right?
-./hosts.sh >> /etc/hosts
+```
+            ------         ---------          ----------
+   code -> |github|   <-- |travis-ci|  -->   | dockerhub |    
+            ------         ---------          ---------- 
+                                              ----------- 
+                                       -->    |AWS for QA|
+                                               -----------
+                                               
 ```
 
-ReachMe
-=======
+Code commited on swarmcomm/docker branches (master, minimal and sipxconfig) will cause automatic build with travis-ci based on the  .travis.yml file which is self explanatory
 
-Please see [ReachMe README](reach/README.md) how to run ReachMe.
+After travis finishes building the docker images it will push them on dockerhub [![N|Dockerhub](https://hub.docker.com/u/ezuce/)
 
 
-Meta container
-==============
-
-There is a docker meta container intended to build other containers in controlled environment named `ezuce-ci`.
-In theory it should be possible to build all components with it, the only thing you need to provide is
-access to hosts docker socket, see [run.sh](ezuce-ci/run.sh), and GitHub auth token to have
-access to private repo's.
-
-In ezuce-ci folder:
-
-```sh
-./build.sh $TOKEN
-./run.sh $TOKEN
-docker exec ezuce-ci ./build.sh
-or
-docker exec ezuce-ci 'cd reach && ./build.sh'
-```
-
-Environment variables
-=====================
-
-The intent is to specify `docker build` flags e.g. to pass --no-cache to forcefully rebuild.
-
-```sh
-BUILD_FLAGS -- flags to pass to `docker build` command.
-```
-
+After building and publishing of docker images is finished, travis will deploy containers on an AWS EC2 machine for QA tests 
