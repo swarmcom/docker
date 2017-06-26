@@ -13,11 +13,7 @@ RUN build/setup-os.sh
 
 COPY etc/commit commit
 
-COPY build/setup.sh build/setup.sh
-RUN build/setup.sh
-
-COPY build/setup-commit.sh build/setup-commit.sh
-RUN build/setup-commit.sh
+COPY src/freeswitch freeswitch
 
 COPY etc/modules.conf freeswitch/modules.conf
 COPY build/configure.sh build/configure.sh
