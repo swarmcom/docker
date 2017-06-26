@@ -1,0 +1,61 @@
+SIPX_PROXY_DEFAULT_SERIAL_EXPIRES : 20
+SIPX_PROXY_DEFAULT_EXPIRES : 300
+SIPX_PROXY_LOG_LEVEL : DEBUG
+SIPX_PROXY_TCP_PORT : 5060
+SIPX_PROXY_UDP_PORT : 5060
+SIPX_PROXY_TLS_PORT : 5061
+SIPX_PROXY_AUTHENTICATE_ALGORITHM :
+SIPX_PROXY_MAX_FORWARDS :
+SIPX_PROXY_STALE_TCP_TIMEOUT :
+SIPX_PROXY_ENSURE_TCP_LIFETIME : 1
+SIPX_PROXY_RELAY_ALLOWED : 1
+SIPX_PROXY_ENABLE_TCP_RESEND : 0
+SIPX_PROXY_DEFAULT_RTT : 100
+SIPX_PROXY_RETRANSMIT_TIMES : 4
+SIPX_PROXY_HOP_BY_HOP_CANCEL : 0
+SIPX_TRUST_SBC_REGISTERED_CALLS : false
+SIPX_SEND_TRYING_FOR_NIST : true
+SIPX_PROXY_MAX_CONCURRENT : 10
+SIPX_PROXY_REJECT_ON_FILLED_QUEUE : true
+SIPX_PROXY_REJECT_ON_FILLED_QUEUE_PERCENT : 75
+SIPX_PROXY_MAX_TRANSACTION_COUNT : 20000
+SIPX_PROXY_LOG_AUTH_CODES : 0
+SIPX_SUPPRESS_ALERT_INDICATOR_IN_TRANSFERS : false
+SIPX_CONSULTATIVE_TRANSFER_GATEWAY_INITIAL_INVITE : true
+SIPX_PASS_P_ASSERTED_IDENTITY : false
+SIPX_PROXY_LOG_CONSOLE :
+SIPX_PROXY_CALL_STATE :
+SIPX_PROXY.205_subscriptionauth.PACKAGES_REQUIRING_AUTHENTICATION : dialog
+SIPX_PROXY.205_subscriptionauth.TARGETS_EXEMPTED_FROM_AUTHENTICATION : ^~~rl~
+SIPX_PROXY.350_calleralertinfo.INTERNAL_ENABLED : 0
+SIPX_PROXY.350_calleralertinfo.INTERNAL : <http://internal.call>;info=alert-internal;x-line-id=0
+SIPX_PROXY.350_calleralertinfo.EXTERNAL_ENABLED : 1
+SIPX_PROXY.350_calleralertinfo.EXTERNAL : <http://external.call>;info=alert-external;x-line-id=0
+SIPX_PROXY.350_calleralertinfo.ON_EXISTING : 0
+SIPX_PROXY.400_authrules.IDENTITY_VALIDITY_SECONDS : 300
+SIPX_PROXY.200_xfer.EXCHANGE_SERVER_FQDN :
+SIPX_PROXY.200_xfer.ADDITIONAL_EXCHANGE_SERVER_FQDN :
+SIPX_PROXY.210_msftxchghack.USERAGENT : ^RTCC/
+SIPX_PROXY_HOST_NAME : uc1.mihai.test
+SIPX_PROXY_HOST_ALIASES : 10.3.0.200:5060 uc1.docker.test:5060
+SIPX_PROXY_CALL_STATE_DB : ENABLE
+SIPX_PROXY_HOSTPORT : 10.3.0.200:5060
+SIPX_PROXY_AUTHENTICATE_REALM : testRealm
+SIPX_PROXY_HOOK_LIBRARY.200_xfer : /usr/local/sipx/usr/lib64/authplugins/libTransferControl.so
+SIPX_PROXY_HOOK_LIBRARY.205_subscriptionauth : /usr/local/sipx/usr/lib64/authplugins/libSubscriptionAuth.so
+SIPX_PROXY_HOOK_LIBRARY.210_msftxchghack : /usr/local/sipx/usr/lib64/authplugins/libMSFT_ExchangeTransferHack.so
+SIPX_PROXY_HOOK_LIBRARY.300_calldestination : /usr/local/sipx/usr/lib64/authplugins/libCallDestination.so
+SIPX_PROXY_HOOK_LIBRARY.350_calleralertinfo : /usr/local/sipx/usr/lib64/authplugins/libCallerAlertInfo.so
+SIPX_PROXY_HOOK_LIBRARY.400_authrules : /usr/local/sipx/usr/lib64/authplugins/libEnforceAuthRules.so
+SIPX_PROXY_HOOK_LIBRARY.700_fromalias : /usr/local/sipx/usr/lib64/authplugins/libCallerAlias.so
+SIPX_PROXY_HOOK_LIBRARY.900_ntap : /usr/local/sipx/usr/lib64/authplugins/libNatTraversalAgent.so
+SIPX_PROXY_HOOK_LIBRARY.995_requestlinter : /usr/local/sipx/usr/lib64/authplugins/libRequestLinter.so
+SIPX_PROXY_HOOK_LIBRARY.990_emerglineid : /usr/local/sipx/usr/lib64/authplugins/libEmergencyLineIdentifier.so
+SIPX_TRAN_HOOK_LIBRARY.905_gatewaydest : /usr/local/sipx/usr/lib64/transactionplugins/libGatewayDestPlugin.so
+SIPX_TRAN_HOOK_LIBRARY.990_customcallerid : /usr/local/sipx/usr/lib64/transactionplugins/libsipxcustomcallerid.so
+SIPX_TRAN_HOOK_LIBRARY.910_sssmessagefilter : /usr/local/sipx/usr/lib64/transactionplugins/libSSSMessageFilterProxyPlugin.so
+SIPX_TRAN.910_sssmessagefilter.NO_FILTER_PORT_LIST : 5161,5160,5180,6050,15060
+SIPX_PROXY.400_authrules.RULES : /usr/local/sipx/etc/sipxpbx/authrules.xml
+SIPX_PROXY.990_emerglineid.EMERGRULES : /usr/local/sipx/etc/sipxpbx/authrules.xml
+SIPX_PROXY_BIND_IP : 10.3.0.200
+SIPX_PROXY_CALL_STATE_DB_PASSWORD :

@@ -1,13 +1,34 @@
 sudo: required
 services:
 - docker
+addons:
+  ssh_known_hosts:
+    - 34.253.75.42
 language: node_js
 node_js:
 - 6.10.2
 branches:
   only:
   - master
-  - travis
+  - sipxconfig
 install:
-deploy:
+- "./build.sh"
 after_success:
+- docker login -u="$DOCKER_U" -p="$DOCKER_P"
+- docker push ezuce/postgres
+- docker push ezuce/sipxconfig
+- docker push ezuce/sipxregistrar
+- docker push ezuce/sipxproxy
+
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_7e5a0af6f023_key -iv $encrypted_7e5a0af6f023_iv
+  -in travis.pem.enc -out /tmp/travis.pem -d
+- eval "$(ssh-agent -s)"
+- chmod 600 /tmp/travis.pem
+- ssh-add /tmp/travis.pem
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: ssh centos@34.253.75.42 'bash -s' < scripts/deploy.sh
+  on:
+all_branches: true

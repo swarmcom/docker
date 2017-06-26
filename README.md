@@ -1,59 +1,42 @@
 eZuce containers
-================
+Init
 
-Notes
+You need to have Docker version at least 1.9.0 (as this setup relies on docker network heavily) and git installed
+
+git clone https://github.com/swarmcom/docker-init.git
+
+next run
+
+./install.sh
+
+You can also build each docker image alone from the correct folder with ./build.sh or start it with ./run.sh
+Building docker images
+
+Each docker image can be build by running ./build.sh under each folder.
+
+    Note : there are some images like (mongo) where you only need to run them since those are maintained in dockerhub official repository by the creators of those projects
+
+Structure of each folder used to build images
+```
+- parent_folder (sipxproxy as an example)
+  -- build
+     ---  scripts used for docker image build
+  -- conf 
+     --- scripts and placehoders used to be imported during  docker container run
+  -- etc
+     --- storing the rpm repository used for yum installs
+  -- src
+     --- in this folder the source code will be downloaded from sipxcom repository.At the time of this instruction we are using branch release-17.08
+  -- Dokcerfile     used to create docker image   
+  -- build.sh       used to build docker image based on Dockerfile
+  -- run.sh         used to start a container independently (you can also use .install.sh from swarmcom/docker-init)
+     
+```
+As a developer your time will be mainly spent under build folder and on the main sipxcom repository where you will commit changes to the code from which docker images are build
+
+Automatic build notes under travis branch
 =====
 
-In order to build ReachMe container it is required to have access to ReachMe repo, therefore
-an access token must be provided (https://github.com/settings/tokens) in form of TOKEN env variable.
-
-This is work in progress, see [TODO](TODO.md)
-
-Init
-====
-
-You need to have Docker version at least 1.9.0 (as this setup relies on docker network heavily).
-
-```sh
-./build.sh
-./run.sh
-
-# You know what are you doing, right?
-./hosts.sh >> /etc/hosts
-```
-
-ReachMe
-=======
-
-Please see [ReachMe README](reach/README.md) how to run ReachMe.
-
-
-Meta container
-==============
-
-There is a docker meta container intended to build other containers in controlled environment named `ezuce-ci`.
-In theory it should be possible to build all components with it, the only thing you need to provide is
-access to hosts docker socket, see [run.sh](ezuce-ci/run.sh), and GitHub auth token to have
-access to private repo's.
-
-In ezuce-ci folder:
-
-```sh
-./build.sh $TOKEN
-./run.sh $TOKEN
-docker exec ezuce-ci ./build.sh
-or
-docker exec ezuce-ci 'cd reach && ./build.sh'
-```
-
-Environment variables
-=====================
-
-The intent is to specify `docker build` flags e.g. to pass --no-cache to forcefully rebuild.
-
-```sh
-BUILD_FLAGS -- flags to pass to `docker build` command.
-```
 
 Check also README.md under each branch to understand better what's going on 
 =====================
