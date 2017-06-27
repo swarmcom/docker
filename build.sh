@@ -11,7 +11,8 @@ docker network create ezuce
 cd base-os && ./build.sh
 cd ../erlang && ./build.sh
 cd ../mongodb && ./build.sh
-cd ../redis &&./build.sh
+cd ../elastic && ./build.sh
 cd ../freeswitch && ./build.sh
+cd ../agents && ./build.sh
 cd ../reach && ./build.sh
-cd ../sipxcom && ./build.sh
+
