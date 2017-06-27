@@ -55,3 +55,5 @@ The intent is to specify `docker build` flags e.g. to pass --no-cache to forcefu
 BUILD_FLAGS -- flags to pass to `docker build` command.
 ```
 
+Check also README.md under each branch to understand better what's going on 
+=====================
