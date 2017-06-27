@@ -13,6 +13,7 @@ Init
 ====
 
 You need to have Docker version at least 1.9.0 (as this setup relies on docker network heavily).
+Also you probably want to add your local user to docker group with `usermod -aG docker $(whoami)`
 
 ```sh
 ./build.sh

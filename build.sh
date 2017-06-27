@@ -12,6 +12,7 @@ cd base-os && ./build.sh
 cd ../erlang && ./build.sh
 cd ../mongodb && ./build.sh
 cd ../elastic && ./build.sh
+cd ../kibana && ./build.sh
 cd ../freeswitch && ./build.sh
 cd ../agents && ./build.sh
 cd ../reach && ./build.sh
