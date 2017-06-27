@@ -3,7 +3,7 @@ FLAGS=${1:-"-td"}
 IMAGE=${2:-"ezuce/freeswitch"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"freeswitch.$NETWORK"}
-REACHME_NODE=${REACHME_NODE:-"reachme@reachme.$NETWORK"}
+REACHME_NODE=${REACHME_NODE:-"reach@reach.$NETWORK"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
