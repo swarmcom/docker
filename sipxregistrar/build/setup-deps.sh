@@ -6,6 +6,7 @@ wget -q https://raw.githubusercontent.com/cjkao/dart-sdk-cent-os-6/master/dart-s
 tar zxvf dart-sdk.1.13.0-centos6.7-64.tar.gz
 
 # install all deps
+yum clean all && yum clean metadata && \
 yum install -y \
 	git make automake libtool gcc-c++ \
 	boost-devel cppunit-devel pcre-devel openssl-devel poco-devel gperftools-devel `# sipXportLib` \
@@ -15,5 +16,5 @@ yum install -y \
 	libev-devel zeromq-devel swig `# sipXsqa` \
 	java-1.7.0-openjdk-devel `# sipXconfig` \
 	libxslt \
-	openfire `# sipXopenfire` \
-	ruby ruby-dbi ruby-devel rubygem-net-sftp rubygems ruby-libs ruby-postgres  `# sipXcdr`
+	ruby ruby-dbi ruby-devel rubygem-net-sftp rubygems ruby-libs ruby-postgres  `# sipXcdr` && \
+yum clean all && yum clean metadata
