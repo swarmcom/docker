@@ -1,6 +1,6 @@
 <include>
-<gateway name="agents">
-<param name="proxy" value="agents.ezuce"/>
+<gateway name="reach">
+<param name="proxy" value="freeswitch.ezuce"/>
 <param name="register" value="false"/>
 <param name="caller-id-in-from" value="true"/>
 </gateway>
