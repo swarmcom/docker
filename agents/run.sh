@@ -3,6 +3,7 @@ FLAGS=${1:-"-td"}
 IMAGE=${2:-"ezuce/agents"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"agents.$NETWORK"}
+NODE=${NODE:-"agents@$NAME"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -17,4 +18,6 @@ docker run $FLAGS \
 	--net $NETWORK \
 	-h $NAME \
 	--name $NAME \
+	--env NODE=agents@$NAME \
+	--env BUSYTONE_NODE=$BUSYTONE_NODE \
 	$IMAGE
