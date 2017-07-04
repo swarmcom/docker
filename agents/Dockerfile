@@ -14,3 +14,4 @@ USER freeswitch
 
 ENV NODE agents@agents.ezuce
 ENV BUSYTONE_NODE busytone@busytone.ezuce
+ENV REACH_FREESWITCH freeswitch.ezuce

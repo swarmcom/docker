@@ -15,5 +15,9 @@ xmlstarlet edit --inplace -u '/include/context/extension/condition/action[@appli
 	-v "call_manager:! $BUSYTONE_NODE" \
 	conf/dialplan/dialplan.xml
 
+echo Setting ReachMe FreeSWITCH address to $REACH_FREESWITCH
+
+xmlstarlet edit --inplace -u '/include/param[@name="proxy"]/@value' -v "$REACH_FREESWITCH" conf/sip_profiles/gateways/reach.xml
+
 /usr/bin/epmd -daemon
 exec /usr/local/freeswitch/bin/freeswitch -nf -np

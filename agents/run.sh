@@ -4,6 +4,8 @@ IMAGE=${2:-"ezuce/agents"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"agents.$NETWORK"}
 NODE=${NODE:-"agents@$NAME"}
+BUSYTONE_NODE=${BUSYTONE_NODE:-"busytone.ezuce"}
+REACH_FREESWITCH=${REACH_FREESWITCH:-"freeswitch.ezuce"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -18,6 +20,7 @@ docker run $FLAGS \
 	--net $NETWORK \
 	-h $NAME \
 	--name $NAME \
-	--env NODE=agents@$NAME \
+	--env NODE=$NODE \
 	--env BUSYTONE_NODE=$BUSYTONE_NODE \
+	--env REACH_FREESWITCH=$REACH_FREESWITCH \
 	$IMAGE
