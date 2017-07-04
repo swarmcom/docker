@@ -7,9 +7,10 @@ then
 	exit
 fi
 # This is the default network segment
-docker network create ezuce
-cd postgres-sipxconfig && ./build.sh
-cd ../sipxconfig && ./build.sh
-cd ../sipxregistrar && ./build.sh
-cd ../siplibs && ./build.sh
+# docker network create ezuce
+# cd postgres-sipxconfig && ./build.sh
+#cd ../sipxconfig && ./build.sh
+
+cd siplibs && ./build.sh
 cd ../sipxproxy && ./build.sh
+cd ../sipxregistrar && ./build.sh
