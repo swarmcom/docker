@@ -16,10 +16,10 @@ install:
 - "./build.sh"
 after_success:
 - docker login -u="$DOCKER_U" -p="$DOCKER_P"
-- docker push ezuce/postgres
-- docker push ezuce/sipxconfig
-- docker push ezuce/sipxregistrar
-- docker push ezuce/sipxproxy
+#- docker push ezuce/postgres
+#- docker push ezuce/sipxconfig
+#- docker push ezuce/sipxregistrar
+#- docker push ezuce/sipxproxy
 - docker push ezuce/siplibs
 
 before_deploy:
