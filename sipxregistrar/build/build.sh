@@ -1,7 +1,5 @@
 #!/bin/sh -e
 export SIPXPBXGROUP=user
 export SIPXPBXUSER=user
-cd ~/build/
+cd /home/user/build/
 make sipXregistry
-rm -rf ~/sipxecs
-rm -rf ~/build

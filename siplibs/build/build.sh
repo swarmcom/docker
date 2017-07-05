@@ -6,3 +6,4 @@ make sipXportLib && make sipXtackLib && \
 make sipXmediaLib && make sipXmediaAdapterLib && \
 make sipXcallLib && make sipXcommserverLib && make sipXcommons
 rm -rf ~/sipxecs
+rm -rf ~/build
