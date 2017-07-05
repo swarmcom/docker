@@ -45,3 +45,12 @@
       - sipxconfig:sipxconfig.ezuce
       - postgres:postgres.ezuce
     container_name: nginx
+
+  supervisor:
+    image: ezuce/supervisor
+    volumes:
+      - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
+      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: supervisor
+    privileged: true
+    restart: on-failure
