@@ -3,8 +3,7 @@
 <context name="reachme">
 <extension name="Catch all extension">
   <condition field="destination_number" expression="^.*$">
-    <action application="erlang_sendmsg" data="call_manager busytone@busytone.ezuce ${uuid}"/>
-    <action application="erlang" data="call_manager:! busytone@busytone.ezuce"/>
+    <action application="erlang" data="call_sup:! busytone@busytone.ezuce"/>
   </condition>
 </extension>
 </context>

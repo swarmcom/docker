@@ -7,12 +7,8 @@ xmlstarlet edit --inplace -u '/configuration/settings/param[@name="shortname"]/@
 
 echo Setting BusyTone Erlang node name to $BUSYTONE_NODE
 
-xmlstarlet edit --inplace -u '/include/context/extension/condition/action[@application="erlang_sendmsg"]/@data' \
-	-v "call_manager $BUSYTONE_NODE \${uuid}" \
-	conf/dialplan/dialplan.xml
-
 xmlstarlet edit --inplace -u '/include/context/extension/condition/action[@application="erlang"]/@data' \
-	-v "call_manager:! $BUSYTONE_NODE" \
+	-v "call_sup:! $BUSYTONE_NODE" \
 	conf/dialplan/dialplan.xml
 
 echo Setting ReachMe FreeSWITCH address to $REACH_FREESWITCH
