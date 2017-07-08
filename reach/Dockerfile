@@ -5,7 +5,6 @@ MAINTAINER Roman Galeev <jamhedd@gmail.com>
 ENV NETWORK=ezuce
 ENV NODE=reach@reach.$NETWORK
 ENV MONGODB=mongodb.$NETWORK
-ENV REDIS=redis.$NETWORK
 ENV SIPXCOM=sipxcom.$NETWORK
 ENV FSNODE=freeswitch@freeswitch.$NETWORK
 
