@@ -15,4 +15,3 @@ cd ../elastic && ./build.sh
 cd ../kibana && ./build.sh
 cd ../freeswitch && ./build.sh
 cd ../reach && ./build.sh
-cd ../export/ && ./build.sh
