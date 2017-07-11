@@ -6,5 +6,14 @@ if [ ! -d sipxecs ]; then
   cd ../
 fi
 cd ../
+
 NETWORK=${NETWORK:-"ezuce"}
+docker build -f Dockerfile.build -t sipxproxy/build .
+docker create --name=sipxproxy-build sipxproxy/build
+mkdir -p tmp
+docker cp sipxproxy-build:/usr/local/sipx tmp/
+docker rm sipxproxy-build
+docker rmi sipxproxy/build
 docker build $BUILD_FLAGS -t $NETWORK/sipxproxy .
+
+rm -rf tmp

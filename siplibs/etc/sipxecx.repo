@@ -1,0 +1,5 @@
+[sipxecs]
+name= sipXecs
+baseurl=http://download.sipxcom.org/pub/17.08-unstable/CentOS_6/x86_64/
+enabled=1
+gpgcheck=0

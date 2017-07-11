@@ -1,8 +1,8 @@
 #!/bin/sh -e
-cd ~/sipxecs
+cd /home/user/sipxecs
 
 autoreconf -if
 
-mkdir ../build
+mkdir -p ../build
 cd ../build
-../sipxecs/configure
+/home/user/sipxecs/configure

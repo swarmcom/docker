@@ -1,0 +1,23 @@
+FROM ezuce/siplibs
+MAINTAINER Mihai Costache <costache.mircea.mihai@gmail.com>
+
+COPY etc/sipxecx.repo /etc/yum.repos.d/
+
+
+USER root
+
+
+COPY src/sipxecs /home/user/sipxecs
+RUN chown -R user:user /home/user/sipxecs
+
+
+COPY build/setup.sh build/setup.sh
+RUN build/setup.sh
+
+COPY build/build.sh build/build.sh
+RUN build/build.sh
+
+USER root
+
+COPY build/after-build.sh build/after-build.sh
+RUN build/after-build.sh

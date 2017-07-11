@@ -6,3 +6,5 @@ sipxregistrar/src/sipxecs
 sipxproxy/src/sipxecs
 mongodb-sipxconfig/mongo-data/data
 sipxconfig/tmp
+sipxproxy/tmp
+sipxregistrar/tmp

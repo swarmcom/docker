@@ -36,10 +36,10 @@ SIPX_PROXY.400_authrules.IDENTITY_VALIDITY_SECONDS : 300
 SIPX_PROXY.200_xfer.EXCHANGE_SERVER_FQDN :
 SIPX_PROXY.200_xfer.ADDITIONAL_EXCHANGE_SERVER_FQDN :
 SIPX_PROXY.210_msftxchghack.USERAGENT : ^RTCC/
-SIPX_PROXY_HOST_NAME : uc1.mihai.test
-SIPX_PROXY_HOST_ALIASES : 10.3.0.200:5060 uc1.docker.test:5060
+SIPX_PROXY_HOST_NAME : sipxproxy.ezuce
+SIPX_PROXY_HOST_ALIASES : 192.168.1.121:5060 sipxproxy.ezuce:5060
 SIPX_PROXY_CALL_STATE_DB : ENABLE
-SIPX_PROXY_HOSTPORT : 10.3.0.200:5060
+SIPX_PROXY_HOSTPORT : 5060
 SIPX_PROXY_AUTHENTICATE_REALM : testRealm
 SIPX_PROXY_HOOK_LIBRARY.200_xfer : /usr/local/sipx/usr/lib64/authplugins/libTransferControl.so
 SIPX_PROXY_HOOK_LIBRARY.205_subscriptionauth : /usr/local/sipx/usr/lib64/authplugins/libSubscriptionAuth.so
@@ -57,5 +57,5 @@ SIPX_TRAN_HOOK_LIBRARY.910_sssmessagefilter : /usr/local/sipx/usr/lib64/transact
 SIPX_TRAN.910_sssmessagefilter.NO_FILTER_PORT_LIST : 5161,5160,5180,6050,15060
 SIPX_PROXY.400_authrules.RULES : /usr/local/sipx/etc/sipxpbx/authrules.xml
 SIPX_PROXY.990_emerglineid.EMERGRULES : /usr/local/sipx/etc/sipxpbx/authrules.xml
-SIPX_PROXY_BIND_IP : 10.3.0.200
+SIPX_PROXY_BIND_IP : 127.0.0.1
 SIPX_PROXY_CALL_STATE_DB_PASSWORD :
