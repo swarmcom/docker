@@ -2,9 +2,9 @@
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
 MONGODB=${MONGODB:-"mongodb.$NETWORK"}
-REDIS=${REDIS:-"redis.$NETWORK"}
+ELASTIC=${ELASTIC:-"elastic.$NETWORK"}
 SIPXCOM=${SIPXCOM:-"sipxcom.$NETWORK"}
-HOSTNAME=${HOSTNAME:-"reach.$NETWORK"}
+HOSTNAME=${HOSTNAME:-"reach-centos6.$NETWORK"}
 FSNODE=${FSNODE:-"freeswitch@freeswitch.$NETWORK"}
 NODE=${NODE:-"reach@$HOSTNAME"}
 
@@ -23,7 +23,7 @@ docker run $FLAGS \
 	--name $HOSTNAME \
 	--env NETWORK=$NETWORK \
 	--env MONGODB=$MONGODB \
-	--env REDIS=$REDIS \
+	--env ELASTIC=$ELASTIC \
 	--env SIPXCOM=$SIPXCOM \
 	--env NODE=$NODE \
 	--env FSNODE=$FSNODE \

@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash
 adduser -d /home/user user
 yum update -y
 

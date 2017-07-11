@@ -1,6 +1,6 @@
 #!/bin/sh -e
 FLAGS=${1:-"-td"}
-IMAGE=${2:-"ezuce/agents"}
+IMAGE=${2:-"uniteme/agents"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"agents.$NETWORK"}
 NODE=${NODE:-"agents@$NAME"}

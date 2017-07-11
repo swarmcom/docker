@@ -7,6 +7,7 @@ ENV NODE=reach@reach.$NETWORK
 ENV MONGODB=mongodb.$NETWORK
 ENV SIPXCOM=sipxcom.$NETWORK
 ENV FSNODE=freeswitch@freeswitch.$NETWORK
+ENV ELASTIC=elastic.$NETWORK
 
 # override on build with --build-arg option
 ARG REPO=git@github.com:ezuce/reach-app.git

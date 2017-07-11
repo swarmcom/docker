@@ -1,20 +1,19 @@
-FROM centos:6
+FROM centos:6.6
 MAINTAINER Roman Galeev <jamhedd@gmail.com>
 
 # override on run with --env option
 ENV NETWORK=ezuce
 ENV NODE=reach@reach.$NETWORK
 ENV MONGODB=mongodb.$NETWORK
-ENV REDIS=redis.$NETWORK
 ENV SIPXCOM=sipxcom.$NETWORK
 ENV FSNODE=freeswitch@freeswitch.$NETWORK
+ENV ELASTIC=elastic.$NETWORK
 
 # override on build with --build-arg option
 ARG REPO=git@github.com:ezuce/reach-app.git
 ARG BRANCH=standalone
 
 USER root
-
 COPY build/setup-os.sh build/setup-os.sh
 RUN build/setup-os.sh
 
