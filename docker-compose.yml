@@ -1,3 +1,15 @@
+  bootstrap:
+    build: bootstrap/.
+    environment:
+      - MONGO_HOST
+      - DOMAIN
+      - SIP_DOMAIN
+      - REALM
+      - HOST_NAME
+    volumes:
+      - ./bootstrap:/bootstrap
+    container_name: bootstrap
+
   mongo:
     image: mongo
     ports:
@@ -29,10 +41,15 @@
       - "12000:12000"
     volumes:
       - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
+      - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
+      - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
+      - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
     links:
       - mongo:mongodb.ezuce
       - postgres:postgres.ezuce
     container_name: sipxconfig
+    hostname: $HOST_NAME
+    domainname: $DOMAIN
     restart: on-failure
 
   nginx:
