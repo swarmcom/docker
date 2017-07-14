@@ -18,6 +18,7 @@
      - ./mongodb-sipxconfig/etc/mongodb.conf:/etc/mongo.config
      - ./mongodb-sipxconfig/mongo-data/data:/data/db
     command: mongod --config /etc/mongo.config
+    hostname: $MONGO_HOST
     container_name: mongo
 
   mongo-init:
@@ -45,12 +46,26 @@
       - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
       - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
     links:
-      - mongo:mongodb.ezuce
+      - mongo:$MONGO_HOST
       - postgres:postgres.ezuce
     container_name: sipxconfig
     hostname: $HOST_NAME
     domainname: $DOMAIN
     restart: on-failure
+
+  sipxregistrar:
+    image: ezuce/sipxregistrar
+    ports:
+      - "5070:5070"
+      - "5075:5075"
+      - "5077:5077"
+    volumes:
+      - ./sipxconfig/run/conf/1/registrar-config:/usr/local/sipx/etc/sipxpbx/registrar-config
+      - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
+    links:
+      - mongo:$MONGO_HOST
+      - postgres:postgres.ezuce
+    container_name: sipxregistrar
 
   nginx:
     image: nginx

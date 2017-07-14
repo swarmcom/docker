@@ -26,5 +26,8 @@ export SIP_DOMAIN
 export HOST_NAME
 export REALM
 
+sudo rm -rf ../mongodb-sipxconfig/mongo-data/data/*
+
+docker-compose down
 docker-compose build
-docker-compose up -d
+docker-compose up --force-recreate -d
