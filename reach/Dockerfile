@@ -33,6 +33,7 @@ COPY build/compile.sh build/compile.sh
 RUN build/compile.sh
 
 COPY build/run.sh run.sh
+COPY build/shell.sh shell.sh
 ENTRYPOINT ./run.sh
 
 EXPOSE 8937
