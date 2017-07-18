@@ -14,4 +14,6 @@ cd ../mongodb && ./build.sh
 cd ../elastic && ./build.sh
 cd ../kibana && ./build.sh
 cd ../freeswitch && ./build.sh
+cd ../agents && ./build.sh
+cd ../busytone && ./build.sh
 cd ../reach && ./build.sh
