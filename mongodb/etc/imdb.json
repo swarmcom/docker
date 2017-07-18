@@ -1,181 +1,443 @@
 {
-	"_id" : "agent1",
-	"name" : "foo",
-	"fnm" : "fooster",
-	"lnm" : "barter",
-	"skl" : [ "stop" ],
-	"clns" : [ "Demo Client" ],
-	"qs" : [ "default_queue" ],
-	"pntk" : "foosecret",
-	"rlm": "ezuce.com",
-	"scrty" : "ADMIN",
-	"aggrp" : "foobaz",
-	"permp" : "default",
-	"cnt" : "foo@agents.ezuce",
-	"type" : "openacdagent"
+  "_id": "FreeswitchMediaCommand-1",
+  "nds": [
+    "freeswitch@freeswitch.ezuce"
+  ],
+  "active": true,
+  "custheaders": "",
+  "dlst": "sofia/gateway/agents/$1;sipx-noroute=VoiceMail;sipx-userforward=false",
+  "type": "freeswitchmediacommand"
 }
 
 {
-	"_id" : "agent2",
-	"name" : "bar",
-	"fnm" : "barr",
-	"lnm" : "bazz",
-	"skl" : [],
-	"clns" : [ "Demo Client" ],
-	"qs" : [ "default_queue" ],
-	"pntk" : "1fe34b985bac4f8aa7741591c01bd617",
-	"rlm": "ezuce.com",
-	"scrty" : "AGENT",
-	"aggrp" : "Default",
-	"permp": "default",
-	"cnt" : "bar@agents.ezuce",
-	"type" : "openacdagent"
+  "_id": "OpenAcdAgent1",
+  "permp": "supervisor",
+  "pstn": [
+    "1234",
+    "abcd"
+  ],
+  "cnt": "agent1@agents.ezuce",
+  "ringtmout": 3,
+  "lnm": "Hadid",
+  "clns": [
+    "client1"
+  ],
+  "skl": [
+    "_agent",
+    "_node",
+    "_profile",
+    "english"
+  ],
+  "pntk": "1234",
+  "aggrp": "Default",
+  "qs": [
+    "Tech"
+  ],
+  "fnm": "Hadid",
+  "name": "agent1",
+  "type": "openacdagent"
 }
 
 {
-	"_id" : "agent3",
-	"name" : "baz",
-	"fnm" : "barr",
-	"lnm" : "bazz",
-	"skl" : [],
-	"clns" : [ "Demo Client" ],
-	"qs" : [ "default_queue" ],
-	"pntk" : "666260ef9123cae8c0bed032b8cb852e",
-	"rlm": "ezuce.com",
-	"scrty" : "SUPERVISOR",
-	"aggrp" : "foobaz",
-	"permp": "default",
-	"cnt" : "baz@agents.ezuce",
-	"type" : "openacdagent"
+  "_id": "OpenAcdAgent2",
+  "permp": "agent",
+  "pstn": [],
+  "cnt": "agent2@agents.ezuce",
+  "ringtmout": 3,
+  "lnm": "Basinger",
+  "clns": [
+    "newclientname"
+  ],
+  "skl": [
+    "_agent",
+    "german",
+    "MainSchedulingSkill",
+    "_node",
+    "_profile",
+    "english"
+  ],
+  "pntk": "1234",
+  "aggrp": "Default",
+  "qs": [
+    "Tech",
+    "Mech"
+  ],
+  "fnm": "Kim",
+  "ent": "openacdagent",
+  "name": "agent2",
+  "type": "openacdagent"
 }
 
 {
-	"_id" : "group1",
-	"name" : "Default",
-	"skl" : [ ],
-	"qs" : [ ],
-	"permp": "default",
-	"type" : "openacdagentgroup"
-}
-
-{
-	"_id" : "group2",
-	"name" : "foobaz",
-	"skl" : [ ],
-	"qs" : [ ],
-	"permp": "default",
-	"type" : "openacdagentgroup"
-}
-
-{
-	"_id" : "queue1",
-	"name" : "boozer",
-	"prfl" : [ ],
-	"wht" : 0,
-	"skl" : [ ],
-	"rcps" : [ ],
-	"qgrp" : "queuezon",
-	"type" : "openacdqueue"
-}
-
-{
-	"_id" : "queue2",
-	"name" : "homer",
-	"prfl" : [ ],
-	"wht" : 2,
-	"skl" : [ ],
-	"rcps" : [ ],
-	"qgrp" : "queuezon",
-	"type" : "openacdqueue"
-}
-
-{
-	"_id": "qgroup1",
-	"name": "Default",
-	"type": "openacdqueuegroup"
-}
-
-{
-	"_id": "qgroup2",
-	"name": "queuezon",
-	"type": "openacdqueuegroup"
-}
-
-{
-	"_id": "qgroup3",
-	"name": "boozer",
-	"type": "openacdqueuegroup"
-}
-
-{
-	"_id" : "skill1",
-	"atom" : "_agent",
-	"dscr" : "Magic skill that is replaced by the agent name",
-	"grpnm" : "Magic",
-	"name" : "Agent Name",
-	"type" : "openacdskill"
-}
-
-{
-	"_id" : "skill2",
-	"atom" : "_brand",
-	"dscr" : "Magic skill to expand to brand",
-	"grpnm" : "Magic",
-	"name" : "Brand",
-	"type" : "openacdskill"
-}
-
-{
-	"_id" : "skill3",
-	"atom" : "english",
-	"dscr" : "English Language",
-	"grpnm" : "Language",
-	"name" : "English",
-	"type" : "openacdskill"
-}
-
-{
-	"_id" : "client1",
-	"ident" : "111",
-	"name" : "Ateneo",
-	"type" : "openacdclient"
-}
-
-{
-	"_id" : "client2",
-	"ident" : "222",
-	"name" : "UST",
-	"type" : "openacdclient"
-}
-
-{
-	"_id" : "opt1",
-	"lbl" : "in a meeting",
-	"bias" : -1,
-	"type" : "openacdreleasecode"
+  "_id": "OpenAcdAgent3",
+  "permp": "agent",
+  "pstn": [],
+  "cnt": "agent3",
+  "ringtmout": 0,
+  "lnm": "Drop",
+  "clns": [
+    "newclientname"
+  ],
+  "skl": [
+    "_agent",
+    "_node",
+    "_profile",
+    "english"
+  ],
+  "pntk": "1234",
+  "aggrp": "Default",
+  "qs": [
+    "Tech"
+  ],
+  "fnm": "Thebob",
+  "name": "agent3",
+  "type": "openacdagent"
 }
 
 
 {
-	"_id" : "opt2",
-	"lbl" : "busy",
-	"bias" : 0,
-	"type" : "openacdreleasecode"
+  "_id": "OpenAcdAgentConfigCommand-1",
+  "lstenbl": true,
+  "autologout": 0,
+  "type": "openacdagentconfigcommand"
 }
 
 {
-	"_id" : "perm1",
-	"name": "default",
-	"perms": ["rptab", "advlg", "sutab"],
-	"type" : "openacdpermissionprofile"
+  "_id": "OpenAcdAgentGroup1",
+  "permp": "agent",
+  "rlsonflr": 3,
+  "clns": [],
+  "ringtmout": 3,
+  "skl": [],
+  "agtmout": "0",
+  "outboundClient": "client1",
+  "qs": [],
+  "noCustOutboundOpt": false,
+  "name": "Default",
+  "type": "openacdagentgroup"
 }
 
 {
-	"_id" : "FreeswitchMediaCommand-1",
-	"nds" : ["freeswitch@freeswitch.ezuce"],
-	"active" : true,
-	"dlst" : "sofia/reachme/$1",
-	"uuid" : "7b86aa73-5789-4439-be38-ff41c603480f",
-	"type" : "freeswitchmediacommand" 
+  "_id": "OpenAcdClient1",
+  "archDir": "/mnt/new",
+  "retainCalls": 7,
+  "useExtAvt": false,
+  "ident": "1",
+  "call_dispositions": [],
+  "clnArch": 10,
+  "recCalls": true,
+  "outbCallerID": "Customer Support Center",
+  "callsDir": "/var/sipxdata/reach/recordings",
+  "agCallerID": true,
+  "name": "client1",
+  "type": "openacdclient"
 }
 
+{
+  "_id": "OpenAcdCommand1",
+  "ident": "*80@freeswitch.ezuce",
+  "ent": "openacdcommand",
+  "als": [
+    {
+      "id": "reach_login",
+      "cnt": "sip:*80@freeswitch.ezuce",
+      "rln": "openacd"
+    },
+    {
+      "id": "*80",
+      "cnt": "sip:*80@freeswitch.ezuce",
+      "rln": "openacd"
+    }
+  ]
+}
+
+{
+  "_id": "OpenAcdPermissionProfile1",
+  "wdg": [
+    "AgentManager",
+    "QueueManager",
+    "CallRecording",
+    "MyStatistics"
+  ],
+  "confn": true,
+  "confq": true,
+  "trfq": true,
+  "mon": false,
+  "trfn": true,
+  "chgsktrf": true,
+  "trfa": true,
+  "confa": true,
+  "sutab": true,
+  "alout": true,
+  "rptab": false,
+  "custdsk": true,
+  "aggrp": [
+    "Default",
+    "supervisor"
+  ],
+  "advlg": true,
+  "qs": [
+    "transfer_queue",
+    "default_queue"
+  ],
+  "brg": false,
+  "ctras": false,
+  "name": "supervisor",
+  "type": "openacdpermissionprofile"
+}
+
+{
+  "_id": "OpenAcdPermissionProfile2",
+  "wdg": [
+    "MyStatistics"
+  ],
+  "confn": false,
+  "confq": false,
+  "trfq": true,
+  "mon": false,
+  "trfn": true,
+  "chgsktrf": false,
+  "trfa": true,
+  "confa": false,
+  "sutab": false,
+  "alout": true,
+  "rptab": false,
+  "custdsk": true,
+  "aggrp": [],
+  "advlg": true,
+  "qs": [],
+  "brg": false,
+  "ctras": false,
+  "name": "agent",
+  "type": "openacdpermissionprofile"
+}
+
+{
+  "_id": "OpenAcdPermissionProfile3",
+  "wdg": [
+    "MyStatistics",
+    "OutboundCall"
+  ],
+  "confn": true,
+  "confq": true,
+  "trfq": false,
+  "mon": false,
+  "trfn": false,
+  "chgsktrf": true,
+  "trfa": false,
+  "confa": true,
+  "sutab": false,
+  "alout": true,
+  "rptab": true,
+  "custdsk": true,
+  "aggrp": [],
+  "advlg": true,
+  "qs": [],
+  "brg": false,
+  "ctras": false,
+  "name": "admin",
+  "type": "openacdpermissionprofile"
+}
+
+{
+  "_id": "OpenAcdQueue1",
+  "autoWrapup": 0,
+  "prfl": [],
+  "wht": 1,
+  "skl": [
+    "english"
+  ],
+  "bltrf": false,
+  "rcps": [],
+  "enableWrapup": false,
+  "wrapupTimer": 0,
+  "qgrp": "Default",
+  "aging": {
+    "int": 1,
+    "remainder": 0
+  },
+  "name": "default_queue",
+  "type": "openacdqueue"
+}
+
+{
+  "_id": "OpenAcdQueue2",
+  "autoWrapup": 0,
+  "prfl": [],
+  "wht": 1,
+  "skl": [],
+  "bltrf": false,
+  "rcps": [],
+  "enableWrapup": false,
+  "wrapupTimer": 0,
+  "qgrp": "TransferGroup",
+  "aging": {
+    "int": 1,
+    "remainder": 0
+  },
+  "name": "transfer_queue",
+  "type": "openacdqueue"
+}
+
+{
+  "_id": "OpenAcdQueue3",
+  "autoWrapup": 0,
+  "prfl": [],
+  "wht": 1,
+  "skl": [
+    "english"
+  ],
+  "bltrf": false,
+  "rcps": [],
+  "enableWrapup": false,
+  "wrapupTimer": 10,
+  "qgrp": "Default",
+  "aging": {
+    "int": 1,
+    "remainder": 0
+  },
+  "name": "Tech",
+  "type": "openacdqueue"
+}
+
+{
+  "_id": "OpenAcdQueue4",
+  "autoWrapup": 0,
+  "prfl": [],
+  "wht": 1,
+  "skl": [
+    "english"
+  ],
+  "bltrf": false,
+  "rcps": [],
+  "enableWrapup": false,
+  "wrapupTimer": 10,
+  "qgrp": "Default",
+  "aging": {
+    "int": 1,
+    "remainder": 0
+  },
+  "name": "Mech",
+  "type": "openacdqueue"
+}
+
+{
+  "_id": "OpenAcdQueueGroup1",
+  "prfl": [],
+  "skl": [],
+  "rcps": [],
+  "name": "Default",
+  "type": "openacdqueuegroup"
+}
+
+{
+  "_id": "OpenAcdQueueGroup2",
+  "prfl": [],
+  "skl": [],
+  "rcps": [],
+  "name": "TransferGroup",
+  "type": "openacdqueuegroup"
+}
+
+{
+  "_id": "OpenAcdReleaseCode1",
+  "lbl": "meeting",
+  "bias": 1,
+  "type": "openacdreleasecode"
+}
+
+{
+  "_id": "OpenAcdReleaseCode2",
+  "lbl": "out",
+  "bias": -1,
+  "type": "openacdreleasecode"
+}
+
+{
+  "_id": "OpenAcdSettings3",
+  "cru": {
+    "$numberLong": "-1"
+  },
+  "requeuecalluifailure": true,
+  "type": "openacdsettings"
+}
+
+{
+  "_id": "OpenAcdSkill1",
+  "atom": "english",
+  "dscr": "English",
+  "grpnm": "Language",
+  "name": "English",
+  "type": "openacdskill"
+}
+
+{
+  "_id": "OpenAcdSkill2",
+  "atom": "german",
+  "dscr": "German",
+  "grpnm": "Language",
+  "name": "German",
+  "type": "openacdskill"
+}
+
+{
+  "_id": "OpenAcdSkill3",
+  "atom": "_brand",
+  "dscr": "Magic skill to expand to a client label",
+  "grpnm": "Magic",
+  "name": "Client",
+  "type": "openacdskill"
+}
+
+{
+  "_id": "OpenAcdSkill4",
+  "atom": "_agent",
+  "dscr": "Magic skill that is replaced by the agent name",
+  "grpnm": "Magic",
+  "name": "Agent Name",
+  "type": "openacdskill"
+}
+
+{
+  "_id": "OpenAcdSkill5",
+  "atom": "_profile",
+  "dscr": "Magic skill that is replaced by the agent profile name",
+  "grpnm": "Magic",
+  "name": "Agent Profile",
+  "type": "openacdskill"
+}
+
+{
+  "_id": "OpenAcdSkill6",
+  "atom": "_node",
+  "dscr": "Magic skill that is replaced by the node identifier",
+  "grpnm": "Magic",
+  "name": "Node",
+  "type": "openacdskill"
+}
+
+{
+  "_id": "OpenAcdSkill7",
+  "atom": "_queue",
+  "dscr": "Magic skill replaced by a queue name",
+  "grpnm": "Magic",
+  "name": "Queue",
+  "type": "openacdskill"
+}
+
+{
+  "_id": "OpenAcdSkill8",
+  "atom": "_all",
+  "dscr": "Magic skill to denote an agent that can answer any call regardless of the other skills",
+  "grpnm": "Magic",
+  "name": "All",
+  "type": "openacdskill"
+}
+
+{
+  "_id": "OpenAcdTruncateCommand-1",
+  "stats": 30,
+  "agentStChEvent": 30,
+  "cdr": 30,
+  "type": "openacdtruncatecommand"
+}
