@@ -4,7 +4,7 @@ IMAGE=${2:-"ezuce/agents"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"agents.$NETWORK"}
 NODE=${NODE:-"agents@$NAME"}
-BUSYTONE_NODE=${BUSYTONE_NODE:-"busytone.ezuce"}
+BUSYTONE_NODE=${BUSYTONE_NODE:-"busytone@busytone.ezuce"}
 REACH_FREESWITCH=${REACH_FREESWITCH:-"freeswitch.ezuce"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
