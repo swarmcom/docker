@@ -9,6 +9,8 @@ cd ../kibana && ./run.sh
 cd ../freeswitch && ./run.sh
 cd ../busytone && ./run.sh
 cd ../agents && ./run.sh
+echo Wait for Elastic to start as we need it running before Reach
+sleep 5
 cd ../reach && ./run.sh
 
 echo Add these to your /etc/hosts
