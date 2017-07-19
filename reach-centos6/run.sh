@@ -4,7 +4,7 @@ NETWORK=${NETWORK:-"ezuce"}
 MONGODB=${MONGODB:-"mongodb.$NETWORK"}
 ELASTIC=${ELASTIC:-"elastic.$NETWORK"}
 SIPXCOM=${SIPXCOM:-"sipxcom.$NETWORK"}
-NAMNAME=${NAME:-"reach-centos6.$NETWORK"}
+NAME=${NAME:-"reach-centos6.$NETWORK"}
 FSNODE=${FSNODE:-"freeswitch@freeswitch.$NETWORK"}
 NODE=${NODE:-"reach@$NAME"}
 
