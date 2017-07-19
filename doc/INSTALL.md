@@ -21,8 +21,7 @@ Install Docker
 --------------
 
    - `cd /etc/yum.repos.d/`
-   - `touch docker.repo`
-   -  
+   - Create a `docker.repo` file with:
      ```sh
      [docker-ce-stable]
      name=Docker CE Stable - $basearch
