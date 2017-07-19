@@ -56,5 +56,65 @@ The intent is to specify `docker build` flags e.g. to pass --no-cache to forcefu
 BUILD_FLAGS -- flags to pass to `docker build` command.
 ```
 
-Check also README.md under each branch to understand better what's going on 
+Check also README.md under each branch to understand better what's going on
 =====================
+
+
+
+
+Step by step for CentOS 7
+=================================
+
+Post-Installation steps CentOS 7:
+
+- IP forwarding (allow packets arriving on your externally-listening interface to be forwarded (or routed) to the docker interface that all of your containers are attached to). Edit /etc/sysctl.conf :
+
+   - net.ipv4.ip_forward=1
+
+   - systemctl restart network
+
+
+-  Disable SELinux CentOS7 :
+
+   Edit /etc/selinux/config
+
+   _SELINUX=disabled_ (reboot required)   
+
+** **
+
+** Install Docker**
+
+   - cd /etc/yum.repos.d/
+   - touch docker.repo
+   -  
+     [docker-ce-stable]
+     name=Docker CE Stable - $basearch
+     baseurl=https://download.docker.com/linux/centos/7/$basearch/stable
+     enabled=1
+     gpgcheck=1
+     gpgkey=https://download.docker.com/linux/centos/gpg
+** **
+
+**Next:**
+
+- systemctl start docker   
+
+- Install git to the working directory
+
+    _yum install git _
+
+- 	_git clone https://github.com/swarmcom/docker.git_
+
+-  Required to access Reach Private Repository -  token can be found in Git-> Account Settings -> Personal Access Tokens
+    Edit ~/.bashrc
+
+    _export TOKEN='aa350c83997bbffb7d55f6577a4ac32e54078b2f'_  
+
+    Exit shell & re-enter
+
+-  Run build.sh script in docker folder
+
+-  Run run.sh in docker folder
+
+-  Add the resulting ip addresses to /etc/hosts
+
