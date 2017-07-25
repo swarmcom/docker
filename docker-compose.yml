@@ -41,7 +41,7 @@
     ports:
       - "12000:12000"
     volumes:
-      - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
+      - ./sipxconfig/run/conf/:/usr/local/sipx/etc/sipxpbx/conf/
       - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
       - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
       - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
@@ -53,19 +53,21 @@
     domainname: $DOMAIN
     restart: on-failure
 
-  sipxregistrar:
-    image: ezuce/sipxregistrar
-    ports:
-      - "5070:5070"
-      - "5075:5075"
-      - "5077:5077"
-    volumes:
-      - ./sipxconfig/run/conf/1/registrar-config:/usr/local/sipx/etc/sipxpbx/registrar-config
-      - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
-    links:
-      - mongo:$MONGO_HOST
-      - postgres:postgres.ezuce
-    container_name: sipxregistrar
+  #sipxregistrar:
+  #  image: ezuce/sipxregistrar
+  #  ports:
+  #    - "5070:5070"
+  #    - "5075:5075"
+  #    - "5077:5077"
+  #  volumes:
+  #    - ./sipxconfig/run/conf/1/:/usr/local/sipx/etc/sipxpbx/
+  #    - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
+  #    - ./sipxconfig/run/conf/1/resource-limits-registrar.ini:/usr/local/sipx/etc/sipxpbx/resource-limits.ini
+  #  links:
+  #    - mongo:$MONGO_HOST
+  #    - postgres:postgres.ezuce
+  #  container_name: sipxregistrar
+  #  restart: on-failure
 
   nginx:
     image: nginx
@@ -78,11 +80,11 @@
       - postgres:postgres.ezuce
     container_name: nginx
 
-  supervisor:
-    image: ezuce/supervisor
-    volumes:
-      - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
-      - /var/run/docker.sock:/var/run/docker.sock
-    container_name: supervisor
-    privileged: true
-    restart: on-failure
+  #supervisor:
+  #  image: ezuce/supervisor
+  #  volumes:
+  #    - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
+  #    - /var/run/docker.sock:/var/run/docker.sock
+  #  container_name: supervisor
+  #  privileged: true
+  #  restart: on-failure

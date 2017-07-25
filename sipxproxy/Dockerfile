@@ -1,7 +1,7 @@
-FROM centos:6
+FROM ezuce/basecentos
 MAINTAINER Mihai Costache <costache.mircea.mihai@gmail.com>
 
-
+USER root
 COPY etc/sipxecx.repo /etc/yum.repos.d/
 
 RUN yum install -y openssl pcre boost poco-crypto poco-data  poco-foundation \
@@ -14,9 +14,5 @@ RUN yum install -y openssl pcre boost poco-crypto poco-data  poco-foundation \
 
 COPY tmp/sipx/ /usr/local/sipx/
 
-###Needed conf files to start proxy
-#COPY conf/mongo-client.ini /usr/local/sipx/etc/sipxpbx/
-#COPY conf/sipXproxy-config /usr/local/sipx/etc/sipxpbx/sipXproxy-config
-#COPY conf/resource-limits.ini /usr/local/sipx/etc/sipxpbx/resource-limits.ini
 
 CMD ["/usr/local/sipx/bin/sipXproxy", "nofork"]

@@ -27,7 +27,11 @@ export HOST_NAME
 export REALM
 
 sudo rm -rf ../mongodb-sipxconfig/mongo-data/data/*
+cd ..
+docker-compose -f docker-compose.yml down
+docker-compose -f docker-compose.yml build
+docker-compose -f docker-compose.yml  up --force-recreate -d
 
-docker-compose down
-docker-compose build
-docker-compose up --force-recreate -d
+sleep 45
+
+docker-compose -f docker-compose-registrar.yml  up --force-recreate -d

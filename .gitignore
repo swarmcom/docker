@@ -8,3 +8,7 @@ mongodb-sipxconfig/mongo-data/data
 sipxconfig/tmp
 sipxproxy/tmp
 sipxregistrar/tmp
+sipxconfig/run
+bootstrap/mongo-client.ini
+bootstrap/postgres-pwd.properties
+bootstrap/sipxconfig.properties
