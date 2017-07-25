@@ -11,7 +11,6 @@ RUN yum install -y openssl pcre boost poco-crypto poco-data  poco-foundation \
         && yum clean all && yum clean metadata
 
 
-
-
 COPY tmp/sipx/ /usr/local/sipx/
-CMD ["/usr/local/sipx/bin/sipregistrar", "nofork"]
+
+CMD ["/usr/local/sipx/bin/sipregistrar"]
