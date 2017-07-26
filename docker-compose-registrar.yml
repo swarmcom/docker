@@ -12,4 +12,20 @@
       - mongo:$MONGO_HOST
       - postgres:postgres.ezuce
     container_name: sipxregistrar
+    hostname: $REGISTRAR_HOST
+    restart: on-failure
+
+  sipxproxy:
+    image: ezuce/sipxproxy
+    ports:
+      - "5060:5060"
+      - "5061:5061"
+    volumes:
+      - ./sipxconfig/run/conf/1/:/usr/local/sipx/etc/sipxpbx/
+      - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
+    external_links:
+      - mongo:$MONGO_HOST
+      - postgres:postgres.ezuce
+    container_name: sipxproxy
+    hostname: $PROXY_HOST
     restart: on-failure

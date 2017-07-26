@@ -6,6 +6,7 @@
       - SIP_DOMAIN
       - REALM
       - HOST_NAME
+      - REGISTRAR_HOST
     volumes:
       - ./bootstrap:/bootstrap
     container_name: bootstrap
@@ -45,6 +46,7 @@
       - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
       - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
       - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
+      - ./bootstrap/ssl-web.keystore:/usr/local/sipx/etc/sipxpbx/ssl/ssl-web.keystore
     links:
       - mongo:$MONGO_HOST
       - postgres:postgres.ezuce
