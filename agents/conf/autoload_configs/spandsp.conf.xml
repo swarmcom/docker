@@ -41,75 +41,81 @@
 
     <descriptors>
 
+     <descriptor name="500">
+       <tone name="500">
+         <element freq1="500" freq2="0" min="100" max="3000"/>
+       </tone>
+     </descriptor>
+
      <descriptor name="600">
        <tone name="600">
-         <element freq1="600" freq2="0" min="600" max="0"/>
+         <element freq1="600" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="800">
        <tone name="800">
-         <element freq1="800" freq2="0" min="600" max="0"/>
+         <element freq1="800" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="1000">
        <tone name="1000">
-         <element freq1="1000" freq2="0" min="600" max="0"/>
+         <element freq1="1000" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="1200">
        <tone name="1200">
-         <element freq1="1200" freq2="0" min="600" max="0"/>
+         <element freq1="1200" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="1400">
        <tone name="1400">
-         <element freq1="1400" freq2="0" min="600" max="0"/>
+         <element freq1="1400" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="1600">
        <tone name="1600">
-         <element freq1="1600" freq2="0" min="600" max="0"/>
+         <element freq1="1600" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="1800">
        <tone name="1800">
-         <element freq1="1800" freq2="0" min="600" max="0"/>
+         <element freq1="1800" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="2000">
        <tone name="2000">
-         <element freq1="2000" freq2="0" min="600" max="0"/>
+         <element freq1="2000" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="2200">
        <tone name="2200">
-         <element freq1="2200" freq2="0" min="600" max="0"/>
+         <element freq1="2200" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="2400">
        <tone name="2400">
-         <element freq1="2400" freq2="0" min="600" max="0"/>
+         <element freq1="2400" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="2600">
        <tone name="2600">
-         <element freq1="2600" freq2="0" min="600" max="0"/>
+         <element freq1="2600" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
      <descriptor name="2800">
        <tone name="2800">
-         <element freq1="2800" freq2="0" min="600" max="0"/>
+         <element freq1="2800" freq2="0" min="100" max="3000"/>
        </tone>
      </descriptor>
 
