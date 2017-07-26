@@ -12,10 +12,11 @@ fqdn = os.environ['HOST_NAME'] + '.' + domain
 configuredIp = socket.gethostbyname(socket.gethostname())
 primaryIp = configuredIp
 primaryFqdn = fqdn
-secret=subprocess.call("`head -c 18 /dev/urandom | base64`", shell=True)  
+secret=subprocess.call("`head -c 18 /dev/urandom | base64`", shell=True)
 
 
-x = {'connectionUrl': 'mongodb://' + mongoHost + ':27017/?readPreference=nearest&readPreferenceTags=clusterId:1;readPreferenceTags=shardId:0;readPreferenceTags=', 'connectionString': 'sipxecs/' + mongoHost + ':27017', 'clusterId':'1', 'shardId':'0', 'useReadTags':'true', 'logappend':'true', 'port':'27017', 'replSet':'sipxecs', 'enable-driver-logging':'true', 'driver-log-level':'5', 'read-query-timeout-ms':'100', 'write-query-timeout-ms':'400'}
+## Mihai - I've removed shardID and read preferences to be able to start sipxregistrar - probably this needs to be done in mongo init
+x = {'connectionUrl': 'mongodb://' + mongoHost + ':27017', 'connectionString': 'sipxecs/' + mongoHost + ':27017', 'logappend':'true', 'port':'27017', 'replSet':'sipxecs', 'enable-driver-logging':'true', 'driver-log-level':'5', 'read-query-timeout-ms':'100', 'write-query-timeout-ms':'400'}
 
 with open('mongo-client.ini', 'w') as f:
     for key, value in x.items():
