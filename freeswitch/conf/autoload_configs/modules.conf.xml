@@ -11,7 +11,7 @@
     
     <load module="mod_commands"/>
     <load module="mod_dptools"/>
-    <load module="mod_expr"/>
+    <load module="mod_conference"/>
     
     <load module="mod_dialplan_xml"/>
 
