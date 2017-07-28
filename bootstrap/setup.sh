@@ -37,8 +37,12 @@ export REGISTRAR_HOST
 export PROXY_HOST
 
 #cleanup
-docker stop `docker ps -a | awk 'NR>1 {print $1}'` &&  docker rm `docker ps -a | awk 'NR>1 {print $1}'`
-sudo rm -rf ../mongodb-sipxconfig/mongo-data/data/*
+docker stop `docker ps -a | awk 'NR>1 {print $1}'` && \
+       docker rm `docker ps -a | awk 'NR>1 {print $1}'` && \
+       docker volume rm `docker volume ls | awk  'NR>1 {print $2}'`
+
+sudo rm -rf ../mongodb-sipxconfig/mongo-data/data/* && \
+     sudo rm -rf ../sipxconfig/run
 
 cd ..
 docker-compose -f docker-compose.yml down

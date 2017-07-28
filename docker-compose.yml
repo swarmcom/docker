@@ -1,86 +1,72 @@
-  bootstrap:
-    build: bootstrap/.
-    environment:
-      - MONGO_HOST
-      - DOMAIN
-      - SIP_DOMAIN
-      - REALM
-      - HOST_NAME
-      - REGISTRAR_HOST
-    volumes:
-      - ./bootstrap:/bootstrap
-    container_name: bootstrap
+  version: "2"
+  services:
+    bootstrap:
+      build: bootstrap/.
+      environment:
+        - MONGO_HOST
+        - DOMAIN
+        - SIP_DOMAIN
+        - REALM
+        - HOST_NAME
+        - REGISTRAR_HOST
+      volumes:
+        - ./bootstrap:/bootstrap
+      container_name: bootstrap
 
-  mongo:
-    image: mongo
-    ports:
-     - "27017:27017"
-    volumes:
-     - ./mongodb-sipxconfig/etc/mongodb.conf:/etc/mongo.config
-     - ./mongodb-sipxconfig/mongo-data/data:/data/db
-    command: mongod --config /etc/mongo.config
-    hostname: $MONGO_HOST
-    container_name: mongo
+    mongo:
+      image: mongo
+      ports:
+       - "27017:27017"
+      volumes:
+       - ./mongodb-sipxconfig/etc/mongodb.conf:/etc/mongo.config
+       - ./mongodb-sipxconfig/mongo-data/data:/data/db
+      command: mongod --config /etc/mongo.config
+      hostname: $MONGO_HOST
+      container_name: mongo
 
-  mongo-init:
-    build: mongodb-init/.
-    links:
-     - mongo:mongo
-    command: /usr/bin/initialize-mongodb.sh
-    container_name: mongo-init
+    mongo-init:
+      build: mongodb-init/.
+      links:
+       - mongo:mongo
+      command: /usr/bin/initialize-mongodb.sh
+      container_name: mongo-init
 
-  postgres:
-    image: ezuce/postgres
-    ports:
-     - "5432:5432"
-    volumes:
-      - ./postgres-sipxconfig/pg-data/pgdata:/var/lib/postgresql/data
-    container_name: postgres
+    postgres:
+      image: ezuce/postgres
+      ports:
+       - "5432:5432"
+      volumes:
+        - ./postgres-sipxconfig/pg-data/pgdata:/var/lib/postgresql/data
+      container_name: postgres
 
-  sipxconfig:
-    image: ezuce/sipxconfig
-    ports:
-      - "12000:12000"
-    volumes:
-      - ./sipxconfig/run/conf/:/usr/local/sipx/etc/sipxpbx/conf/
-      - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
-      - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
-      - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
-      - ./bootstrap/ssl-web.keystore:/usr/local/sipx/etc/sipxpbx/ssl/ssl-web.keystore
-    links:
-      - mongo:$MONGO_HOST
-      - postgres:postgres.ezuce
-    container_name: sipxconfig
-    hostname: $HOST_NAME
-    domainname: $DOMAIN
-    restart: on-failure
+    sipxconfig:
+      image: ezuce/sipxconfig
+      ports:
+        - "12000:12000"
+      volumes:
+        - ./sipxconfig/run/conf/:/usr/local/sipx/etc/sipxpbx/conf/
+        - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
+        - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
+        - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
+        - ./bootstrap/ssl-web.keystore:/usr/local/sipx/etc/sipxpbx/ssl/ssl-web.keystore
+      links:
+        - mongo:$MONGO_HOST
+        - postgres:postgres.ezuce
+      container_name: sipxconfig
+      hostname: $HOST_NAME
+      domainname: $DOMAIN
+      restart: on-failure
 
-  #sipxregistrar:
-  #  image: ezuce/sipxregistrar
-  #  ports:
-  #    - "5070:5070"
-  #    - "5075:5075"
-  #    - "5077:5077"
-  #  volumes:
-  #    - ./sipxconfig/run/conf/1/:/usr/local/sipx/etc/sipxpbx/
-  #    - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
-  #    - ./sipxconfig/run/conf/1/resource-limits-registrar.ini:/usr/local/sipx/etc/sipxpbx/resource-limits.ini
-  #  links:
-  #    - mongo:$MONGO_HOST
-  #    - postgres:postgres.ezuce
-  #  container_name: sipxregistrar
-  #  restart: on-failure
-
-  nginx:
-    image: nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx-sipxconfig/etc/sipxconfig.conf:/etc/nginx/conf.d/default.conf
-    links:
-      - sipxconfig:sipxconfig.ezuce
-      - postgres:postgres.ezuce
-    container_name: nginx
+    nginx:
+      image: nginx
+      ports:
+        - "80:80"
+      volumes:
+        - ./nginx-sipxconfig/etc/sipxconfig.conf:/etc/nginx/conf.d/default.conf
+      links:
+        - sipxconfig:sipxconfig.ezuce
+        - postgres:postgres.ezuce
+      container_name: nginx
 
   #supervisor:
   #  image: ezuce/supervisor

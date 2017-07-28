@@ -1,31 +1,37 @@
-  sipxregistrar:
-    image: ezuce/sipxregistrar
-    ports:
-      - "5070:5070"
-      - "5075:5075"
-      - "5077:5077"
-    volumes:
-      - ./sipxconfig/run/conf/1/:/usr/local/sipx/etc/sipxpbx/
-      - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
-      - ./sipxconfig/run/conf/1/resource-limits-registrar.ini:/usr/local/sipx/etc/sipxpbx/resource-limits.ini
-    external_links:
-      - mongo:$MONGO_HOST
-      - postgres:postgres.ezuce
-    container_name: sipxregistrar
-    hostname: $REGISTRAR_HOST
-    restart: on-failure
+  version: "2"
+  services:
 
-  sipxproxy:
-    image: ezuce/sipxproxy
-    ports:
-      - "5060:5060"
-      - "5061:5061"
-    volumes:
-      - ./sipxconfig/run/conf/1/:/usr/local/sipx/etc/sipxpbx/
-      - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
-    external_links:
-      - mongo:$MONGO_HOST
-      - postgres:postgres.ezuce
-    container_name: sipxproxy
-    hostname: $PROXY_HOST
-    restart: on-failure
+    sipxregistrar:
+      image: ezuce/sipxregistrar
+      ports:
+        - "5070:5070"
+        - "5075:5075"
+        - "5077:5077"
+      volumes:
+        - ./sipxconfig/run/conf/1/:/usr/local/sipx/etc/sipxpbx/
+        - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
+        - ./sipxconfig/run/conf/1/resource-limits-registrar.ini:/usr/local/sipx/etc/sipxpbx/resource-limits.ini
+      external_links:
+        - mongo:$MONGO_HOST
+        - postgres:postgres.ezuce
+      container_name: sipxregistrar
+      hostname: $REGISTRAR_HOST
+      restart: on-failure
+
+    sipxproxy:
+      image: ezuce/sipxproxy
+      ports:
+        - "5060:5060"
+        - "5061:5061"
+      depends_on:
+        - sipxregistrar
+      volumes:
+        - ./sipxconfig/run/conf/1/:/usr/local/sipx/etc/sipxpbx/
+        - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
+      external_links:
+        - mongo:$MONGO_HOST
+        - postgres:postgres.ezuce
+        - sipxregistrar:$REGISTRAR_HOST
+      container_name: sipxproxy
+      hostname: $PROXY_HOST
+      restart: on-failure
