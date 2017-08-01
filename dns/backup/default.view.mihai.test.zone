@@ -1,0 +1,26 @@
+$TTL 1800
+@       IN     SOA    ns1.mihai.test. root.mihai.test. (
+                       159001254 ; serial#
+                       1800            ; refresh, seconds
+                       1800            ; retry, seconds
+                       1800            ; expire, seconds
+                       1800 )          ; minimum TTL, seconds
+mihai.test.            NS    named
+
+mihai.test.       IN    NAPTR	    2 0 "s" "SIP+D2U" "" _sip._udp
+mihai.test.       IN    NAPTR	    2 0 "s" "SIP+D2T" "" _sip._tcp
+
+_sip._tcp	  IN    SRV	30 10 5060 sipxproxy
+_sip._udp	  IN    SRV	30 10 5060 sipxproxy
+_sips._tcp	  IN    SRV	30 10 5061 sipxproxy
+_sip._tls	  IN    SRV	30 10 5061 sipxproxy
+_sip._tcp.rr	  IN    SRV	30 10 5070 sipxregistrar
+_sip._tcp.rr.sipxregistrar	  IN    SRV	10 10 5070 sipxregistrar
+_sip._tcp_rr.config               IN    SRV     10 10 5070 sipxregistrar
+_sip._udp.rr.config               IN    SRV     10 10 5070 sipxregistrar
+_sip._udp.rr     IN SRV         30 10 5070 sipxregistrar
+
+sipxproxy 		IN    A	172.19.0.10
+sipxregistrar 		IN    A	172.19.0.11
+named                   IN    A 172.19.0.100
+

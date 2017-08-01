@@ -1,4 +1,4 @@
-  version: "2"
+  version: "3"
   services:
     bootstrap:
       build: bootstrap/.
@@ -9,10 +9,26 @@
         - REALM
         - HOST_NAME
         - REGISTRAR_HOST
+        - NETWORK_NAME
+        - NETWORK_SUBNET
+        - PROXY_IP
+        - PROXY_HOST
+        - DNS_IP
       volumes:
         - ./bootstrap:/bootstrap
       container_name: bootstrap
-
+      restart: on-failure
+      networks:
+        - ezuce
+    dns:
+      build: dns/.
+      volumes:
+        - ./dns/srv/docker/bind9:/named
+      container_name: named
+      restart: on-failure
+      networks:
+         ezuce:
+           ipv4_address: $DNS_IP
     mongo:
       image: mongo
       ports:
@@ -23,22 +39,25 @@
       command: mongod --config /etc/mongo.config
       hostname: $MONGO_HOST
       container_name: mongo
-
+      networks:
+        - ezuce
     mongo-init:
       build: mongodb-init/.
-      links:
-       - mongo:mongo
+    #  links:
+    #   - mongo:mongo
       command: /usr/bin/initialize-mongodb.sh
       container_name: mongo-init
-
+      networks:
+        - ezuce
     postgres:
       image: ezuce/postgres
       ports:
        - "5432:5432"
       volumes:
         - ./postgres-sipxconfig/pg-data/pgdata:/var/lib/postgresql/data
-      container_name: postgres
-
+      container_name: postgres.ezuce
+      networks:
+        - ezuce
     sipxconfig:
       image: ezuce/sipxconfig
       ports:
@@ -49,25 +68,21 @@
         - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
         - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
         - ./bootstrap/ssl-web.keystore:/usr/local/sipx/etc/sipxpbx/ssl/ssl-web.keystore
-      links:
-        - mongo:$MONGO_HOST
-        - postgres:postgres.ezuce
       container_name: sipxconfig
       hostname: $HOST_NAME
       domainname: $DOMAIN
       restart: on-failure
-
+      networks:
+        - ezuce
     nginx:
       image: nginx
       ports:
         - "80:80"
       volumes:
         - ./nginx-sipxconfig/etc/sipxconfig.conf:/etc/nginx/conf.d/default.conf
-      links:
-        - sipxconfig:sipxconfig.ezuce
-        - postgres:postgres.ezuce
       container_name: nginx
-
+      networks:
+        - ezuce
   #supervisor:
   #  image: ezuce/supervisor
   #  volumes:
@@ -76,3 +91,9 @@
   #  container_name: supervisor
   #  privileged: true
   #  restart: on-failure
+  #   networks:
+  #    - ezuce
+  networks:
+    ezuce:
+      external:
+        name: ezuce

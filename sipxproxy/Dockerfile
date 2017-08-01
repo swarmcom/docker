@@ -15,4 +15,4 @@ RUN yum install -y openssl pcre boost poco-crypto poco-data  poco-foundation \
 COPY tmp/sipx/ /usr/local/sipx/
 
 
-CMD ["/usr/local/sipx/bin/sipXproxy", "nofork"]
+CMD ["/usr/local/sipx/bin/sipXproxy"]
