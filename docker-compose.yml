@@ -11,9 +11,9 @@
         - REGISTRAR_HOST
         - NETWORK_NAME
         - NETWORK_SUBNET
-        - PROXY_IP
         - PROXY_HOST
         - DNS_IP
+        - MACHINE_IP
       volumes:
         - ./bootstrap:/bootstrap
       container_name: bootstrap
@@ -83,16 +83,23 @@
       container_name: nginx
       networks:
         - ezuce
-  #supervisor:
-  #  image: ezuce/supervisor
-  #  volumes:
-  #    - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
-  #    - /var/run/docker.sock:/var/run/docker.sock
-  #  container_name: supervisor
-  #  privileged: true
-  #  restart: on-failure
-  #   networks:
-  #    - ezuce
+    supervisor:
+      build: supervisor/.
+      image: ezuce/supervisor
+      environment:
+        - NETWORK_SUBNET=${NETWORK_SUBNET}
+        - MACHINE_IP=${MACHINE_IP}
+        - PROXY_HOST=${PROXY_HOST}
+        - SIP_DOMAIN=${SIP_DOMAIN}
+        - HOST_PWD=${PWD}
+      volumes:
+        - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
+        - /var/run/docker.sock:/var/run/docker.sock
+      container_name: supervisor
+      privileged: true
+      restart: on-failure
+      networks:
+        - ezuce
   networks:
     ezuce:
       external:

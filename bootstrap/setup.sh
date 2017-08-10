@@ -60,13 +60,13 @@ docker network create \
        ezuce
 
 
-echo "Enter proxy IP address from your subdomain"
-read proxyIP
-PROXY_IP="$proxyIP"
+#echo "Enter proxy IP address from your subdomain"
+#read proxyIP
+#PROXY_IP="$proxyIP"
 
-echo "Enter registrar container IP address from your subdomain"
-read regIP
-REG_IP="$regIP"
+#echo "Enter registrar container IP address from your subdomain"
+#read regIP
+#REG_IP="$regIP"
 
 echo "Enter dns container IP address from your subdomain"
 read dnsIP
@@ -74,7 +74,6 @@ DNS_IP="$dnsIP"
 
 #Get host IP ADD
 MACHINE_IP=$(hostname -I | awk '{print $1}')
-
 
 
 export MONGO_HOST
@@ -87,10 +86,7 @@ export PROXY_HOST
 export MACHINE_IP
 export NETWORK_NAME
 export NETWORK_SUBNET
-export PROXY_IP
 export DNS_IP
-export REG_IP
-
 
 
 cd ..
@@ -98,22 +94,4 @@ docker-compose -f docker-compose.yml down
 docker-compose -f docker-compose.yml build
 docker-compose -f docker-compose.yml  up --force-recreate -d
 
-
-
-sleep 55
-#Mihai Fixing fallbackRules --  should be done from config
-
-sudo sed -i "s/^\(SIPX_PROXY_HOST_NAME*:*\).*$/\1 \: $PROXY_HOST/"  ./sipxconfig/run/conf/1/sipXproxy-config
-sudo sed -i "s/^\(SIPX_PROXY_BIND_IP*:*\).*$/\1 \: $PROXY_IP/"  ./sipxconfig/run/conf/1/sipXproxy-config
-sudo sed -i "s/^\(SIPX_PROXY_HOSTPORT*:*\).*$/\1 \: $PROXY_IP:5060/"  ./sipxconfig/run/conf/1/sipXproxy-config
-sudo sed -i "s/^\(SIPX_PROXY_HOST_ALIASES*:*\).*$/& $MACHINE_IP/"  ./sipxconfig/run/conf/1/sipXproxy-config
-sudo sed -i "s/^\(SIPX_PROXY_HOST_ALIASES*:*\).*$/& $SIP_DOMAIN:5060/"  ./sipxconfig/run/conf/1/sipXproxy-config
-sudo sed -i "s/^\(SIPX_PROXY_LOG_LEVEL*:*\).*$/\1 \: DEBUG/"  ./sipxconfig/run/conf/1/sipXproxy-config
-sudo sed -i "s/^\(SIP_REGISTRAR_LOG_LEVEL*:*\).*$/\1 \: DEBUG/"  ./sipxconfig/run/conf/1/registrar-config
-
-
-sudo sed -i "s/^\(SIP_REGISTRAR_BIND_IP*:*\).*$/\1 \: $REG_IP/"  ./sipxconfig/run/conf/1/registrar-config
-
-
-
-docker-compose -f docker-compose-registrar.yml  up --force-recreate -d
+docker run -d -p 9000:9000 --privileged -v /var/run/docker.sock:/var/run/docker.sock uifd/ui-for-docker
