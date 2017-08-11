@@ -8,10 +8,8 @@
         - SIP_DOMAIN
         - REALM
         - HOST_NAME
-        - REGISTRAR_HOST
         - NETWORK_NAME
         - NETWORK_SUBNET
-        - PROXY_HOST
         - DNS_IP
         - MACHINE_IP
       volumes:
@@ -24,6 +22,7 @@
       build: dns/.
       volumes:
         - ./dns/srv/docker/bind9:/named
+        - ./dns/srv/docker/bind9/etc/named.conf:/etc/named.conf
       container_name: named
       restart: on-failure
       networks:
@@ -43,8 +42,8 @@
         - ezuce
     mongo-init:
       build: mongodb-init/.
-    #  links:
-    #   - mongo:mongo
+      links:
+        - mongo:mongo
       command: /usr/bin/initialize-mongodb.sh
       container_name: mongo-init
       networks:
@@ -68,6 +67,9 @@
         - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
         - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
         - ./bootstrap/ssl-web.keystore:/usr/local/sipx/etc/sipxpbx/ssl/ssl-web.keystore
+      links:
+        - mongo:$MONGO_HOST
+        - postgres:postgres.ezuce
       container_name: sipxconfig
       hostname: $HOST_NAME
       domainname: $DOMAIN
@@ -89,11 +91,14 @@
       environment:
         - NETWORK_SUBNET=${NETWORK_SUBNET}
         - MACHINE_IP=${MACHINE_IP}
-        - PROXY_HOST=${PROXY_HOST}
         - SIP_DOMAIN=${SIP_DOMAIN}
         - HOST_PWD=${PWD}
+        - DNS_IP=${DNS_IP}
+        - MONGO_HOST=${MONGO_HOST}
+        - HOST_NAME=${HOST_NAME}
       volumes:
         - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
+        - ./dns/srv/docker/bind9:/named
         - /var/run/docker.sock:/var/run/docker.sock
       container_name: supervisor
       privileged: true

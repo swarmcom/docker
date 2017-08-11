@@ -20,13 +20,13 @@ echo "Enter realm"
 read realm
 REALM="$realm"
 
-echo "Enter registrar host (fqdn)"
-read registrarHost
-REGISTRAR_HOST="$registrarHost"
+#echo "Enter registrar host (fqdn)"
+#read registrarHost
+#REGISTRAR_HOST="$registrarHost"
 
-echo "Enter proxy host (fqdn)"
-read proxyHost
-PROXY_HOST="$proxyHost"
+#echo "Enter proxy host (fqdn)"
+#read proxyHost
+#PROXY_HOST="$proxyHost"
 
 
 echo "Create a routable network"
@@ -93,5 +93,7 @@ cd ..
 docker-compose -f docker-compose.yml down
 docker-compose -f docker-compose.yml build
 docker-compose -f docker-compose.yml  up --force-recreate -d
+
+docker restart nginx
 
 docker run -d -p 9000:9000 --privileged -v /var/run/docker.sock:/var/run/docker.sock uifd/ui-for-docker
