@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <include>
-<context name="reachme">
-<extension name="Catch all extension">
-  <condition field="destination_number" expression="^.*$">
-    <action application="set" data="queue=${destination_number}"/>
-    <action application="set" data="allow_voicemail=true"/>
-    <action application="erlang" data="freeswitch_media_manager:! reach@reach.ezuce"/>
-  </condition>
-</extension>
-</context>
+  <context name="reachme">
+    <extension name="Catch all extension">
+      <condition field="destination_number" expression="^.*$">
+        <action application="set" data="reach_brand=1"/>
+        <action application="set" data="reach_queue=${destination_number}"/>
+        <action application="set" data="reach_weight=1"/>
+        <!-- <action application="set" data="reach_moh=default"/> -->
+        <!-- <action application="set" data="reach_skills=english"/> -->
+        <!-- <action application="set" data="reach_voicemail=true"/> -->
+        <!-- <action application="set" data="reach_agent=agent1"/> -->
+        <action application="erlang" data="call_sup:! reach@172.17.0.1"/>
+      </condition>
+    </extension>
+  </context>
 </include>
