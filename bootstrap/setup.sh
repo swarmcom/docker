@@ -44,7 +44,9 @@ docker stop `docker ps -a | awk 'NR>1 {print $1}'` && \
        docker volume rm `docker volume ls | awk  'NR>1 {print $2}'`
 
 sudo rm -rf ../mongodb-sipxconfig/mongo-data/data/* && \
-     sudo rm -rf ../sipxconfig/run
+     sudo rm -rf ../sipxconfig/run && \
+     sudo rm -rf ../dns/srv && \
+     sudo rm -rf mongo-client.ini postgres-pwd.properties sipxconfig.properties
 
 echo "=================================================================="
 echo "=== Don't forget to make this net routable outside docker host ==="

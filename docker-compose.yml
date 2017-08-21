@@ -15,14 +15,13 @@
       volumes:
         - ./bootstrap:/bootstrap
       container_name: bootstrap
-      restart: on-failure
       networks:
         - ezuce
     dns:
       build: dns/.
       volumes:
         - ./dns/srv/docker/bind9:/named
-        - ./dns/srv/docker/bind9/etc/named.conf:/etc/named.conf
+    #    - ./dns/srv/docker/bind9/etc/named.conf:/etc/named.conf
       container_name: named
       restart: on-failure
       networks:
@@ -42,8 +41,8 @@
         - ezuce
     mongo-init:
       build: mongodb-init/.
-      links:
-        - mongo:mongo
+#      links:
+#        - mongo:mongo
       command: /usr/bin/initialize-mongodb.sh
       container_name: mongo-init
       networks:
@@ -67,9 +66,11 @@
         - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
         - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
         - ./bootstrap/ssl-web.keystore:/usr/local/sipx/etc/sipxpbx/ssl/ssl-web.keystore
-      links:
-        - mongo:$MONGO_HOST
-        - postgres:postgres.ezuce
+      depends_on:
+        - bootstrap
+#      links:
+#        - mongo:$MONGO_HOST
+#        - postgres:postgres.ezuce
       container_name: sipxconfig
       hostname: $HOST_NAME
       domainname: $DOMAIN
