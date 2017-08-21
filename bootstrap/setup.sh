@@ -1,4 +1,27 @@
 #!/bin/sh
+clear
+
+echo "=================================================================="
+echo "=== This procedure will remove all containers from this server ==="
+echo "=================================================================="
+printf "\n"
+printf "\n"
+printf "\n"
+
+echo "=================================================================="
+echo "=== If you agree press Y, if not setup will exit and you CAN'T ==="
+echo "===              install this application                      ==="
+echo "=================================================================="
+
+read readAnswer
+
+ANSWER="$readAnswer"
+
+if [ "$ANSWER" != "Y" ] && [ "$ANSWER" != "y" ]
+then
+  exit 1
+fi
+
 
 echo "Enter domain"
 read domain
@@ -38,16 +61,28 @@ echo "Enter network subnet(CIDR): x.x.x.x/N"
 read netSub
 NETWORK_SUBNET="$netSub"
 
+
 #cleanup
+
+
+
+# Remove existing containers
+if [ `docker ps -a | wc -l` > 0 ]
+then
+docker stop supervisor && docker rm supervisor && \
 docker stop `docker ps -a | awk 'NR>1 {print $1}'` && \
        docker rm `docker ps -a | awk 'NR>1 {print $1}'` && \
        docker volume rm `docker volume ls | awk  'NR>1 {print $2}'`
+fi
 
 sudo rm -rf ../mongodb-sipxconfig/mongo-data/data/* && \
      sudo rm -rf ../sipxconfig/run && \
      sudo rm -rf ../dns/srv && \
-     sudo rm -rf mongo-client.ini postgres-pwd.properties sipxconfig.properties
+     sudo rm -rf mongo-client.ini postgres-pwd.properties sipxconfig.properties && \
+     sudo rm -rf ../mongodb-sipxconfig/mongo-data/data && \
+     sudo rm -rf ../postgres-sipxconfig/pg-data/pgdata
 
+clear
 echo "=================================================================="
 echo "=== Don't forget to make this net routable outside docker host ==="
 echo "=================================================================="
@@ -56,7 +91,6 @@ echo "=================================================================="
 
 echo "Removing network ezuce...,if exists"
 docker network rm ezuce
-sleep 2
 docker network create \
       --subnet $NETWORK_SUBNET \
        ezuce
@@ -70,6 +104,8 @@ docker network create \
 #read regIP
 #REG_IP="$regIP"
 
+printf "\n"
+printf "\n"
 echo "Enter dns container IP address from your subdomain"
 read dnsIP
 DNS_IP="$dnsIP"

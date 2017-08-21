@@ -13,3 +13,4 @@ bootstrap/mongo-client.ini
 bootstrap/postgres-pwd.properties
 bootstrap/sipxconfig.properties
 dns/srv/
+bootstrap/0

@@ -14,11 +14,11 @@ if [ ! -z "$IP" ]; then
     if [[ ${PROCESS:0:1} == "+" ]] ; then
       if [ ! "$(docker ps -q -f name=$1)" ]; then
         if [ "$(docker ps -aq -f status=exited -f name=$1)" ]; then
-            docker rm $1           
+            docker rm $1
         fi
         # run your container
         echo "starting $1"
-        docker run --privileged -d --name $1 --hostname $1.$SIP_DOMAIN --dns $DNS_IP --link mongo:$MONGO_HOST -v $HOST_PWD/sipxconfig/run/conf/1:/usr/local/sipx/etc/sipxpbx -v $HOST_PWD/bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini --net ezuce --ip="$IP" ezuce/$1
+        docker run --privileged -d --name $1 --hostname $1.$SIP_DOMAIN --dns $DNS_IP -v $HOST_PWD/sipxconfig/run/conf/1:/usr/local/sipx/etc/sipxpbx -v $HOST_PWD/bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini --net ezuce --ip="$IP" ezuce/$1
       fi
     else
       if [ "$(docker ps -q -f name=$1)" ]; then

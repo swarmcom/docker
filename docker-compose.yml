@@ -27,6 +27,7 @@
       networks:
          ezuce:
            ipv4_address: $DNS_IP
+
     mongo:
       image: mongo
       ports:
@@ -36,9 +37,11 @@
        - ./mongodb-sipxconfig/mongo-data/data:/data/db
       command: mongod --config /etc/mongo.config
       hostname: $MONGO_HOST
-      container_name: mongo
+      container_name: $MONGO_HOST
       networks:
         - ezuce
+
+
     mongo-init:
       build: mongodb-init/.
 #      links:
@@ -47,6 +50,7 @@
       container_name: mongo-init
       networks:
         - ezuce
+
     postgres:
       image: ezuce/postgres
       ports:
@@ -68,6 +72,9 @@
         - ./bootstrap/ssl-web.keystore:/usr/local/sipx/etc/sipxpbx/ssl/ssl-web.keystore
       depends_on:
         - bootstrap
+        - postgres
+        - mongo
+
 #      links:
 #        - mongo:$MONGO_HOST
 #        - postgres:postgres.ezuce
@@ -77,6 +84,7 @@
       restart: on-failure
       networks:
         - ezuce
+
     nginx:
       image: nginx
       ports:
@@ -86,6 +94,9 @@
       container_name: nginx
       networks:
         - ezuce
+      depends_on:
+        - sipxconfig
+
     supervisor:
       build: supervisor/.
       image: ezuce/supervisor
@@ -106,6 +117,7 @@
       restart: on-failure
       networks:
         - ezuce
+        
   networks:
     ezuce:
       external:
