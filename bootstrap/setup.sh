@@ -69,7 +69,7 @@ NETWORK_SUBNET="$netSub"
 # Remove existing containers
 if [ `docker ps -a | wc -l` > 0 ]
 then
-docker stop supervisor && docker rm supervisor && \
+docker-compose down
 docker stop `docker ps -a | awk 'NR>1 {print $1}'` && \
        docker rm `docker ps -a | awk 'NR>1 {print $1}'` && \
        docker volume rm `docker volume ls | awk  'NR>1 {print $2}'`
@@ -96,22 +96,21 @@ docker network create \
        ezuce
 
 
-#echo "Enter proxy IP address from your subdomain"
-#read proxyIP
-#PROXY_IP="$proxyIP"
-
-#echo "Enter registrar container IP address from your subdomain"
-#read regIP
-#REG_IP="$regIP"
-
 printf "\n"
 printf "\n"
-echo "Enter dns container IP address from your subdomain"
+echo "Enter DNS container IP address from your subdomain"
 read dnsIP
 DNS_IP="$dnsIP"
 
 #Get host IP ADD
 MACHINE_IP=$(hostname -I | awk '{print $1}')
+
+#Get docker ezuce network IP add
+NETADAPT=`docker network inspect ezuce | grep Id | awk -F ':' '{print $2}'`
+#Removing "" from ezuce bridge network adapt name
+NETADAPT=${NETADAPT/\"/}
+NETADAPT=${NETADAPT/\"/}
+DROUTER_IP=$(ip addr show |grep  ${NETADAPT:0:8} | grep inet | awk '{print $2}' | awk -F "/" '{print $1}')
 
 
 export MONGO_HOST
@@ -125,7 +124,7 @@ export MACHINE_IP
 export NETWORK_NAME
 export NETWORK_SUBNET
 export DNS_IP
-
+export DROUTER_IP
 
 cd ..
 docker-compose -f docker-compose.yml down
@@ -133,5 +132,3 @@ docker-compose -f docker-compose.yml build
 docker-compose -f docker-compose.yml  up --force-recreate -d
 
 docker restart nginx
-
-docker run -d -p 9000:9000 --privileged -v /var/run/docker.sock:/var/run/docker.sock uifd/ui-for-docker
