@@ -50,6 +50,6 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] &
     echo "${rangeArray[2]}" >> $registrarIpConfig
     echo "${rangeArray[3]}" >> $proxyIpConfig
     cd /named
-    /usr/bin/dns-config.sh --domain $SIP_DOMAIN --config-host $HOST_NAME --proxy-ip ${availableIps[1]} --registrar-ip ${availableIps[0]} --dns-ip $DNS_IP
+    /usr/bin/dns-config.sh --domain $SIP_DOMAIN --config-host $HOST_NAME --proxy-ip ${rangeArray[3]} --registrar-ip ${rangeArray[2]} --dns-ip $DNS_IP
     docker restart named
 fi
