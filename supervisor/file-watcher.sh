@@ -37,7 +37,7 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] &
      echo "${rangeArray[@]}"
      echo "AvailableIps detected for registrar and proxy respectively:"
      echo "${rangeArray[2]} and echo "${rangeArray[3]}""
-
+     
 
     sed -i "s/^\(SIPX_PROXY_HOST_NAME*:*\).*$/\1 \: sipxproxy.$SIP_DOMAIN/"  $proxyConfig
     sed -i "s/^\(SIPX_PROXY_BIND_IP*:*\).*$/\1 \: ${rangeArray[3]}/"  $proxyConfig
