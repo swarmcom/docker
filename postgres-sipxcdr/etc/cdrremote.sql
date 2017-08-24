@@ -1,7 +1,7 @@
 /*
- * "Call direction" is an application-level plugin. 
+ * "Call direction" is an application-level plugin.
  *
- * Call direction is encoded in char(1) as follows: 
+ * Call direction is encoded in char(1) as follows:
  *
  *   Incoming (I): for calls that come in from a PSTN gateway
  *   Outgoing (O): for calls that go out to a PSTN gateway
