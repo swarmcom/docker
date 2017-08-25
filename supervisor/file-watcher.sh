@@ -35,7 +35,6 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] &
        rangeArray=(${rangeArray[@]//*$value*})
     done
 
-
      echo "Available IPs:"
      echo "${rangeArray[@]}"
      echo "AvailableIps detected for registrar and proxy respectively:"
