@@ -67,7 +67,7 @@ EOL
 named                   IN    A ${DNS}
 EOL
   fi
-  
+
 cat > var/default.view.${DOMAIN}.zone <<EOL
 \$TTL 1800
 @       IN     SOA    ns1.${DOMAIN}. root.${DOMAIN}. (
@@ -126,16 +126,16 @@ cat > etc/named.conf <<EOL
 
 options {
 	listen-on port 53 { any; };
-	
+
 	directory 	"/named/var";
 	dump-file 	"/named/var/data/cache_dump.db";
 	statistics-file "/named/var/data/named_stats.txt";
 	memstatistics-file "/named/var/data/named_mem_stats.txt";
         forwarders { 127.0.0.11; };
 
-  allow-query     { 127.0.0.1; 172.16.0.0/12; };
-  allow-query-cache { 127.0.0.1; 172.16.0.0/12; };
-  allow-query-cache-on { 127.0.0.1; 172.16.0.0/12; };
+  allow-query     { 127.0.0.1; 172.16.0.0/12; $NETWORK_SUBNET;};
+  allow-query-cache { 127.0.0.1; 172.16.0.0/12; $NETWORK_SUBNET; };
+  allow-query-cache-on { 127.0.0.1; 172.16.0.0/12; $NETWORK_SUBNET; };
 
 	/*
 	 - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
@@ -147,7 +147,7 @@ options {
 	   attacks. Implementing BCP38 within your network would greatly
 	   reduce such attack surface
 	*/
-	
+
 
 	dnssec-enable yes;
 	dnssec-validation yes;
@@ -191,7 +191,7 @@ logging {
         category unmatched { log_unmatched; };
 };
 
-view default.view { 
+view default.view {
 
   zone "${DOMAIN}" IN {
     type master;
@@ -203,7 +203,7 @@ view default.view {
    type master;
    file "${CONFIG}.${DOMAIN}.zone";
    allow-update { none; };
- }; 
+ };
 
 };
 EOL

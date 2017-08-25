@@ -3,6 +3,7 @@
 proxyConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipXproxy-config"
 registrarConfig="/usr/local/sipx/etc/sipxpbx/conf/1/registrar-config"
 proxyIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxproxy"
+natConfig="/usr/local/sipx/etc/sipxpbx/conf/1/nattraversalrules.xml"
 registrarIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxregistrar"
 CFDAT_FILE_PROXY="/usr/local/sipx/etc/sipxpbx/conf/1/sipxproxy.cfdat"
 CFDAT_FILE_REGISTRAR="/usr/local/sipx/etc/sipxpbx/conf/1/sipxregistrar.cfdat"
@@ -26,27 +27,31 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] &
      result=$cmd
      set -f
      usedArray=(${result//,/ })
-     range=`/usr/bin/newcidr.sh $NETWORK_SUBNET`
+     #range=`/usr/bin/newcidr.sh $NETWORK_SUBNET`
+    range=$FREEIPS
      rangeArray=(${range//,/})
      for value in "${usedArray[@]}"; do
-         value=`echo $value | sed 's/.//;s/....$//'`
-         rangeArray=(${rangeArray[@]//*$value*})
-      done
+       value=`echo $value | sed 's/.//;s/....$//'`
+       rangeArray=(${rangeArray[@]//*$value*})
+    done
+
 
      echo "Available IPs:"
      echo "${rangeArray[@]}"
      echo "AvailableIps detected for registrar and proxy respectively:"
      echo "${rangeArray[2]} and echo "${rangeArray[3]}""
-     
+     sed -i "s/^\(SIPX_PROXY_HOST_NAME*:*\).*$/\1 \: sipxproxy.$SIP_DOMAIN/"  $proxyConfig
+     sed -i "s/^\(SIPX_PROXY_BIND_IP*:*\).*$/\1 \: ${rangeArray[3]}/"  $proxyConfig
+     sed -i "s/^\(SIPX_PROXY_HOSTPORT*:*\).*$/\1 \: ${rangeArray[3]}:5060/"  $proxyConfig
+     sed -i "s/^\(SIPX_PROXY_HOST_ALIASES*:*\).*$/& $MACHINE_IP/"  $proxyConfig
+     sed -i "s/^\(SIPX_PROXY_HOST_ALIASES*:*\).*$/& $SIP_DOMAIN:5060/"  $proxyConfig
+     sed -i "s/^\(SIPX_PROXY_LOG_LEVEL*:*\).*$/\1 \: DEBUG/"  $proxyConfig
+     sed -i "s/^\(SIP_REGISTRAR_LOG_LEVEL*:*\).*$/\1 \: DEBUG/"  $registrarConfig
+     sed -i "s/^\(SIP_REGISTRAR_BIND_IP*:*\).*$/\1 \: ${rangeArray[2]}/"  $registrarConfig
+#     sed -i "s/\(<proxyunsecurehostport>\)\([^<]*\)\(<[^>]*\)/\1$MACHINE_IP:5060\3/g"  $natConfig
+#    sed -i "s/\(<mediarelaynativeaddress>\)\([^<]*\)\(<[^>]*\)/\1$MACHINE_IP\3/g"  $natConfig
 
-    sed -i "s/^\(SIPX_PROXY_HOST_NAME*:*\).*$/\1 \: sipxproxy.$SIP_DOMAIN/"  $proxyConfig
-    sed -i "s/^\(SIPX_PROXY_BIND_IP*:*\).*$/\1 \: ${rangeArray[3]}/"  $proxyConfig
-    sed -i "s/^\(SIPX_PROXY_HOSTPORT*:*\).*$/\1 \: ${rangeArray[3]}:5060/"  $proxyConfig
-    sed -i "s/^\(SIPX_PROXY_HOST_ALIASES*:*\).*$/& $MACHINE_IP/"  $proxyConfig
-    sed -i "s/^\(SIPX_PROXY_HOST_ALIASES*:*\).*$/& $SIP_DOMAIN:5060/"  $proxyConfig
-    sed -i "s/^\(SIPX_PROXY_LOG_LEVEL*:*\).*$/\1 \: DEBUG/"  $proxyConfig
-    sed -i "s/^\(SIP_REGISTRAR_LOG_LEVEL*:*\).*$/\1 \: DEBUG/"  $registrarConfig
-    sed -i "s/^\(SIP_REGISTRAR_BIND_IP*:*\).*$/\1 \: ${rangeArray[2]}/"  $registrarConfig
+
     echo "${rangeArray[2]}" >> $registrarIpConfig
     echo "${rangeArray[3]}" >> $proxyIpConfig
     cd /named

@@ -108,6 +108,8 @@
         - DNS_IP=${DNS_IP}
         - MONGO_HOST=${MONGO_HOST}
         - HOST_NAME=${HOST_NAME}
+        - FREEIPS=${FREEIPS}
+        
       volumes:
         - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
         - ./dns/srv/docker/bind9:/named
@@ -117,7 +119,7 @@
       restart: on-failure
       networks:
         - ezuce
-        
+
   networks:
     ezuce:
       external:

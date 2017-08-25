@@ -1,6 +1,27 @@
 #!/bin/sh
 clear
 
+# get host machine IP , Network, gateway
+
+#Transform netmask to CIDR prefix function
+
+mask2cdr ()
+{
+   # Assumes there's no "255." after a non-255 byte in the mask
+   local x=${1##*255.}
+   set -- 0^^^128^192^224^240^248^252^254^ $(( (${#1} - ${#x})*2 )) ${x%%.*}
+   x=${1%%$3*}
+   echo $(( $2 + (${#x}/4) ))
+}
+echo "Getting some host machine informations...wait a sec"
+NETWORK_GATEWAY=$(ip route | grep "default" | awk '{print $3}')
+MACHINE_IP=$(hostname -I | awk '{print $1}')
+INTERFACE=$(route | grep "default" | awk '{print $8}')
+NETWORK_IP=$(route | grep $INTERFACE | awk 'NR>1 {print $1}')
+NETWORK_MASK=$(route | grep $INTERFACE | awk 'NR>1 {print $3}')
+CIDR=$(mask2cdr $NETWORK_MASK)
+FREEIPS=$(nmap -v -sn -n $NETWORK_IP/$CIDR -oG - | awk '/Status: Down/{print $2}')
+
 echo "=================================================================="
 echo "=== This procedure will remove all containers from this server ==="
 echo "=================================================================="
@@ -18,8 +39,8 @@ read readAnswer
 ANSWER="$readAnswer"
 
 if [ "$ANSWER" != "Y" ] && [ "$ANSWER" != "y" ]
-then
-  exit 1
+  then
+    exit 1
 fi
 
 
@@ -43,28 +64,22 @@ echo "Enter realm"
 read realm
 REALM="$realm"
 
-#echo "Enter registrar host (fqdn)"
-#read registrarHost
-#REGISTRAR_HOST="$registrarHost"
 
-#echo "Enter proxy host (fqdn)"
-#read proxyHost
-#PROXY_HOST="$proxyHost"
-
-
-echo "Create a routable network"
-#echo "Enter network name"
-#read netName
-#NETWORK_NAME="$netName"
-
-echo "Enter network subnet(CIDR): x.x.x.x/N"
+# Create ezuce network
+echo   "======================================================"
+printf "=== Enter network subnet(CIDR): x.x.x.x/N.       === \n"
+printf "=== Default is your host network $NETWORK_IP/$CIDR === \n"
+echo   "======================================================"
 read netSub
-NETWORK_SUBNET="$netSub"
 
+if [ -z "$netSub" ]
+  then
+    NETWORK_SUBNET="$NETWORK_IP/$CIDR"
+  else
+    NETWORK_SUBNET="$netSub"
+fi
 
 #cleanup
-
-
 
 # Remove existing containers
 if [ `docker ps -a | wc -l` > 0 ]
@@ -85,32 +100,35 @@ sudo rm -rf ../mongodb-sipxconfig/mongo-data/data/* && \
 clear
 echo "=================================================================="
 echo "=== Don't forget to make this net routable outside docker host ==="
+echo "===      If you chosed NOT to use default host network         ==="
 echo "=================================================================="
-
 
 
 echo "Removing network ezuce...,if exists"
 docker network rm ezuce
 docker network create \
+      -d macvlan \
       --subnet $NETWORK_SUBNET \
+      --gateway $NETWORK_GATEWAY \
+      -o parent=$INTERFACE \
        ezuce
 
 
 printf "\n"
 printf "\n"
-echo "Enter DNS container IP address from your subdomain"
+echo "Enter DNS container IP address from your subdomain."
+echo "Make sure IP is not already in use "
 read dnsIP
 DNS_IP="$dnsIP"
 
-#Get host IP ADD
-MACHINE_IP=$(hostname -I | awk '{print $1}')
+
 
 #Get docker ezuce network IP add
-NETADAPT=`docker network inspect ezuce | grep Id | awk -F ':' '{print $2}'`
+#NETADAPT=`docker network inspect ezuce | grep Id | awk -F ':' '{print $2}'`
 #Removing "" from ezuce bridge network adapt name
-NETADAPT=${NETADAPT/\"/}
-NETADAPT=${NETADAPT/\"/}
-DROUTER_IP=$(ip addr show |grep  ${NETADAPT:0:8} | grep inet | awk '{print $2}' | awk -F "/" '{print $1}')
+#NETADAPT=${NETADAPT/\"/}
+#NETADAPT=${NETADAPT/\"/}
+#DROUTER_IP=$(ip addr show |grep  ${NETADAPT:0:8} | grep inet | awk '{print $2}' | awk -F "/" '{print $1}')
 
 
 export MONGO_HOST
@@ -125,6 +143,7 @@ export NETWORK_NAME
 export NETWORK_SUBNET
 export DNS_IP
 export DROUTER_IP
+export FREEIPS
 
 cd ..
 docker-compose -f docker-compose.yml down
