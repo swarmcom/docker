@@ -4,6 +4,7 @@ cd reach-ui
 git fetch
 git reset --hard $COMMIT
 git clean -fd
-npm install http-server
+sed -i "s|reach_ws:.*|reach_ws:\ \"$REACH_WS\"|" src/config.js
 npm install
 npm run build
+npm install http-server

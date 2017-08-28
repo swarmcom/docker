@@ -8,6 +8,7 @@ ENV REACH=reach.$NETWORK
 # override on build with --build-arg option
 ARG REPO=https://github.com/swarmcom/reach-ui.git
 ARG BRANCH=master
+ARG REACH_WS=ws://$REACH:8937/ws
 
 RUN useradd -s /bin/bash -m user
 
