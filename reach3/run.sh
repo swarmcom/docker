@@ -19,6 +19,7 @@ fi
 echo -n "starting: $NAME "
 docker run $FLAGS \
 	--net $NETWORK \
+	-p 8937:8937 \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
