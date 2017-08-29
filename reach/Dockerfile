@@ -24,10 +24,6 @@ WORKDIR /home/user
 COPY build/setup.sh build/setup.sh
 RUN build/setup.sh
 
-COPY build/compile-js.sh build/compile-js.sh
-RUN build/compile-js.sh
-
-
 COPY etc/commit commit
 COPY build/compile.sh build/compile.sh
 RUN build/compile.sh
