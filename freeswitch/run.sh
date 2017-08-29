@@ -4,6 +4,7 @@ IMAGE=${2:-"ezuce/freeswitch"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"freeswitch.$NETWORK"}
 REACHME_NODE=${REACHME_NODE:-"reach@reach.$NETWORK"}
+REACHME_API=${REACHME_API:-"http://reach.$NETWORK:8937/fsapi"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -20,4 +21,5 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NODE=freeswitch@$NAME \
 	--env REACHME_NODE=$REACHME_NODE \
+	--env REACHME_API=$REACHME_API \
 	$IMAGE
