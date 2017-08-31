@@ -95,7 +95,8 @@ sudo rm -rf ../mongodb-sipxconfig/mongo-data/data/* && \
      sudo rm -rf ../dns/srv && \
      sudo rm -rf mongo-client.ini postgres-pwd.properties sipxconfig.properties && \
      sudo rm -rf ../mongodb-sipxconfig/mongo-data/data && \
-     sudo rm -rf ../postgres-sipxconfig/pg-data/pgdata
+     sudo rm -rf ../postgres-sipxconfig/pg-data/pgdata && \
+     sudo rm -rf ../postgres-sipxcdr/data/pgdata
 
 clear
 echo "=================================================================="

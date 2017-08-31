@@ -2,17 +2,22 @@
 
 proxyConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipXproxy-config"
 registrarConfig="/usr/local/sipx/etc/sipxpbx/conf/1/registrar-config"
+cdrConfig="/usr/local/sipx/etc/sipxpbx/conf/1/callresolver-config"
 proxyIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxproxy"
 natConfig="/usr/local/sipx/etc/sipxpbx/conf/1/nattraversalrules.xml"
 registrarIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxregistrar"
+cdrIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxcdr"
 CFDAT_FILE_PROXY="/usr/local/sipx/etc/sipxpbx/conf/1/sipxproxy.cfdat"
 CFDAT_FILE_REGISTRAR="/usr/local/sipx/etc/sipxpbx/conf/1/sipxregistrar.cfdat"
+CFDAT_FILE_SIPXCDR="/usr/local/sipx/etc/sipxpbx/conf/1/sipxcdr.cfdat"
 
 PROCESS_PROXY=`cat $CFDAT_FILE_PROXY`
 PROCESS_REGISTRAR=`cat $CFDAT_FILE_REGISTRAR`
+PROCESS_CDR=`cat $CFDAT_FILE_SIPXCDR`
 
 proxyIp=""
 registrarIp=""
+cdrIp=""
 
 if [ -f "$proxyIpConfig" ]; then
     proxyIp=`cat $proxyIpConfig`
@@ -22,7 +27,11 @@ if [ -f "$registrarIpConfig" ]; then
     registrarIp=`cat $registrarIpConfig`
 fi
 
-if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] && [ -z "$proxyIp" ] && [ ${PROCESS_PROXY:0:1} == "+" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ]; then
+if [ -f "$cdrIpConfig" ]; then
+    cdrIp=`cat $cdrIpConfig`
+fi
+
+if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && [ -z "$registrarIp" ] && [ -z "$proxyIp" ] && [ -z "$cdrIp" ] && [ ${PROCESS_PROXY:0:1} == "+" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ] && [ ${PROCESS_CDR:0:1} == "+" ]; then
      cmd=`docker network inspect ezuce |grep IPv4 | awk -F":" '{print $2}'`
      result=$cmd
      set -f
@@ -53,6 +62,7 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] &
 
     echo "${rangeArray[2]}" >> $registrarIpConfig
     echo "${rangeArray[3]}" >> $proxyIpConfig
+    echo "${rangeArray[4]}" >> $cdrIpConfig
     cd /named
     /usr/bin/dns-config.sh --domain $SIP_DOMAIN --config-host $HOST_NAME --proxy-ip ${rangeArray[3]} --registrar-ip ${rangeArray[2]} --dns-ip $DNS_IP
     docker restart named

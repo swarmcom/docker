@@ -61,6 +61,15 @@
       networks:
         - ezuce
 
+    postgres-sipxcdr:
+      image: ezuce/postgres-cdr
+      volumes:
+        - ./postgres-sipxcdr/data/pgdata:/var/lib/postgresql/data
+      container_name: postgres.cdr
+      hostname: postgres.cdr
+      networks:
+        - ezuce
+
     sipxconfig:
       image: ezuce/sipxconfig
       ports:
@@ -116,7 +125,7 @@
         - MONGO_HOST=${MONGO_HOST}
         - HOST_NAME=${HOST_NAME}
         - FREEIPS=${FREEIPS}
-        
+
       volumes:
         - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
         - ./dns/srv/docker/bind9:/named
