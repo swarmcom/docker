@@ -1,5 +1,4 @@
 /token
 sipxcom/src/sipxecs
-freeswitch/etc/commit
-reach/etc/commit
+/*/etc/commit
 export/freeswitch/freeswitch.tar
