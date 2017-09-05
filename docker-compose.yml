@@ -60,6 +60,16 @@
       container_name: postgres.ezuce
       networks:
         - ezuce-private
+
+    postgres-sipxcdr:
+      image: ezuce/postgres-cdr
+      volumes:
+        - ./postgres-sipxcdr/data/pgdata:/var/lib/postgresql/data
+      container_name: postgres.cdr
+      hostname: postgres.cdr
+      networks:
+        - ezuce-private
+
     sipxconfig:
       image: ezuce/sipxconfig
       ports:
@@ -85,13 +95,19 @@
       image: nginx
       ports:
         - "80:80"
-      volumes:
-        - ./nginx-sipxconfig/etc/sipxconfig.conf:/etc/nginx/conf.d/default.conf
+      environment:
+        - NGINX_PORT=80
+        - DOCKER_API_PORT=81
+        - MACHINE_IP=${MACHINE_IP}
       container_name: nginx
+      volumes:
+        - ./nginx-sipxconfig/etc/sipxconfig.conf:/etc/nginx/conf.d/default.template
       networks:
         - ezuce-private
       depends_on:
         - sipxconfig
+      command: /bin/bash -c "envsubst < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+      restart: on-failure
 
     supervisor:
       build: supervisor/.
@@ -106,7 +122,6 @@
         - HOST_NAME=${HOST_NAME}
         - FREEIPS=${FREEIPS}
         - MONGO_IP=${MONGO_IP}
-
       volumes:
         - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
         - ./dns/srv/docker/bind9:/named
