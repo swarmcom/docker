@@ -12,11 +12,12 @@
         - NETWORK_SUBNET
         - DNS_IP
         - MACHINE_IP
+        - MONGO_IP
       volumes:
         - ./bootstrap:/bootstrap
       container_name: bootstrap
       networks:
-        - ezuce
+        - ezuce-private
     dns:
       build: dns/.
       volumes:
@@ -25,7 +26,7 @@
       container_name: named
       restart: on-failure
       networks:
-         ezuce:
+         ezuce-public:
            ipv4_address: $DNS_IP
 
     mongo:
@@ -39,17 +40,16 @@
       hostname: $MONGO_HOST
       container_name: $MONGO_HOST
       networks:
-        - ezuce
+         ezuce-private:
+           ipv4_address: $MONGO_IP
 
 
     mongo-init:
       build: mongodb-init/.
-#      links:
-#        - mongo:mongo
       command: /usr/bin/initialize-mongodb.sh
       container_name: mongo-init
       networks:
-        - ezuce
+        - ezuce-private
 
     postgres:
       image: ezuce/postgres
@@ -59,7 +59,7 @@
         - ./postgres-sipxconfig/pg-data/pgdata:/var/lib/postgresql/data
       container_name: postgres.ezuce
       networks:
-        - ezuce
+        - ezuce-private
     sipxconfig:
       image: ezuce/sipxconfig
       ports:
@@ -74,16 +74,12 @@
         - bootstrap
         - postgres
         - mongo
-
-#      links:
-#        - mongo:$MONGO_HOST
-#        - postgres:postgres.ezuce
       container_name: sipxconfig
       hostname: $HOST_NAME
       domainname: $DOMAIN
       restart: on-failure
       networks:
-        - ezuce
+        - ezuce-private
 
     nginx:
       image: nginx
@@ -93,7 +89,7 @@
         - ./nginx-sipxconfig/etc/sipxconfig.conf:/etc/nginx/conf.d/default.conf
       container_name: nginx
       networks:
-        - ezuce
+        - ezuce-private
       depends_on:
         - sipxconfig
 
@@ -109,7 +105,8 @@
         - MONGO_HOST=${MONGO_HOST}
         - HOST_NAME=${HOST_NAME}
         - FREEIPS=${FREEIPS}
-        
+        - MONGO_IP=${MONGO_IP}
+
       volumes:
         - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
         - ./dns/srv/docker/bind9:/named
@@ -118,9 +115,12 @@
       privileged: true
       restart: on-failure
       networks:
-        - ezuce
+        - ezuce-private
 
   networks:
-    ezuce:
+    ezuce-public:
       external:
-        name: ezuce
+        name: ezuce-public
+    ezuce-private:
+      external:
+        name: ezuce-private

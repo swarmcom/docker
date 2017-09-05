@@ -20,6 +20,9 @@ do
   elif [ "${params[$i-1]}" == "--dns-ip" ]; then
    DNS=${params[$i]}
    echo $DNS
+  elif [ "${params[$i-1]}" == "--mongo-ip" ]; then
+  MONGO=${params[$i]}
+  echo $MONGO
   fi
 done
 
@@ -65,6 +68,11 @@ EOL
   if [ "${DNS}" != "" ]; then
   cat >> var/${CONFIG}.${DOMAIN}.zone <<EOL
 named                   IN    A ${DNS}
+EOL
+  fi
+  if [ "${MONGO}" != "" ]; then
+  cat >> var/${CONFIG}.${DOMAIN}.zone <<EOL
+mongo 		IN    A	${MONGO}
 EOL
   fi
 
@@ -113,6 +121,15 @@ EOL
 named                   IN    A ${DNS}
 EOL
   fi
+  if [ "${MONGO}" != "" ]; then
+  cat >> var/default.view.${DOMAIN}.zone <<EOL
+mongo 		IN    A	${MONGO}
+EOL
+  fi
+
+
+
+
 
 cat > etc/named.conf <<EOL
 //
