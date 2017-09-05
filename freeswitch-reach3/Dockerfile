@@ -42,3 +42,5 @@ ENTRYPOINT [ "./run.sh" ]
 
 ENV NODE freeswitch@freeswitch.ezuce
 ENV REACHME_NODE reachme@reachme.ezuce
+
+EXPOSE 5060/udp
