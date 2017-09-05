@@ -1,6 +1,6 @@
 #!/bin/sh -e
 NETWORK=${1:-"ezuce"}
-for CONTAINER in mongodb freeswitch elastic reach kibana agents busytone reach-ui rr
+for CONTAINER in mongodb freeswitch elastic reach kibana agents busytone reach-ui rr nginx
 do
 	if [ "$(docker inspect -f {{.State.Running}} $CONTAINER.$NETWORK)" = "true" ]
 	then
