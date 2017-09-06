@@ -4,11 +4,11 @@ MAINTAINER Roman Galeev <jamhedd@gmail.com>
 # override on run with --env option
 ENV NETWORK=ezuce
 ENV REACH=reach.$NETWORK
+ENV REACH_WS=ws://$REACH:8937/ws
 
 # override on build with --build-arg option
 ARG REPO=https://github.com/swarmcom/reach-ui.git
 ARG BRANCH=master
-ARG REACH_WS=ws://$REACH:8937/ws
 
 RUN useradd -s /bin/bash -m user
 

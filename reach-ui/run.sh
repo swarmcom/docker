@@ -2,6 +2,7 @@
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"reach-ui.$NETWORK"}
+REACH_WS=${REACH_WS:-""}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -18,4 +19,5 @@ docker run $FLAGS \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
+	--env REACH_WS=$REACH_WS \
 	$NETWORK/reach-ui
