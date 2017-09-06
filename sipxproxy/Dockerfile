@@ -8,7 +8,7 @@ RUN yum install -y openssl pcre boost poco-crypto poco-data  poco-foundation \
         poco-mysql  poco-net poco-netssl poco-odbc poco-pagecompiler poco-sqlite \
         poco-util poco-xml poco-zip pwdutils ruby bind-utils patch shadow-utils libodbc \
         unixODBC gperftools-libs xmlrpc-c-devel libmcrypt-devel libconfig gtest-devel \
-        leveldb-devel hiredis-devel libpcap zeromq-devel mongo-cxx-driver v8-devel \
+        leveldb-devel hiredis-devel libpcap zeromq-devel mongo-cxx-driver v8-devel postgresql-odbc \
         && yum clean all && yum clean metadata
 
 

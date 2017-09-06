@@ -23,6 +23,9 @@ do
   elif [ "${params[$i-1]}" == "--mongo-ip" ]; then
   MONGO=${params[$i]}
   echo $MONGO
+elif [ "${params[$i-1]}" == "--cdr-ip" ]; then
+CDR=${params[$i]}
+echo $CDR
   fi
 done
 
@@ -72,10 +75,14 @@ EOL
   fi
   if [ "${MONGO}" != "" ]; then
   cat >> var/${CONFIG}.${DOMAIN}.zone <<EOL
-mongo 		IN    A	${MONGO}
+${MONGO_HOST} 		IN    A	${MONGO}
 EOL
   fi
-
+  if [ "${CDR}" != "" ]; then
+  cat >> var/${CONFIG}.${DOMAIN}.zone <<EOL
+postgres.cdr 		IN    A	${CDR}
+EOL
+  fi
 cat > var/default.view.${DOMAIN}.zone <<EOL
 \$TTL 1800
 @       IN     SOA    ns1.${DOMAIN}. root.${DOMAIN}. (
@@ -123,10 +130,14 @@ EOL
   fi
   if [ "${MONGO}" != "" ]; then
   cat >> var/default.view.${DOMAIN}.zone <<EOL
-mongo 		IN    A	${MONGO}
+${MONGO_HOST} 		IN    A	${MONGO}
 EOL
   fi
-
+  if [ "${CDR}" != "" ]; then
+  cat >> var/default.view.${DOMAIN}.zone <<EOL
+postgres.cdr 		IN    A	${CDR}
+EOL
+  fi
 
 
 

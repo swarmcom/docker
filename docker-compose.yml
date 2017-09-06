@@ -53,8 +53,6 @@
 
     postgres:
       image: ezuce/postgres
-      ports:
-       - "5432:5432"
       volumes:
         - ./postgres-sipxconfig/pg-data/pgdata:/var/lib/postgresql/data
       container_name: postgres.ezuce
@@ -63,12 +61,16 @@
 
     postgres-sipxcdr:
       image: ezuce/postgres-cdr
+      ports:
+       - "5432:5432"
       volumes:
         - ./postgres-sipxcdr/data/pgdata:/var/lib/postgresql/data
       container_name: postgres.cdr
       hostname: postgres.cdr
       networks:
-        - ezuce-private
+         ezuce-private:
+           ipv4_address: $CDR_IP
+
 
     sipxconfig:
       image: ezuce/sipxconfig
@@ -122,6 +124,7 @@
         - HOST_NAME=${HOST_NAME}
         - FREEIPS=${FREEIPS}
         - MONGO_IP=${MONGO_IP}
+        - CDR_IP=${CDR_IP}
       volumes:
         - ./sipxconfig/run/conf:/usr/local/sipx/etc/sipxpbx/conf
         - ./dns/srv/docker/bind9:/named

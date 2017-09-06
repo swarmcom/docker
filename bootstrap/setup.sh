@@ -72,6 +72,7 @@ echo "Make sure IP is not already in use "
 read dnsIP
 DNS_IP="$dnsIP"
 MONGO_IP="172.18.0.100"
+CDR_IP="172.18.0.101"
 
 
 export MONGO_HOST
@@ -89,6 +90,7 @@ export DROUTER_IP
 export FREEIPS
 export PRIVATE_SUBNET
 export MONGO_IP
+export CDR_IP
 
 cd ..
 docker-compose -f docker-compose.yml down

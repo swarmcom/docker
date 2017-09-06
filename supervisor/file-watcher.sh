@@ -32,8 +32,8 @@ if [ -f "$cdrIpConfig" ]; then
 fi
 
 if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && [ -z "$registrarIp" ] && [ -z "$proxyIp" ] && [ -z "$cdrIp" ] && [ ${PROCESS_PROXY:0:1} == "+" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ] && [ ${PROCESS_CDR:0:1} == "+" ]; then
-  FREE PRIVATE SUBNET IPs for registrar
-       cmd=`docker network inspect ezuce-private |grep IPv4 | awk -F":" '{print $2}'`
+#  FREE PRIVATE SUBNET IPs for registrar
+     cmd=`docker network inspect ezuce-private |grep IPv4 | awk -F":" '{print $2}'`
      result=$cmd
      set -f
      PRIVATE_SUBNET=`docker network inspect ezuce-private | grep Subnet | awk -F":" '{print $2}' |  sed -e 's/"//g' -e 's/,//g'`
@@ -50,21 +50,29 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && 
 
     rangePublic=$FREEIPS
     rangeArrayPublic=(${rangePublic//,/})
-    rangeArrayPublic=${rangeArrayPublic[@]}
+#    rangeArrayPublic=${rangeArrayPublic[@]}
 #
 
      echo "Available public IPs:"
      echo "${rangeArrayPublic[@]}"
-     echo "Available public Ips detected for proxy :"
-     echo "${rangeArrayPublic[2]}"
-     echo "Available private IPs:"
-      echo "${rangeArrayPrivate[@]}"
+# Second method to detect if proxy IP is in use
+    for proxyIP in "${rangeArrayPublic[@]:1}"; do
+          . /usr/bin/checkip.sh $proxyIP
+           if [ $FLAG="good" ]; then
+             echo "Available public IPs detected for proxy :"
+             echo "${proxyIP}"
+             break 2
+          fi
+    done
+
+##TODO # IF proxyIP outside loop is null then ask admin to provide manually an IP from public subnet
+
      echo "Available private IPs detected for registrar"
      echo "${rangeArrayPrivate[2]}"
 
      sed -i "s/^\(SIPX_PROXY_HOST_NAME*:*\).*$/\1 \: sipxproxy.$SIP_DOMAIN/"  $proxyConfig
-     sed -i "s/^\(SIPX_PROXY_BIND_IP*:*\).*$/\1 \: ${rangeArrayPublic[2]}/"  $proxyConfig
-     sed -i "s/^\(SIPX_PROXY_HOSTPORT*:*\).*$/\1 \: ${rangeArrayPublic[2]}:5060/"  $proxyConfig
+     sed -i "s/^\(SIPX_PROXY_BIND_IP*:*\).*$/\1 \: ${proxyIP}/"  $proxyConfig
+     sed -i "s/^\(SIPX_PROXY_HOSTPORT*:*\).*$/\1 \: ${proxyIP}:5060/"  $proxyConfig
      sed -i "s/^\(SIPX_PROXY_HOST_ALIASES*:*\).*$/& $MACHINE_IP/"  $proxyConfig
      sed -i "s/^\(SIPX_PROXY_HOST_ALIASES*:*\).*$/& $SIP_DOMAIN:5060/"  $proxyConfig
      sed -i "s/^\(SIPX_PROXY_LOG_LEVEL*:*\).*$/\1 \: DEBUG/"  $proxyConfig
@@ -74,9 +82,9 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && 
 #    sed -i "s/\(<mediarelaynativeaddress>\)\([^<]*\)\(<[^>]*\)/\1$MACHINE_IP\3/g"  $natConfig
 
     echo "${rangeArrayPrivate[2]}" >> $registrarIpConfig
-    echo "${rangeArrayPublic[2]}" >> $proxyIpConfig
+    echo "${proxyIP}" >> $proxyIpConfig
     echo "${rangeArrayPrivate[3]}" >> $cdrIpConfig
     cd /named
-    /usr/bin/dns-config.sh --domain $SIP_DOMAIN --config-host $HOST_NAME --proxy-ip ${rangeArrayPublic[2]} --registrar-ip ${rangeArrayPrivate[2]} --dns-ip $DNS_IP --mongo-ip $MONGO_IP
+    /usr/bin/dns-config.sh --domain $SIP_DOMAIN --config-host $HOST_NAME --proxy-ip ${proxyIP} --registrar-ip ${rangeArrayPrivate[2]} --dns-ip $DNS_IP --mongo-ip $MONGO_IP --cdr-ip $CDR_IP
     docker restart named
 fi
