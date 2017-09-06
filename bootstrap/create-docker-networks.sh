@@ -17,8 +17,8 @@ HOST_IP=$(hostname -I | awk '{print $1}')
 NETWORK_GATEWAY=$(ip route | grep "default" | awk 'NR==1 {print $3}')
 MACHINE_IP=$(hostname -I | awk '{print $1}')
 INTERFACE=$(route | grep "default" | awk 'NR==1 {print $8}')
-NETWORK_IP=$(route | grep $INTERFACE | awk 'NR>1 {print $1}')
-NETWORK_MASK=$(route | grep $INTERFACE | awk 'NR>1 {print $3}')
+NETWORK_IP=$(route | grep $INTERFACE | awk 'NR==2 {print $1}')
+NETWORK_MASK=$(route | grep $INTERFACE | awk 'NR==2 {print $3}')
 CIDR=$(mask2cdr $NETWORK_MASK)
 clear
 echo 'Getting free IPs in the public subnet range...It will take a while'
@@ -54,7 +54,6 @@ fi
 
 #Preparing host to macvaln intercommunication
 sudo ip link del ezuce-macvlan link $INTERFACE type macvlan mode bridge
-
 echo "Provide IP x.x.x.x/N address for your virtual Host interface. Should be a free IP from host public subnet"
 read virtIP
 VIRT_IP="$virtIP"
