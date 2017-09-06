@@ -1,6 +1,9 @@
 #!/bin/sh -e
-NAME=ezuce-ci
 TOKEN=$1
+FLAGS=${FLAGS:-"-td"}
+NETWORK=${NETWORK:-"ezuce"}
+NAME=${NAME:-"ci.$NETWORK"}
+NODE=${NODE:-"ci@$NAME"}
 
 if [ -z $TOKEN ]
 then
@@ -20,6 +23,8 @@ echo -n "starting: $NAME "
 docker run \
 	-h $NAME \
 	--name $NAME \
-	-e TOKEN=$TOKEN \
+	--env NETWORK=$NETWORK \
+	--env TOKEN=$TOKEN \
+	--env NODE=$NODE \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-td ezuce/ci

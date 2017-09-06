@@ -15,4 +15,7 @@ fi
 
 echo Building with docker group: $DOCKER_GROUP
 
+COMMIT=${2:-"$(git ls-remote $REPO | grep master | sed 's/refs.*//')"}
+echo $COMMIT > etc/commit
+
 docker build $BUILD_FLAGS -t ezuce/ci --build-arg TOKEN=$TOKEN --build-arg DOCKER=$DOCKER_GROUP .
