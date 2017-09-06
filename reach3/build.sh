@@ -5,7 +5,7 @@ then
 	exit 1
 fi
 REPO=${1:-"https://$TOKEN@github.com/ezuce/reach3.git"}
-COMMIT=${2:-"$(git ls-remote $REPO | grep standalone | sed 's/refs.*//')"}
+COMMIT=${2:-"$(git ls-remote $REPO | grep master | sed 's/refs.*//')"}
 echo $COMMIT > etc/commit
 
 BRANCH=${BRANCH:-"master"}
