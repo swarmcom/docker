@@ -14,7 +14,6 @@ fi
 
 echo -n "starting: $NAME "
 docker run $FLAGS \
-	-p 8080:8080 \
 	--net $NETWORK \
 	-h $NAME \
 	--name $NAME \

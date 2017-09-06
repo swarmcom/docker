@@ -17,7 +17,6 @@ fi
 echo -n "starting: $NAME "
 docker run $FLAGS \
 	--net $NETWORK \
-	-p 5060:5060/udp \
 	-h $NAME \
 	--name $NAME \
 	--env NODE=freeswitch@$NAME \
