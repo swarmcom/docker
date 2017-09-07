@@ -4,7 +4,7 @@ main([OurNode, Cookie, Node, M, F|A]) ->
 	{ok, _} = net_kernel:start([l2a(OurNode), longnames]),
 	erlang:set_cookie(node(), l2a(Cookie)),
 	Re = rpc:call(l2a(Node), l2a(M), l2a(F), fix_args(A)),
-	io:format("~p", [Re]);
+	io:format("~p~n", [Re]);
 main(_) ->
     usage().
 
