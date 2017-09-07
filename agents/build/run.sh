@@ -13,7 +13,7 @@ xmlstarlet edit --inplace -u '/include/context/extension/condition/action[@appli
 
 echo Setting ReachMe FreeSWITCH address to $REACH_FREESWITCH
 
-xmlstarlet edit --inplace -u '/include/param[@name="proxy"]/@value' -v "$REACH_FREESWITCH" conf/sip_profiles/gateways/reach.xml
+xmlstarlet edit --inplace -u '/include/gateway[@name="reach"]/param[@name="proxy"]/@value' -v "$REACH_FREESWITCH" conf/sip_profiles/gateways/reach.xml
 
 /usr/bin/epmd -daemon
 exec /usr/local/freeswitch/bin/freeswitch -nf -np
