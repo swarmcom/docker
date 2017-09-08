@@ -21,6 +21,7 @@ fi
 
 echo -n "starting: $NAME "
 docker run \
+	--net $NETWORK \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
