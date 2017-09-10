@@ -10,7 +10,9 @@ NETWORK=${NETWORK:-"ezuce"}
 COMMIT=${2:-"$(git ls-remote $REPO $BRANCH | sed 's/refs.*//')"}
 echo $COMMIT > etc/commit
 
-echo Using repository:$REPO branch:$BRANCH commit:$COMMIT
+SAFE_REPO=$(echo $REPO | sed s/$TOKEN//g)
+
+echo Using repository:$SAFE_REPO branch:$BRANCH commit:$COMMIT
 docker build $BUILD_FLAGS -t $NETWORK/reach \
 	--build-arg REPO=$REPO \
 	--build-arg BRANCH=$BRANCH \
