@@ -4,4 +4,6 @@ COMMAND=${1:-"console"}
 cd ci
 CFG=config
 sed -i "s|ci@172.17.0.1|$NODE|g" $CFG/vm.args
+mkdir -p $HOME/pr
+export SHELL=/bin/sh
 exec _build/default/rel/ci/bin/ci $COMMAND $*
