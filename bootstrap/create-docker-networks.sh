@@ -61,6 +61,14 @@ sudo ip addr add $VIRT_IP dev ezuce-macvlan
 sudo ifconfig ezuce-macvlan up
 
 
+###############################################
+## Removing local route on default interface ##
+###############################################
+sudo ip route del $NETWORK_SUBNET dev $INTERFACE
+
+
+
+
 docker network create \
       -d macvlan \
       --subnet $NETWORK_SUBNET \
