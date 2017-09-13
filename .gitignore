@@ -14,3 +14,6 @@ bootstrap/postgres-pwd.properties
 bootstrap/sipxconfig.properties
 dns/srv/
 bootstrap/0
+postgres-sipxcdr/data/pgdata/
+postgres-sipxconfig/pg-data/
+

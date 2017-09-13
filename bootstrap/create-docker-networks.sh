@@ -21,8 +21,10 @@ NETWORK_IP=$(route | grep $INTERFACE | awk 'NR==2 {print $1}')
 NETWORK_MASK=$(route | grep $INTERFACE | awk 'NR==2 {print $3}')
 CIDR=$(mask2cdr $NETWORK_MASK)
 clear
+NETWORK_SUBNET="$(ip route | grep $INTERFACE | grep $HOST_IP | awk '{print $1}')"
+
 echo 'Getting free IPs in the public subnet range...It will take a while'
-FREEIPS=$(nmap -v -sn -n $NETWORK_IP/$CIDR -oG - | awk '/Status: Down/{print $2}')
+FREEIPS=$(nmap -v -sn -n $NETWORK_SUBNET -oG - | awk '/Status: Down/{print $2}')
 
 
 # Create ezuce-public network
@@ -33,8 +35,6 @@ printf "===                 will use your                       === \n"
 printf "===   DEFAULT host network $NETWORK_IP/$CIDR            === \n"
 echo   "==========================================================="
 
-## improved detection on network subnet"
-NETWORK_SUBNET="$(ip route | grep $INTERFACE | grep $HOST_IP | awk '{print $1}')"
 
 
 clear
