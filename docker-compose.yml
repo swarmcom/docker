@@ -71,7 +71,6 @@
          ezuce-private:
            ipv4_address: $CDR_IP
 
-
     sipxconfig:
       image: ezuce/sipxconfig
       ports:
@@ -92,6 +91,19 @@
       restart: on-failure
       networks:
         - ezuce-private
+
+    #freeswitch:
+        #image: ezuce/freeswitch-sipx
+        #ports:
+          #- "8888:22"
+          #- "15060:15060"
+          #- "8084:8084"
+          #- "8184:8184"
+          #- "8284:8284"
+          #- "8080:8080"
+        #container_name: freeswitch
+        #networks:
+          #- ezuce-private
 
     nginx:
       image: nginx

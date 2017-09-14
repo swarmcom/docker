@@ -5,19 +5,24 @@ registrarConfig="/usr/local/sipx/etc/sipxpbx/conf/1/registrar-config"
 cdrConfig="/usr/local/sipx/etc/sipxpbx/conf/1/callresolver-config"
 proxyIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxproxy"
 natConfig="/usr/local/sipx/etc/sipxpbx/conf/1/nattraversalrules.xml"
+freeswitchConfig="/usr/local/sipx/etc/sipxpbx/conf/1/freeswitch.xml"
 registrarIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxregistrar"
 cdrIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxcdr"
+freeswitchIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxfreeswitch"
 CFDAT_FILE_PROXY="/usr/local/sipx/etc/sipxpbx/conf/1/sipxproxy.cfdat"
 CFDAT_FILE_REGISTRAR="/usr/local/sipx/etc/sipxpbx/conf/1/sipxregistrar.cfdat"
 CFDAT_FILE_SIPXCDR="/usr/local/sipx/etc/sipxpbx/conf/1/sipxcdr.cfdat"
+CFDAT_FILE_SIPXFREESWITCH="/usr/local/sipx/etc/sipxpbx/conf/1/sipxfreeswitch.cfdat"
 
 PROCESS_PROXY=`cat $CFDAT_FILE_PROXY`
 PROCESS_REGISTRAR=`cat $CFDAT_FILE_REGISTRAR`
 PROCESS_CDR=`cat $CFDAT_FILE_SIPXCDR`
+PROCESS_FREESWITCH=`cat $CFDAT_FILE_SIPXFREESWITCH`
 
 proxyIp=""
 registrarIp=""
 cdrIp=""
+freeswitchIp=""
 
 if [ -f "$proxyIpConfig" ]; then
     proxyIp=`cat $proxyIpConfig`
@@ -31,8 +36,12 @@ if [ -f "$cdrIpConfig" ]; then
     cdrIp=`cat $cdrIpConfig`
 fi
 
-if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && { { [ -z "$registrarIp" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ]; } || { [ -z "$proxyIp" ] && [ ${PROCESS_PROXY:0:1} == "+" ]; } || { [ -z "$cdrIp" ] && [ ${PROCESS_CDR:0:1} == "+" ]; }; }; then
-#  FREE PRIVATE SUBNET IPs for registrar
+if [ -f "$freeswitchIpConfig" ]; then
+   freeswitchIp=`cat $freeswitchIpConfig`   
+fi
+
+if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && [ -f "$freeswitchConfig" ] && { { [ -z "$registrarIp" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ]; } || { [ -z "$proxyIp" ] && [ ${PROCESS_PROXY:0:1} == "+" ]; } || { [ -z "$cdrIp" ] && [ ${PROCESS_CDR:0:1} == "+" ]; } || { [ -z "$freeswitchIp" ] && [ ${PROCESS_FREESWITCH:0:1} == "+" ]; }; }; then
+#  FREE PRIVATE SUBNET IPs for registrar     
      cmd=`docker network inspect ezuce-private |grep IPv4 | awk -F":" '{print $2}'`
      result=$cmd
      set -f
@@ -88,7 +97,10 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && 
 #    sed -i "s/\(<mediarelaynativeaddress>\)\([^<]*\)\(<[^>]*\)/\1$MACHINE_IP\3/g"  $natConfig
     if [ -z "$cdrIp" ] && [ ${PROCESS_CDR:0:1} == "+" ]; then
         echo "${rangeArrayPrivate[3]}" >> $cdrIpConfig
-    fi    
+    fi
+    if [ -z "$freeswitchIp" ] && [ ${PROCESS_FREESWITCH:0:1} == "+" ]; then
+        echo "${rangeArrayPrivate[4]}" >> $freeswitchIpConfig
+    fi
     
     cd /named
     /usr/bin/dns-config.sh --domain $SIP_DOMAIN --config-host $HOST_NAME --proxy-ip ${proxyIP} --registrar-ip ${rangeArrayPrivate[2]} --dns-ip $DNS_IP --mongo-ip $MONGO_IP --cdr-ip $CDR_IP
