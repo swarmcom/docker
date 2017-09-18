@@ -1,7 +1,8 @@
 FROM uniteme/freeswitch
 MAINTAINER Roman Galeev <jamhedd@gmail.com>
 
-RUN rm -rf conf
+
+#RUN rm -rf conf
 COPY conf/ conf/
 
 COPY build/run.sh run.sh
