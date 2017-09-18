@@ -11,6 +11,7 @@ echo "Container $1 ip address: $IP"
 echo "Host current directory used for mapping: $HOST_PWD"
 echo "Mongo IP is $MONGO_IP"
 echo "CDR IP is $CDR_IP"
+
 if [ ! -z "$IP" ]; then
     PROCESS=`cat $CFDAT_FILE`
     if [[ ${PROCESS:0:1} == "+" ]] ; then
@@ -20,7 +21,7 @@ if [ ! -z "$IP" ]; then
         fi
         # run your container
         echo "starting $1"
-        docker run --privileged -d --name $1 -p $2:$2  -p $2:$2/udp --hostname $1.$SIP_DOMAIN --dns $DNS_IP -v $HOST_PWD/sipxconfig/run/conf/1:/usr/local/sipx/etc/sipxpbx -v $HOST_PWD/bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini --net $3 --ip="$IP" ezuce/$1
+        docker run --privileged -d --name $1 $2 --hostname $1.$SIP_DOMAIN --dns $DNS_IP -v $HOST_PWD/sipxconfig/run/conf/1:/usr/local/sipx/etc/sipxpbx -v $HOST_PWD/bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini --net $3 --ip="$IP" ezuce/$1
       fi
     else
       if [ "$(docker ps -q -f name=$1)" ]; then

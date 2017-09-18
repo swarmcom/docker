@@ -5,4 +5,4 @@ USER root
 COPY build/build.sh build/build.sh
 RUN build/build.sh
 
-ENTRYPOINT ["/usr/bin/freeswitch"]
+CMD freeswitch -nonat -conf /usr/local/sipx/etc/sipxpbx -db /usr/local/freeswitch/db -log /usr/local/freeswitch/log
