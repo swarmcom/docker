@@ -1,13 +1,44 @@
 sudo: required
 services:
 - docker
-language: node_js
-node_js:
-- 6.10.2
+language: python
 branches:
   only:
   - master
   - travis
+  - UC-4547
+addons:
+  ssh_known_hosts: download.ezuce.com
+before_install:
+- sudo apt-get install rpm
 install:
+- export TOKEN=$TOKEN
+- cd reach-centos6
+- travis_wait 30 ./build.sh
+- docker create --name=reach-build ezuce/reach-centos6
+- docker cp reach-build:/home/user/reach/_build reach_build
+- mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10.1-1.x86_64/usr/lib/reach/
+- cp -R reach_build/default/* ~/rpmbuild/BUILDROOT/reach-app-17.10.1-1.x86_64/usr/lib/reach/
+- mkdir ~/rpmbuild/SPECS
+- mkdir ~/rpmbuild/RPMS
+- mkdir ~/rpmbuild/SOURCES
+- mkdir ~/rpmbuild/SRPMS
+- mkdir ~/rpmbuild/BUILD
+- cp reach-app.spec ~/rpmbuild/SPECS/
+- ls -la ~/rpmbuild
+- rpmbuild -bb ~/rpmbuild/SPECS/reach-app.spec
+- cd ..
+script: echo "no test"
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_a95d97d9b5ee_key -iv $encrypted_a95d97d9b5ee_iv
+  -in deploy.pem.enc -out deploy.pem -d
+- eval "$(ssh-agent -s)"
+- chmod 600 deploy.pem
+- ssh-add deploy.pem
 deploy:
+- provider: script
+  skip_cleanup: true
+  script: scp -i deploy.pem ~/rpmbuild/RPMS/x86_64/reach-app-17.10.1-1.x86_64.rpm root@download.ezuce.com:/vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64/
+  on:
+    branch: UC-4547
 after_success:
