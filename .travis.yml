@@ -17,6 +17,8 @@ install:
 - travis_wait 30 ./build.sh
 - docker create --name=reach-build ezuce/reach-centos6
 - docker cp reach-build:/home/user/reach/_build reach_build
+- rm -rf reach_build/default/rel/reach/releases/2.0.0/vm.args
+- rm -rf reach_build/default/rel/reach/releases/2.0.0/sys.config
 - mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10-10000.f9a1a.x86_64/usr/lib/reach/
 - cp -R reach_build/default/* ~/rpmbuild/BUILDROOT/reach-app-17.10-10000.f9a1a.x86_64/usr/lib/reach/
 - mkdir ~/rpmbuild/SPECS
