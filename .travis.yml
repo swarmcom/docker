@@ -17,8 +17,8 @@ install:
 - travis_wait 30 ./build.sh
 - docker create --name=reach-build ezuce/reach-centos6
 - docker cp reach-build:/home/user/reach/_build reach_build
-- mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10.1-1.x86_64/usr/lib/reach/
-- cp -R reach_build/default/* ~/rpmbuild/BUILDROOT/reach-app-17.10.1-1.x86_64/usr/lib/reach/
+- mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10-5598.f9a1a.x86_64/usr/lib/reach/
+- cp -R reach_build/default/* ~/rpmbuild/BUILDROOT/reach-app-17.10-5598.f9a1a.x86_64/usr/lib/reach/
 - mkdir ~/rpmbuild/SPECS
 - mkdir ~/rpmbuild/RPMS
 - mkdir ~/rpmbuild/SOURCES
@@ -38,7 +38,7 @@ before_deploy:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: scp -i deploy.pem ~/rpmbuild/RPMS/x86_64/reach-app-17.10.1-1.x86_64.rpm root@download.ezuce.com:/vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64/
+  script: scp -i deploy.pem ~/rpmbuild/RPMS/x86_64/reach-app-17.10-5598.f9a1a.x86_64.rpm root@download.ezuce.com:/vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64/reach-app-17.10-5598.f9a1a.x86_64.rpm
   on:
     branch: UC-4547
 after_success:
