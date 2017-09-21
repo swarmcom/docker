@@ -65,7 +65,7 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && 
      echo "Available public IPs:"
      echo "${rangeArrayPublic[@]}"
 # Second method to detect if proxy IP is in use
-    for proxyIP in "${rangeArrayPublic[@]:1}"; do
+    for proxyIP in "${rangeArrayPublic[@]:2}"; do
           . /usr/bin/checkip.sh $proxyIP
            if [ $FLAG="good" ]; then
              echo "Available public IPs detected for proxy :"
@@ -99,7 +99,7 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && 
         echo "${rangeArrayPrivate[3]}" >> $cdrIpConfig
     fi
     if [ -z "$freeswitchIp" ] && [ ${PROCESS_FREESWITCH:0:1} == "+" ]; then
-      for freeswitchIp in "${rangeArrayPublic[@]:2}"; do
+      for freeswitchIp in "${rangeArrayPublic[@]:3}"; do
             . /usr/bin/checkip.sh $freeswitchIp
              if [ $FLAG="good" ]; then
                echo "Available public IPs detected for freeswitch :"

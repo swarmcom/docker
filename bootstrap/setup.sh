@@ -35,7 +35,7 @@ echo "Enter config hostname (without domain)"
 read host
 HOST_NAME="$host"
 
-echo "Enter mongo host (fqdn)"
+echo "Enter mongo host (without domain)"
 read mongoHost
 MONGO_HOST="$mongoHost"
 

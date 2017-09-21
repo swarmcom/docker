@@ -25,9 +25,12 @@
     #    - ./dns/srv/docker/bind9/etc/named.conf:/etc/named.conf
       container_name: named
       restart: on-failure
+      dns: 127.0.0.1
+      dns_search: $DOMAIN
       networks:
          ezuce-public:
            ipv4_address: $DNS_IP
+
 
     mongo:
       image: mongo
