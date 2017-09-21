@@ -23,9 +23,12 @@ do
   elif [ "${params[$i-1]}" == "--mongo-ip" ]; then
   MONGO=${params[$i]}
   echo $MONGO
-elif [ "${params[$i-1]}" == "--cdr-ip" ]; then
-CDR=${params[$i]}
-echo $CDR
+  elif [ "${params[$i-1]}" == "--cdr-ip" ]; then
+  CDR=${params[$i]}
+  echo $CDR
+  elif [ "${params[$i-1]}" == "--fs-ip" ]; then
+  FS=${params[$i]}
+  echo $FS
   fi
 done
 

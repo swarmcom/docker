@@ -36,10 +36,7 @@ printf "===   DEFAULT host network $NETWORK_IP/$CIDR            === \n"
 echo   "==========================================================="
 
 
-
-clear
-
-printf "Removing ezuce-* networks if exists\n"   
+printf "\nRemoving ezuce-* networks if exists\n"
 
 if [ `docker network ls | grep ezuce | wc -l` > 0 ]
   then
@@ -50,9 +47,9 @@ fi
 
 #Preparing host to macvaln intercommunication
 sudo ip link del ezuce-macvlan link $INTERFACE type macvlan mode bridge > /dev/null 2>&1
-printf "\nProvide IP x.x.x.x/N address for your virtual Host interface. Should be a free IP from host public subnet\n"
+printf "\nProvide IP x.x.x.x address for your virtual Host interface. Should be a free IP from host public subnet\n"
 read virtIP
-VIRT_IP="$virtIP"
+VIRT_IP="$virtIP/$CIDR"
 
 
 
