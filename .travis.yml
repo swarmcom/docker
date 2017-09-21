@@ -18,7 +18,7 @@ install:
 - docker create --name=reach-build ezuce/reach-centos6
 - docker cp -L reach-build:/home/user/reach/_build reach_build
 - mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10-10000.f9a1a.x86_64/usr/lib/reach/
-- cp -R reach_build/prod/* ~/rpmbuild/BUILDROOT/reach-app-17.10-10000.f9a1a.x86_64/usr/lib/reach/
+- cp -R reach_build/prod/rel/reach/* ~/rpmbuild/BUILDROOT/reach-app-17.10-10000.f9a1a.x86_64/usr/lib/reach/
 - mkdir ~/rpmbuild/SPECS
 - mkdir ~/rpmbuild/RPMS
 - mkdir ~/rpmbuild/SOURCES
