@@ -15,5 +15,8 @@ xmlstarlet edit --inplace -u '/include/context/extension/condition/action[@appli
 	-v "freeswitch_media_manager:! $REACHME_NODE" \
 	conf/dialplan/reachme.xml
 
+echo Setting Agents gateway to $AGENTS_GW
+xmlstarlet edit --inplace -u '/include/gateway/param[@name="proxy"]/@data' -v "AGENTS_GW" conf/sip_profiles/gateways/agents.xml
+
 /usr/bin/epmd -daemon
 exec /usr/local/freeswitch/bin/freeswitch -nf -np

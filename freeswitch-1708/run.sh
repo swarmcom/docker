@@ -4,6 +4,7 @@ IMAGE=${2:-"ezuce/freeswitch-1708"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"freeswitch.$NETWORK"}
 REACHME_NODE=${REACHME_NODE:-"reach@reach.$NETWORK"}
+AGENTS_GW=${AGENTS_GW:-"agents.ezuce"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -20,4 +21,5 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NODE=freeswitch@$NAME \
 	--env REACHME_NODE=$REACHME_NODE \
+	--env AGENTS_GW=$AGENTS_GW \
 	$IMAGE
