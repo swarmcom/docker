@@ -43,7 +43,7 @@ deploy:
     branch: UC-4547
 - provider: script
   skip_cleanup: true
-  script: ssh -i deploy.pem root@download.ezuce.com 'cd /vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64; createrepo .; exit 0'
+  script: ssh -i deploy.pem root@download.ezuce.com 'cd /vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64; createrepo .; chown -R download:download /vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64/repodata/; exit 0'
   on:
     branch: UC-4547
 after_success:

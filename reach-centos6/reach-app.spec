@@ -6,6 +6,7 @@ Group:       Misc
 License: CPAL
 AutoReqProv: no
 URL:         http://ezuce.com
+Requires: reach-app-recordings
 %description
 Reach is a skills-based, Call Center software based on FreeSWITCH and built in erlang.
 %files
