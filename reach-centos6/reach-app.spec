@@ -11,3 +11,4 @@ Requires: reach-app-recordings
 Reach is a skills-based, Call Center software based on FreeSWITCH and built in erlang.
 %files
 /usr/lib/reach/*
+%attr(755,root,root) /etc/init.d/reach

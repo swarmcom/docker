@@ -19,6 +19,8 @@ install:
 - docker cp -L reach-build:/home/user/reach/_build reach_build
 - mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10-10000.f9a1a.x86_64/usr/lib/reach/
 - cp -R reach_build/prod/rel/reach/* ~/rpmbuild/BUILDROOT/reach-app-17.10-10000.f9a1a.x86_64/usr/lib/reach/
+- mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10-10000.f9a1a.x86_64/etc/init.d/
+- cp reach ~/rpmbuild/BUILDROOT/reach-app-17.10-10000.f9a1a.x86_64/etc/init.d/
 - mkdir ~/rpmbuild/SPECS
 - mkdir ~/rpmbuild/RPMS
 - mkdir ~/rpmbuild/SOURCES

@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# reach       Init script for OpenUC Reach
+#
+# chkconfig: 345 97 15
+# description: OpenUC Reach is a skills-based automated contact distribution \
+#              system built on Erlang and FreeSWITCH
+# processname: reach
+# config: @reachetcdir@/sys.config
+# config: @reachetcdir@/vm.args
+
+
+start() {
+  running=`/usr/lib/reach/bin/reach ping`
+  echo $running
+  if [[ "$running" == *"not responding to pings"* ]]
+  then
+      echo "Starting Reach...."
+      /usr/lib/reach/bin/reach start >&2
+  else
+      echo "Reach already running" >&2
+  fi
+}
+
+stop() {
+  /usr/lib/reach/bin/reach stop >&2
+}
+
+status() {
+  status=`/usr/lib/reach/bin/reach ping`
+  echo $status
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    /usr/lib/reach/bin/reach stop >&2
+    ;;
+  status)
+    /usr/lib/reach/bin/reach ping >&2
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+esac
