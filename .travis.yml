@@ -42,12 +42,19 @@ before_deploy:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: scp -i deploy.pem ~/rpmbuild/RPMS/x86_64/reach-app-17.10-10000.f9a1a.x86_64.rpm root@download.ezuce.com:/vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64/reach-app-17.10-10000.f9a1a.x86_64.rpm
+  script: scp -i deploy.pem ~/rpmbuild/RPMS/x86_64/reach-app-17.10-10000.f9a1a.x86_64.rpm
+    root@download.ezuce.com:/vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64/reach-app-17.10-10000.f9a1a.x86_64.rpm
   on:
     branch: UC-4547
 - provider: script
   skip_cleanup: true
-  script: ssh -i deploy.pem root@download.ezuce.com 'cd /vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64; createrepo .; chown -R download:download /vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64/repodata/; exit 0'
+  script: ssh -i deploy.pem root@download.ezuce.com 'cd /vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64;
+    createrepo .; chown -R download:download /vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64/repodata/;
+    exit 0'
   on:
     branch: UC-4547
 after_success:
+notifications:
+  slack:
+    rooms:
+      - secure: KKzgf+1nELkHTA6CZZvuqvPvFFoTaMe/naDFzZ7mId0Dm1U4GYZAO9wmDD+7R6PucXKBNWWB066OP2CxyuC334J2Tn+Jy8b/8dVWbWr4AHjy/vaZGCnvGQUc8LfsxYCjxAYd3QFbirPWd/7xbQMpyY7OnuqpXUXBQw0oec3/5tdPeNkbCPo6h59djHP7axJsYzcetmV+uHhhVBnMCj9uXKOFtLgj/cBW3Qze5wI9OLbNDnAIUq9QTl5he/wyD+r4rMPpQ1fZYgsCwuR0gXsOlVaMSNhhGcJsRSOLRH3fM/hr5PSd8b0X6BLzWazWFJcLm/8I8QjDfCEyHG3s1lW/mT4OLoH617hYRaRfJPlJOGjVAZQ0zIRdp0OSzmK3LHQ5zPzqCBa1TB7iq02EB8zmtDLmJOvjCSJBF8l17Vnr1P1IFXnVlCPa+1oL2152tsHnmtBWmeBSJ1qJ/D7W21W7WMgzJMYIw0YIDJQN7NWpCD4eAySs+5eTlddEeYsNIiaY/ty/WId0ml0XgdzjaJEJhJRn2fs5bo1dYsLApDe4amFqTpmadZfqRrNG3gaFlMmTA2KLmcBsh9I4axIwOjm/a/GfXuZZE6WjoxU/iPEBfDQqNc3/xksrN0g0r9kmXPdGjn6/WvznN099KvQI9EpqCNAmA/qx2ez2idRELXYlIA8=
