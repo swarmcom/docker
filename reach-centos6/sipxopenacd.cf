@@ -1,0 +1,471 @@
+# Copyright (C) 2013 eZuce Inc.
+
+#
+# reach configuration and process management
+#
+
+bundle agent sipxopenacd {
+  methods:
+    sipxopenacd::
+      "any" usebundle => "sipxopenacd_config";
+    any::
+      "any" usebundle => "reach_key";
+      "any" usebundle => "sipxopenacd_running";
+      "any" usebundle => "reach_apache";
+      "any" usebundle => "reach_clientrec_cleanup";
+      "any" usebundle => "reach_mongo_cleanup";
+      "any" usebundle => "reach_recordings_cleanup";
+      "any" usebundle => "reach_call_segments_facts";
+      "any" usebundle => "reach_logwatcher";
+}
+
+bundle agent reach_logwatcher {
+  files:
+    "$(sipx.SIPX_CONFDIR)/sipxlogwatcher.d/reach.tmp"
+      comment => "reach log watcher tmp",
+      create => "true",
+      perms => m(644),
+      transformer => "$(sipx.SIPX_LIBEXECDIR)/sipxlogwatcher-maker --in $(sipx.SIPX_CFDATA)/$(sipx.location_id)/alarms.yaml --template $(sipx.SIPX_CONFDIR)/openacd/reach.sec.erb --out $(this.promiser)";
+
+    "$(sipx.SIPX_CONFDIR)/sipxlogwatcher.d/reach.sec"
+      comment => "reach log watcher",
+      create => "true",
+      perms => m(644),
+      copy_from => local_cp_by_digest("$(sipx.SIPX_CONFDIR)/sipxlogwatcher.d/reach.tmp"),
+      classes => if_repaired("reload_sipxlogwatcher");
+}
+
+bundle agent sipxopenacd_config {
+  files:
+    any::
+      # regular configs
+      "/usr/lib/reach/releases/<REACH_VERSION>/vm.args"
+        comment => "install reach config $(this.promiser)",
+        create => "true",
+        perms => m("644"),
+        edit_line => sipxopenacd_vm_args,
+        classes => if_repaired("restart_reach");
+
+      "/usr/lib/reach/releases/<REACH_VERSION>/sys.config"
+        comment => "install reach config $(this.promiser)",
+        create => "true",
+        perms => m("644"),
+        edit_line => sipxopenacd_sys_config,
+        classes => if_repaired("restart_reach");
+
+      "/usr/lib64/reach/lib/reach_ouc-14.10.0/priv/scripts/reach-recordings/config.json"
+        comment => "configure reach recordings process",
+        create => "true",
+        perms => m("644"),
+        edit_line => reach_recordings_config,
+        classes => if_repaired("restart_reach_recordings");
+
+      sipxopenacd::
+        "$(sipx.SIPX_VARDIR)/configserver/phone/acd/audio"
+          comment => "sync Reach prompts",
+          create => "true",
+          perms => mog("644","$(sipx.SIPXPBXUSER)","$(sipx.SIPXPBXGROUP)"),
+          copy_from => copy_prompts("$(sipx.master_address)","$(sipx.SIPX_VARDIR)/configserver/phone/acd/audio"),
+          file_select => wav_prompt,
+          depth_search => recurse("1");
+}
+
+bundle edit_line sipxopenacd_vm_args() {
+  insert_lines:
+    any::
+"
+## Name of the node
+-name reach
+
+## Cookie for distributed erlang
+-setcookie ClueCon
+
+## Heartbeat management; auto-restarts VM if it dies or becomes unresponsive
+## (Disabled by default..use with caution!)
+##-heart
+
+## Enable kernel poll and a few async threads
++K true
++A 5
+
+## Increase number of concurrent ports/sockets
+##-env ERL_MAX_PORTS 4096
+
+## Tweak GC to run more often
+##-env ERL_FULLSWEEP_AFTER 10
+"
+;
+
+  delete_lines:
+    any::
+      ".*";
+}
+
+bundle edit_line sipxopenacd_sys_config() {
+  insert_lines:
+    any::
+"
+[{reach_core,
+  [
+   {rsakey, \"$(sipx.OPENACD_KEYDIR)/reach.key\"}
+    %% Add plugins here
+    , {plugins, [reach_freeswitch, reach_dialplan, reach_spx, reach_ouc]}
+    , {call_queue_config_storage, spx_call_queue_config}
+    , {nodes, [$(sipx.SYS_CONFIG_NODES)]}
+    , {call_record_format, mp3}
+    , {call_record_uri, \"/tmp\"}
+  ]},
+
+  %% Application-specific configuration here
+
+  {reach_freeswitch, [
+	{freeswitch_node, ['freeswitch@127.0.0.1']},
+	{originate, [
+		{uri, \"sofia/$(sipx.net_domain)\"},
+		{params, [
+			{bridge_early_media, true},
+			{sip_cid_type, pid},
+			{hangup_after_bridge, true}
+		]}
+	]}
+  ]},
+
+  {reach_dialplan,
+   [
+    {agent_login_announcement, \"$(sipx.SIPX_CONFDIR)/openacd/CannotLogin.wav\"}
+   ]},
+
+  {reach_spx, [
+	{replica_sets, [\"localhost:27017\"]}
+  ]},
+
+  {reach_ouc, [
+
+	{rstat, [
+		{backend, mongo},
+		{refresh_latency, $(sipx.STATS_REFRESH_LATENCY)}
+	]},
+
+	%{reports, [
+	%    {agent, [
+	%        {coverage, 300} % should be rounded to a value from ouc_rstat:DEFAULT_CONF
+	%    ]}
+	%]},
+
+	{ouc_agent_state_change_store, [
+		{backend, mongo},
+
+		{ouc_agent_state_change_store_mongo, [
+			{database, reach_reports},
+			{collection, agent_state_events},
+			{indexes, [agent_id, timestamp]}
+		]}
+	]},
+
+	{ouc_web, [
+		% WebSocket start bind port;
+		% wss_port = ws_port + 1;
+		{ws_port, 8936},
+
+		% Number of websocket workers (half for ws and half for wss)
+		% If cowboy_workers = 100,
+		%   wss will get 50 workers
+		%   ws  will get 50 workers
+		{cowboy_workers, 100},
+		{cowboy_ssl_versions, ['tlsv1.2','tlsv1.1',tlsv1]},
+
+		% TLS/SSL certificates to use
+      {ssl_certfile, \"$(sipx.APACHE2_CONFDIR)/ssl/ssl-web.crt\"},
+      {ssl_keyfile,  \"$(sipx.APACHE2_CONFDIR)/ssl/ssl-web.key\"}
+
+	]},
+
+	{ouc_call_segment_report_job, [
+		%% Seconds interval between script run
+		{interval, 300}
+	]},
+
+	{ouc_call_recordings_h, [
+		{recordings_streaming_port, 8222}
+	]},
+
+	{sipxconfig_rest_api, \"https://$(sipx.master_fqdn)/sipxconfig/rest\"},
+	{contact_info_resource, \"/my/contact-information\"},
+	{root_uri, \"\"},
+
+	% enable js debug tools/logs
+	{frontend_debug, true},
+
+	% static file server (no trailing slash)
+	{frontend_static_root_uri, \"/static\"},
+
+	{replica_sets, [\"localhost:27017\"]}
+  ]},
+
+  {lager, [
+	{handlers, [
+		{lager_console_backend, [
+			{level, info},
+			{formatter, lager_default_formatter},
+			{formatter_config, [date, \" \", time, \" \", pid, \" \", color, severity, \" \", {module,[module],\"\"}, {line,[\".\",line,\" \"],\"\"}, \"\e[0m\", message, \"\n\"]}
+		]},
+		{lager_file_backend, [
+			{file, \"log/debug.log\"},
+			{level, debug},
+			{formatter, lager_default_formatter},
+			{formatter_config, [date, \" \", time, \" \", pid, \" \", severity, \" \", {module,[module],\"\"}, {line,[\".\",line,\" \"],\"\"}, message, \"\n\"]}
+		]}
+	]},
+	{colored, true},
+	{error_logger_hwm, 5000}
+  ]},
+
+  {fs_sync, [
+	{default_handler, \"../../../../external.sh\"}
+  ]}
+]."
+;
+
+  delete_lines:
+    any::
+      ".*";
+}
+
+bundle edit_line reach_recordings_config() {
+  insert_lines:
+    any::
+"{
+  \"port\": 8222,
+  \"mongoini\": \"$(sipx.SIPX_CONFDIR)/mongo-client.ini\",
+  \"db\": \"reach\",
+  \"collections\": {
+    \"files\": \"fs.files\",
+    \"chunks\": \"fs.chunks\"
+  },
+  \"privateKeyFile\": \"$(sipx.SIPX_VARDIR)/key/reach.key\",
+  \"logFile\": \"$(sipx.OPENACD_LOGDIR)/reach-recordings-streaming.log\",
+  \"linkExpiration\": $(sipx.RECORDINGS_LINK_EXPIRATION)
+}"
+;
+
+  delete_lines:
+    any::
+      ".*";
+}
+
+# Remove entry from crontab for call recordings cleanup
+bundle agent reach_clientrec_cleanup {
+  vars:
+    # execute it every day after midnight
+    "cron" string => "10 0 * * * $(sipx.SIPX_BINDIR)/reach-clean `mongo --quiet localhost:27017 $(sipx.SIPX_BINDIR)/reach-mongo.js`> /dev/null";
+    "cron_id" string => ".*/reach-clean .*"; #regex
+
+  methods:
+    any::
+      "any" usebundle => remove_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)");
+}
+
+# Install cron schedules for mongo cdr and stats cleanup
+bundle agent reach_mongo_cleanup {
+  vars:
+    # execute it every day after midnight
+    "cron" string => "10 0 * * * mongo --quiet localhost:27017 $(sipx.SIPX_BINDIR)/reach-cdr-stats.js > /dev/null";
+    "cron_id" string => ".*/reach-cdr-stats .*"; #regex
+
+  methods:
+    sipxopenacd::
+      "any" usebundle => add_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)", "$(cron)");
+
+    !sipxopenacd::
+      "any" usebundle => remove_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)");
+}
+
+# Install cron schedules for call segment_facts
+bundle agent reach_call_segments_facts {
+  vars:
+    # TODO use @REL_VSN@ from reach-app instead of hardcoded 14.10.0 version
+    "cron" string => "$(sipx.CRON_CALL_SEGMENT_DATA_INTERVAL) * * * nice -10 node /usr/lib64/reach/lib/reach_ouc-14.10.0/priv/scripts/reach-csf/call_segment_facts.js -c $(sipx.CRON_CALL_SEGMENT_CHUNK_SIZE) &>> $(sipx.OPENACD_LOGDIR)/reach-call-segment-facts.log";
+    "cron_id" string => ".*/call_segment_facts.js .*"; #regex
+
+  methods:
+    sipxopenacd::
+      "any" usebundle => add_crontab("$(cron_id)", "root", "$(cron)");
+
+    !sipxopenacd::
+      "any" usebundle => remove_crontab("$(cron_id)", "root");
+
+    any::
+      "any" usebundle => remove_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)");
+}
+
+# Install cron schedules for reach recordings cleanup
+bundle agent reach_recordings_cleanup {
+  vars:
+    # execute it every day after midnight
+    "cron" string => "$(sipx.RECORDINGS_CLEANUP_MIN) $(sipx.RECORDINGS_CLEANUP_HOUR) * * * $(sipx.SIPX_BINDIR)/reach-recordings-clean.py -d $(sipx.OPENACD_LOGDIR)";
+    "cron_id" string => ".*/reach-recordings-clean.py .*"; #regex
+
+  methods:
+    sipxopenacd::
+      "any" usebundle => add_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)", "$(cron)");
+
+    !sipxopenacd::
+      "any" usebundle => remove_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)");
+}
+
+bundle agent reach_key {
+  vars:
+    any::
+      "key_file" string => "$(sipx.SIPX_VARDIR)/key/reach.key";
+      "key_list" slist => {
+        "reach.key",
+        "reach.key.pub"
+      };
+
+  classes:
+    "missing_key" not => fileexists("$(key_file)");
+
+  commands:
+    primary.missing_key::
+      "/usr/bin/ssh-keygen"
+        comment => "Creating reach key",
+        args => "-t rsa -f $(key_file) -N \"\" -q";
+
+  files:
+    !primary.sipxopenacd::
+      "$(sipx.SIPX_VARDIR)/key/$(key_list)"
+        comment => "Synchronize reach key",
+        perms => mog("600", "root", "root"),
+        copy_from => master_files("$(sipx.master_address)","$(sipx.SIPX_VARDIR)/key/$(key_list)"),
+        classes => if_repaired("restart_reach");
+}
+
+bundle agent sipxopenacd_running {
+  vars:
+    any::
+	  "service_command" string => ".*/usr/lib/reach/.*";
+
+  classes:
+    any::
+      "has_service_script" expression => fileexists("$(sipx.SIPX_SERVICEDIR)/reach");
+
+  methods:
+    any::
+	  "any" usebundle => find_service_by_command("$(service_command)","sipxopenacd_running","root");
+    sipxopenacd::
+      "any" usebundle => rh_chkconfig_status("reach_recordings on");
+    !sipxopenacd::
+      "any" usebundle => rh_chkconfig_status("reach_recordings off");
+
+  commands:
+    (!sipxopenacd|stop_sipxecs).sipxopenacd_running::
+      "/etc/init.d/reach"
+        comment => "stop reach",
+        args => "stop";
+
+       "$(sipx.SIPX_SERVICEDIR)/reach_recordings"
+        comment => "stop reach recordings",
+        args => "stop";
+
+    sipxopenacd.!sipxopenacd_running::
+      "/etc/init.d/reach"
+        comment => "start reach",
+        args => "start";
+
+      "$(sipx.SIPX_SERVICEDIR)/reach_recordings"
+        comment => "start reach recordings",
+        args => "start";
+
+    sipxopenacd.sipxopenacd_running.(restart_sipxecs|restart_reach)::
+      "/etc/init.d/reach"
+        comment => "restart reach",
+        args => "restart";
+
+    sipxopenacd.sipxopenacd_running.(restart_sipxecs|restart_reach|restart_reach_recordings)::
+      "$(sipx.SIPX_SERVICEDIR)/reach_recordings"
+        comment => "restart reach recordings",
+        args => "restart";
+
+
+}
+
+bundle agent reach_apache {
+  files:
+    "$(sipx.APACHE2_CONFDIR)/reach-nodes.ini"
+      comment => "install apache config for openuc reach dashboard $(this.promiser)",
+      create => "true",
+      perms => m("644"),
+      edit_line => sipxopenacd_reach_nodes,
+      classes => if_repaired("restart_apache");
+
+    "$(sipx.APACHE2_CONFDIR)/reach.conf"
+      comment => "install apache config for openuc reach dashboard $(this.promiser)",
+      create => "true",
+      perms => m("644"),
+      edit_line => sipxopenacd_reach_conf,
+      classes => if_repaired("restart_apache");
+}
+
+bundle edit_line sipxopenacd_reach_nodes() {
+  insert_lines:
+    any::
+"nodes $(sipx.REACH_NODES)"
+;
+
+  delete_lines:
+    any::
+      ".*";
+}
+
+bundle edit_line sipxopenacd_reach_conf() {
+  vars:
+    fedora16_or_greater::
+      "reach_location_prefix" string => "/usr/local/sipx";
+      "deploy_options" string => "Options none
+    Require all granted";
+    !fedora16_or_greater::
+      "reach_location_prefix" string => "";
+      "deploy_options" string => "Order allow,deny
+    Allow from all";
+    centos_dev::
+      "reach_location_prefix" string => "/usr/local/sipx";
+      "deploy_options" string => "Order allow,deny
+    Allow from all";
+
+  insert_lines:
+    any::
+"
+RewriteMap map rnd:$(sipx.APACHE2_CONFDIR)/reach-nodes.ini
+
+<LocationMatch \"^/reach/?$\">
+  RewriteEngine on
+
+  RewriteCond %{HTTPS} =off
+  RewriteRule ^.*$ http://${map:nodes}/reach/portal/  [L,R]
+
+  RewriteCond %{HTTPS} =on
+  RewriteRule ^.*$ https://${map:nodes}/reach/portal/ [L,R]
+</LocationMatch>
+
+RedirectMatch \"/reach/portal$\" \"/reach/portal/\"
+
+<Location \"/reach/portal/\">
+    DefaultType None
+    ProxyPass        http://127.0.0.1:8937/
+    ProxyPassReverse http://127.0.0.1:8937/
+</Location>
+
+Alias /reach/static \"$(reach_location_prefix)/var/www/reach\"
+
+<Directory \"$(reach_location_prefix)/var/www/reach\">
+    Options -Indexes
+    AllowOverride None
+    $(deploy_options)
+</Directory>
+"
+;
+
+  delete_lines:
+    any::
+      ".*";
+}

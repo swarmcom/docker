@@ -1,6 +1,6 @@
 Name:        reach-app
-Version:     17.10
-Release:     10000.f9a1a
+Version:     17.10.10000
+Release:     <REACH_VERSION>
 Summary:     Contact Center
 Group:       Misc
 License: CPAL
@@ -12,3 +12,4 @@ Reach is a skills-based, Call Center software based on FreeSWITCH and built in e
 %files
 /usr/lib/reach/*
 %attr(755,root,root) /etc/init.d/reach
+/usr/share/sipxecs/cfinputs/plugin.d/sipxopeancd.cf
