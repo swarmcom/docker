@@ -75,7 +75,7 @@ bundle edit_line sipxopenacd_vm_args() {
     any::
 "
 ## Name of the node
--name reach
+-name reach@$(sys.ipv4)
 
 ## Cookie for distributed erlang
 -setcookie ClueCon
