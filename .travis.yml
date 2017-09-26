@@ -25,8 +25,8 @@ install:
 - mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10.10000-$REACH_VERSION.x86_64/etc/init.d/
 - cp reach ~/rpmbuild/BUILDROOT/reach-app-17.10.10000-$REACH_VERSION.x86_64/etc/init.d/
 - mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10.10000-$REACH_VERSION.x86_64/usr/share/sipxecs/cfinputs/plugin.d/
-- cp sipxopeancd.cf ~/rpmbuild/BUILDROOT/reach-app-17.10.10000-$REACH_VERSION.x86_64/usr/share/sipxecs/cfinputs/plugin.d/
-- sed -i "s|<REACH_VERSION>|"$REACH_VERSION"|g" ~/rpmbuild/BUILDROOT/reach-app-17.10.10000-$REACH_VERSION.x86_64/usr/share/sipxecs/cfinputs/plugin.d/sipxopeancd.cf
+- cp sipxopenacd.cf ~/rpmbuild/BUILDROOT/reach-app-17.10.10000-$REACH_VERSION.x86_64/usr/share/sipxecs/cfinputs/plugin.d/
+- sed -i "s|<REACH_VERSION>|"$REACH_VERSION"|g" ~/rpmbuild/BUILDROOT/reach-app-17.10.10000-$REACH_VERSION.x86_64/usr/share/sipxecs/cfinputs/plugin.d/sipxopenacd.cf
 - mkdir ~/rpmbuild/SPECS
 - mkdir ~/rpmbuild/RPMS
 - mkdir ~/rpmbuild/SOURCES
