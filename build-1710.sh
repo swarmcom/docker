@@ -13,8 +13,8 @@ cd ../erlang && ./build.sh
 cd ../mongodb && ./build.sh
 cd ../elastic && ./build.sh
 cd ../kibana && ./build.sh
-cd ../freeswitch.1708 && ./build.sh
-cd ../agents && ./build.sh
+cd ../freeswitch-1708 && ./build.sh
+cd ../freeswitch-agents && ./build.sh
 cd ../rr && ./build.sh
 cd ../busytone && ./build.sh
 cd ../reach && ./build.sh
