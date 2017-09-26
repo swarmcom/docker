@@ -191,7 +191,8 @@ bundle edit_line sipxopenacd_sys_config() {
 
 	{sipxconfig_rest_api, \"https://$(sipx.master_fqdn)/sipxconfig/rest\"},
 	{contact_info_resource, \"/my/contact-information\"},
-	{root_uri, \"\"},
+  {reports_server_url, \"https://$(sipx.master_fqdn)/jasperserver\"},
+	{root_uri, \"/reach/portal\"},
 
 	% enable js debug tools/logs
 	{frontend_debug, true},
@@ -455,9 +456,9 @@ RedirectMatch \"/reach/portal$\" \"/reach/portal/\"
     ProxyPassReverse http://127.0.0.1:8937/
 </Location>
 
-Alias /reach/static \"$(reach_location_prefix)/var/www/reach\"
+Alias /static \"/usr/lib/reach/site\"
 
-<Directory \"$(reach_location_prefix)/var/www/reach\">
+<Directory \"/usr/lib/reach/site\">
     Options -Indexes
     AllowOverride None
     $(deploy_options)
