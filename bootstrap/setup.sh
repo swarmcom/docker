@@ -1,6 +1,8 @@
 #!/bin/sh
 clear
 
+. ./beforesetup.sh
+
 echo "=================================================================="
 echo "=== This procedure will remove all containers from this server ==="
 echo "=================================================================="
