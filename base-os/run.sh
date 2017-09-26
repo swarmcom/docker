@@ -1,7 +1,7 @@
 #!/bin/sh -e
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
-NAME=${NAME:-"sipxcom-fat.$NETWORK"}
+NAME=${NAME:-"base.$NETWORK"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -17,4 +17,4 @@ docker run $FLAGS \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
-	ezuce/sipxecs:17.04
+	$NETWORK/base
