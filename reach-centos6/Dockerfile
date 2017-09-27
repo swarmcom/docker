@@ -11,7 +11,7 @@ ENV ELASTIC=elastic.$NETWORK
 
 # override on build with --build-arg option
 ARG REPO=git@github.com:ezuce/reach-app.git
-ARG BRANCH=standalone
+ARG BRANCH=master
 
 USER root
 COPY build/setup-os.sh build/setup-os.sh
@@ -27,6 +27,8 @@ RUN build/setup-erlang.sh
 USER user
 COPY build/setup.sh build/setup.sh
 RUN build/setup.sh
+
+COPY etc/commit commit
 
 COPY build/compile-js.sh build/compile-js.sh
 RUN build/compile-js.sh

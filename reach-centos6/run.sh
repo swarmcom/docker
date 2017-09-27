@@ -27,4 +27,4 @@ docker run $FLAGS \
 	--env SIPXCOM=$SIPXCOM \
 	--env NODE=$NODE \
 	--env FSNODE=$FSNODE \
-	$NETWORK/reach
+	$NETWORK/reach-centos6
