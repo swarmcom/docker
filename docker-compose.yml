@@ -80,10 +80,12 @@
         - "12000:12000"
       volumes:
         - ./sipxconfig/run/conf/:/usr/local/sipx/etc/sipxpbx/conf/
+        - fs_config:/usr/local/sipx/etc/sipxpbx/freeswitch/conf/autoload_configs/
         - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
         - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
         - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
         - ./bootstrap/ssl-web.keystore:/usr/local/sipx/etc/sipxpbx/ssl/ssl-web.keystore
+        - prompts:/usr/local/sipx/share/www/doc/
       depends_on:
         - bootstrap
         - postgres
@@ -133,6 +135,7 @@
         - NETWORK_SUBNET=${NETWORK_SUBNET}
         - MACHINE_IP=${MACHINE_IP}
         - SIP_DOMAIN=${SIP_DOMAIN}
+        - DOMAIN=${DOMAIN}
         - HOST_PWD=${PWD}
         - DNS_IP=${DNS_IP}
         - MONGO_HOST=${MONGO_HOST}
@@ -157,3 +160,7 @@
     ezuce-private:
       external:
         name: ezuce-private
+
+  volumes:
+    prompts:
+    fs_config:

@@ -99,5 +99,8 @@ docker-compose -f docker-compose.yml down
 docker-compose -f docker-compose.yml build
 docker-compose -f docker-compose.yml  up --force-recreate -d
 
-
 docker restart nginx
+
+#docker create --name sipxconfigcopy ezuce/sipxconfig
+#docker cp sipxconfigcopy:/usr/local/sipx/share/www/ sipxconfig/run
+#docker rm sipxconfigcopy
