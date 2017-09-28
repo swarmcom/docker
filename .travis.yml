@@ -34,7 +34,7 @@ install:
 - mkdir ~/rpmbuild/SRPMS
 - mkdir ~/rpmbuild/BUILD
 - cp reach-app.spec ~/rpmbuild/SPECS/
-- sed -i "s|<REACH_VERSION>|"$REACH_VERSION"|g" ~/rpmbuild/SPECS/reach-app.spec
+- sed -i "s|<REACH_VERSION>|"$REACH_VERSION"|g; s|<EPOCH>|"$EPOCH"|g;" ~/rpmbuild/SPECS/reach-app.spec
 - ls -la ~/rpmbuild
 - rpmbuild -bb ~/rpmbuild/SPECS/reach-app.spec
 - cd ..

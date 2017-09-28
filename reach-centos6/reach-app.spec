@@ -1,5 +1,5 @@
 Name:        reach-app
-Version:     17.10.10000
+Version:     17.10.<EPOCH>
 Release:     <REACH_VERSION>
 Summary:     Contact Center
 Group:       Misc
