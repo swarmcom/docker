@@ -1,0 +1,4 @@
+{
+  "logFile": "/var/log/sipxpbx/reach-mongo-sync.log",
+  "mongoDbUri": "mongodb://localhost:27017/local"
+}

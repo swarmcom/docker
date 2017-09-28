@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# chkconfig: 345 97 15
+# description: reach mongo sync service
+#
+. /etc/init.d/functions
+
+export PATH=$PATH:/usr/bin
+
+
+start(){
+        cd /usr/lib/reach/mongo-sync
+        node_modules/forever/bin/forever start app.js
+}
+
+stop(){
+        cd /usr/lib/reach/mongo-sync
+        node_modules/forever/bin/forever stop app.js
+}
+
+restart(){
+        cd /usr/lib/reach/mongo-sync
+        node_modules/forever/bin/forever restart app.js
+}
+
+case "$1" in
+        start)
+                echo "Start service reach_sync"
+                start
+                ;;
+        stop)
+                echo "Stop service reach_sync"
+                stop
+                ;;
+        restart)
+                echo "Restart service reach_sync"
+                restart
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart}"
+                exit 1
+                ;;
+esac

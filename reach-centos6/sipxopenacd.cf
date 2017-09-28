@@ -355,8 +355,10 @@ bundle agent sipxopenacd_running {
 	  "any" usebundle => find_service_by_command("$(service_command)","sipxopenacd_running","root");
     sipxopenacd::
       "any" usebundle => rh_chkconfig_status("reach_recordings on");
+      "any" usebundle => rh_chkconfig_status("reach_sync on");
     !sipxopenacd::
       "any" usebundle => rh_chkconfig_status("reach_recordings off");
+      "any" usebundle => rh_chkconfig_status("reach_sync off");
 
   commands:
     (!sipxopenacd|stop_sipxecs).sipxopenacd_running::
@@ -368,6 +370,10 @@ bundle agent sipxopenacd_running {
         comment => "stop reach recordings",
         args => "stop";
 
+       "$(sipx.SIPX_SERVICEDIR)/reach_sync"
+         comment => "stop reach mongodb sync",
+         args => "stop";
+
     sipxopenacd.!sipxopenacd_running::
       "/etc/init.d/reach"
         comment => "start reach",
@@ -375,6 +381,10 @@ bundle agent sipxopenacd_running {
 
       "$(sipx.SIPX_SERVICEDIR)/reach_recordings"
         comment => "start reach recordings",
+        args => "start";
+
+      "$(sipx.SIPX_SERVICEDIR)/reach_sync"
+        comment => "start reach mongodb sync",
         args => "start";
 
     sipxopenacd.sipxopenacd_running.(restart_sipxecs|restart_reach)::
@@ -386,7 +396,6 @@ bundle agent sipxopenacd_running {
       "$(sipx.SIPX_SERVICEDIR)/reach_recordings"
         comment => "restart reach recordings",
         args => "restart";
-
 
 }
 

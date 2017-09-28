@@ -1,7 +1,7 @@
 sudo: required
 services:
 - docker
-language: python
+language: node_js
 branches:
   only:
   - master
@@ -17,14 +17,17 @@ install:
 - travis_wait 30 ./build.sh
 - docker create --name=reach-build ezuce/reach-centos6
 - docker cp -L reach-build:/home/user/reach/_build reach_build
+- cd mongo-sync && npm install && cd ..
 - REACH_VERSION=$(echo `cd reach_build/prod/rel/reach/releases/ && ls -d */` | sed 's/.$//')
 - EPOCH=$(date +%s)
 - mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/lib/reach/
 - cp -R reach_build/prod/rel/reach/* ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/lib/reach/
+- cp -R mongo-sync ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/lib/reach/
 - rm -rf ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/lib/reach/releases/$REACH_VERSION/vm.args
 - rm -rf ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/lib/reach/releases/$REACH_VERSION/sys.config
 - mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/etc/init.d/
 - cp reach ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/etc/init.d/
+- cp reach_sync ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/etc/init.d/
 - mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/share/sipxecs/cfinputs/plugin.d/
 - cp sipxopenacd.cf ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/share/sipxecs/cfinputs/plugin.d/
 - sed -i "s|<REACH_VERSION>|"$REACH_VERSION"|g" ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/share/sipxecs/cfinputs/plugin.d/sipxopenacd.cf
