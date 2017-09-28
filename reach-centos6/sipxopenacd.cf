@@ -107,7 +107,7 @@ bundle edit_line sipxopenacd_sys_config() {
 "
 [{reach_core,
   [
-   {rsakey, \"$(sipx.OPENACD_KEYDIR)/reach.key\"}
+   {rsakey, \"/usr/lib/reach/reach.key\"}
     %% Add plugins here
     , {plugins, [reach_freeswitch, reach_dialplan, reach_spx, reach_ouc]}
     , {call_queue_config_storage, spx_call_queue_config}
