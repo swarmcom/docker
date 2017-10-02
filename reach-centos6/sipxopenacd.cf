@@ -75,7 +75,7 @@ bundle edit_line sipxopenacd_vm_args() {
     any::
 "
 ## Name of the node
--name reach@$(sys.ipv4)
+-name reach@$(sipx.host).$(sipx.net_domain)
 
 ## Cookie for distributed erlang
 -setcookie ClueCon
@@ -119,9 +119,9 @@ bundle edit_line sipxopenacd_sys_config() {
   %% Application-specific configuration here
 
   {reach_freeswitch, [
-	{freeswitch_node, ['freeswitch@127.0.0.1']},
+	{freeswitch_node, [\'freeswitch@$(sipx.host).$(sipx.net_domain)\']},
 	{originate, [
-		{uri, \"sofia/$(sipx.net_domain)\"},
+		{uri, \"sofia/gateway/$(sipx.net_domain)/~s\"},
 		{params, [
 			{bridge_early_media, true},
 			{sip_cid_type, pid},
