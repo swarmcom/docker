@@ -19,4 +19,4 @@
 #make -j cd-sounds-install
 #make -j cd-moh-install
 
-yum clean all && yum install -y http://files.freeswitch.org/freeswitch-release-1-6.noarch.rpm epel-release && yum install -y freeswitch-config-vanilla freeswitch-lang-en freeswitch-sounds-en freeswitch-event-erlang-event && yum clean all
+yum clean all && yum install -y http://files.freeswitch.org/freeswitch-release-1-6.noarch.rpm epel-release && yum install -y freeswitch-config-vanilla freeswitch-lang-en freeswitch-sounds-en freeswitch-event-erlang-event && yum install -y inotify-tools && yum clean all
