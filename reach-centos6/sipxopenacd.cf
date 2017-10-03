@@ -211,8 +211,8 @@ bundle edit_line sipxopenacd_sys_config() {
 			{formatter_config, [date, \" \", time, \" \", pid, \" \", color, severity, \" \", {module,[module],\"\"}, {line,[\".\",line,\" \"],\"\"}, \"\e[0m\", message, \"\n\"]}
 		]},
 		{lager_file_backend, [
-			{file, \"log/debug.log\"},
-			{level, debug},
+			{file, \"$(sipx.OPENACD_LOGDIR)/sipxreach.log\"},
+			{level, $(sipx.OPENACD_LOG_LEVEL)},
 			{formatter, lager_default_formatter},
 			{formatter_config, [date, \" \", time, \" \", pid, \" \", severity, \" \", {module,[module],\"\"}, {line,[\".\",line,\" \"],\"\"}, message, \"\n\"]}
 		]}
