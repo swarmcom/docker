@@ -33,7 +33,7 @@ case "$1" in
     /usr/lib/reach/bin/reach ping >&2
     ;;
   restart)
-    /usr/lib/reach/bin/reach reboot
+    /usr/lib/reach/bin/reach restart
     ;;
   *)
     echo "Usage: $0 {start|stop|restart|status}"
