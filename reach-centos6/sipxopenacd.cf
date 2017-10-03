@@ -354,9 +354,11 @@ bundle agent sipxopenacd_running {
     any::
 	  "any" usebundle => find_service_by_command("$(service_command)","sipxopenacd_running","root");
     sipxopenacd::
+      "any" usebundle => rh_chkconfig_status("reach on");
       "any" usebundle => rh_chkconfig_status("reach_recordings on");
       "any" usebundle => rh_chkconfig_status("reach_sync on");
     !sipxopenacd::
+      "any" usebundle => rh_chkconfig_status("reach off");
       "any" usebundle => rh_chkconfig_status("reach_recordings off");
       "any" usebundle => rh_chkconfig_status("reach_sync off");
 
