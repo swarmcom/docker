@@ -285,7 +285,7 @@ bundle agent reach_mongo_cleanup {
 bundle agent reach_call_segments_facts {
   vars:
     # TODO use @REL_VSN@ from reach-app instead of hardcoded 14.10.0 version
-    "cron" string => "$(sipx.CRON_CALL_SEGMENT_DATA_INTERVAL) * * * nice -10 node /usr/lib64/reach/lib/reach_ouc-14.10.0/priv/scripts/reach-csf/call_segment_facts.js -c $(sipx.CRON_CALL_SEGMENT_CHUNK_SIZE) &>> $(sipx.OPENACD_LOGDIR)/reach-call-segment-facts.log";
+    "cron" string => "$(sipx.CRON_CALL_SEGMENT_DATA_INTERVAL) * * * nice -10 node /usr/lib/reach/scripts-priv/reach-csf/call_segment_facts.js -c $(sipx.CRON_CALL_SEGMENT_CHUNK_SIZE) &>> $(sipx.OPENACD_LOGDIR)/reach-call-segment-facts.log";
     "cron_id" string => ".*/call_segment_facts.js .*"; #regex
 
   methods:
