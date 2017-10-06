@@ -35,6 +35,9 @@ case "$1" in
   restart)
     /usr/lib/reach/bin/reach restart
     ;;
+  print-vqueues)
+    /usr/lib/reach/bin/reach rpc cpx print_vqueues
+    ;;
   *)
-    echo "Usage: $0 {start|stop|restart|status}"
+    echo "Usage: $0 {start|stop|restart|status|print-vqueues}"
 esac
