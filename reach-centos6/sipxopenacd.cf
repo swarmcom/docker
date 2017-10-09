@@ -243,7 +243,7 @@ bundle edit_line reach_recordings_config() {
     \"files\": \"fs.files\",
     \"chunks\": \"fs.chunks\"
   },
-  \"privateKeyFile\": \"$(sipx.SIPX_VARDIR)/key/reach.key\",
+  \"privateKeyFile\": \"/usr/lib/reach/reach.key\",
   \"logFile\": \"$(sipx.OPENACD_LOGDIR)/reach-recordings-streaming.log\",
   \"linkExpiration\": $(sipx.RECORDINGS_LINK_EXPIRATION)
 }"
