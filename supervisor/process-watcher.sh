@@ -8,9 +8,6 @@ if [ -f "$IP_FILE" ]; then
 fi
 echo "Container $1 address file: $IP_FILE"
 echo "Container $1 ip address: $IP"
-echo "Host current directory used for mapping: $HOST_PWD"
-echo "Mongo IP is $MONGO_IP"
-echo "CDR IP is $CDR_IP"
 
 if [ ! -z "$IP" ]; then
     PROCESS=`cat $CFDAT_FILE`

@@ -28,7 +28,7 @@
       dns: 127.0.0.1
       dns_search: $DOMAIN
       networks:
-         ezuce-public:
+         ezuce-private:
            ipv4_address: $DNS_IP
 
 
@@ -97,19 +97,6 @@
       networks:
         - ezuce-private
 
-    #freeswitch:
-        #image: ezuce/freeswitch-sipx
-        #ports:
-          #- "8888:22"
-          #- "15060:15060"
-          #- "8084:8084"
-          #- "8184:8184"
-          #- "8284:8284"
-          #- "8080:8080"
-        #container_name: freeswitch
-        #networks:
-          #- ezuce-private
-
     nginx:
       image: nginx
       ports:
@@ -140,7 +127,7 @@
         - DNS_IP=${DNS_IP}
         - MONGO_HOST=${MONGO_HOST}
         - HOST_NAME=${HOST_NAME}
-        - FREEIPS=${FREEIPS}
+#        - FREEIPS=${FREEIPS}
         - MONGO_IP=${MONGO_IP}
         - CDR_IP=${CDR_IP}
       volumes:

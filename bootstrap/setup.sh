@@ -1,14 +1,16 @@
 #!/bin/sh
 clear
 
-. ./beforesetup.sh
+if [ ! -f /etc/systemd/system/docker.service.d/docker.conf  ] ; then
+sudo ./beforesetup.sh
+fi
+
 
 echo "=================================================================="
 echo "=== This procedure will remove all containers from this server ==="
 echo "=================================================================="
-printf "\n"
-printf "\n"
-printf "\n"
+printf "\n\n\n"
+
 
 echo "=================================================================="
 echo "=== If you agree press Y, if not setup will exit and you CAN'T ==="
@@ -45,6 +47,8 @@ echo "Enter realm"
 read realm
 REALM="$realm"
 
+clear
+echo "Will do some cleanup first.Please wait..."
 #cleanup
 
 # Remove existing containers
@@ -69,12 +73,13 @@ sudo rm -rf ../mongodb-sipxconfig/mongo-data/data/* && \
 
 printf "\n"
 printf "\n"
-echo "Enter DNS container IP address from your public subdomain."
-echo "Make sure IP is not already in use "
-read dnsIP
-DNS_IP="$dnsIP"
+#echo "Enter DNS container IP address from your public subdomain."
+#echo "Make sure IP is not already in use "
+#read dnsIP
+#DNS_IP="$dnsIP"
 MONGO_IP="172.18.0.100"
 CDR_IP="172.18.0.101"
+DNS_IP="172.18.0.102"
 
 
 export MONGO_HOST
@@ -89,7 +94,7 @@ export NETWORK_NAME
 export NETWORK_SUBNET
 export DNS_IP
 export DROUTER_IP
-export FREEIPS
+#export FREEIPS
 export PRIVATE_SUBNET
 export MONGO_IP
 export CDR_IP

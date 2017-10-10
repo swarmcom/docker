@@ -23,20 +23,20 @@ CIDR=$(mask2cdr $NETWORK_MASK)
 clear
 NETWORK_SUBNET="$(ip route | grep $INTERFACE | grep $HOST_IP | awk '{print $1}')"
 
-echo 'Getting free IPs in the public subnet range...It will take a while'
-FREEIPS=$(nmap -v -sn -n $NETWORK_SUBNET -oG - | awk '/Status: Down/{print $2}')
+#echo 'Getting free IPs in the public subnet range...It will take a while'
+#FREEIPS=$(nmap -v -sn -n $NETWORK_SUBNET -oG - | awk '/Status: Down/{print $2}')
 
 
 # Create ezuce-public network
 
 echo   "==========================================================="
-printf "===   ezuce-public network subnet(CIDR): x.x.x.x/N.     === \n"
+printf "===   Your public network subnet(CIDR): x.x.x.x/N.     === \n"
 printf "===                 will use your                       === \n"
 printf "===   DEFAULT host network $NETWORK_IP/$CIDR            === \n"
 echo   "==========================================================="
 
 
-printf "\nRemoving ezuce-* networks if exists\n"
+printf "\nRemoving ezuce-* networks if any exists\n"
 
 if [ `docker network ls | grep ezuce | wc -l` > 0 ]
   then
@@ -46,24 +46,24 @@ if [ `docker network ls | grep ezuce | wc -l` > 0 ]
 fi
 
 #Preparing host to macvaln intercommunication
-sudo ip link del ezuce-macvlan link $INTERFACE type macvlan mode bridge > /dev/null 2>&1
-printf "\nProvide IP x.x.x.x address for your virtual Host interface. Should be a free IP from host public subnet\n"
-read virtIP
-VIRT_IP="$virtIP/$CIDR"
+#sudo ip link del ezuce-macvlan link $INTERFACE type macvlan mode bridge > /dev/null 2>&1
+#printf "\nProvide IP x.x.x.x address for your virtual Host interface. Should be a free IP from host public subnet\n"
+#read virtIP
+#VIRT_IP="$virtIP/$CIDR"
 
 
 
-sudo ip link add ezuce-macvlan link $INTERFACE type macvlan mode bridge
-sudo ip addr add $VIRT_IP dev ezuce-macvlan
-sudo ifconfig ezuce-macvlan up
+#sudo ip link add ezuce-macvlan link $INTERFACE type macvlan mode bridge
+#sudo ip addr add $VIRT_IP dev ezuce-macvlan
+#sudo ifconfig ezuce-macvlan up
 
 
-docker network create \
-      -d macvlan \
-      --subnet $NETWORK_SUBNET \
-      --gateway $HOST_IP \
-      -o parent=$INTERFACE \
-       ezuce-public > /dev/null 2>&1
+#docker network create \
+#      -d macvlan \
+#      --subnet $NETWORK_SUBNET \
+#      --gateway $HOST_IP \
+#      -o parent=$INTERFACE \
+#       ezuce-public > /dev/null 2>&1
 
 
 #     - create a private ezuce-private (bridge mode for all except proxy freeswitch and sipxbridge)

@@ -1,0 +1,25 @@
+FROM centos:6
+
+
+COPY etc/sipxecx.repo /etc/yum.repos.d/
+
+COPY build/setup-os.sh build/setup-os.sh
+RUN build/setup-os.sh
+
+COPY build/setup-deps.sh build/setup-deps.sh
+RUN build/setup-deps.sh
+
+USER root
+
+COPY src/sipxecs /root/sipxecs
+COPY build/setup.sh build/setup.sh
+RUN build/setup.sh
+
+COPY build/build.sh build/build.sh
+RUN build/build.sh
+COPY build/after-build.sh build/after-build.sh
+RUN build/after-build.sh
+WORKDIR /home/user
+COPY conf/sipxrelay.sh sipxrelay.sh
+#ENTRYPOINT ["/home/user/sipxrelay.sh"]
+CMD /home/user/sipxrelay.sh
