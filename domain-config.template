@@ -1,0 +1,7 @@
+SIP_DOMAIN_NAME : testRealm
+SIP_REALM : testRealm
+SHARED_SECRET : RAJDFaFkzZ01z9Ji2zeIKfzZ
+DEFAULT_LANGUAGE : en
+SUPERVISOR_PORT : 8092
+SIP_DOMAIN_ALIASES : uc1.mihai.test 10.3.0.150 10.3.0.151 uc2.testRealm 10.3.0.152 uc3.testRealm
+CONFIG_HOSTS : uc1.mihai.test

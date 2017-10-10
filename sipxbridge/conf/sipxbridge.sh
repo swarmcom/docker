@@ -1,4 +1,8 @@
 #!/bin/sh -e
+#create log directory
+mkdir -p usr/local/sipx/var/log/sipxpbx/
+
+
 
 JavaCmd=`/usr/local/sipx/bin/sipx-config --java`
 TmpDir=/usr/local/sipx/var/sipxdata/tmp
