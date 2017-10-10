@@ -62,7 +62,6 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && 
          sed -i "s/^\(SIPX_PROXY_HOST_ALIASES*:*\).*$/& $SIP_DOMAIN:5060/"  $proxyConfig
          sed -i "s/^\(SIPX_PROXY_LOG_LEVEL*:*\).*$/\1 \: DEBUG/"  $proxyConfig
 
-        echo "A INTRAT in PROXY"
          echo "${rangeArrayPrivate[3]}" >> $proxyIpConfig
      fi
      if [ -z "$registrarIp" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ]; then
@@ -93,7 +92,7 @@ if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && 
     docker restart named
 fi
 
-#echo "ADRESA NATRELAY ESTE   $bridgeIP"
+
 
 #sed -i "s|<mediarelaynativeaddress>[0-9a-z.]\{1,\}</mediarelaynativeaddress>|<mediarelaynativeaddress>$bridgeIP</mediarelaynativeaddress>|g" $natConfig
 #sed -i "s|<proxyunsecurehostport>[0-9a-z.]\{1,\}:5060</proxyunsecurehostport>|<proxyunsecurehostport>$proxyIP</proxyunsecurehostport>|g" $natConfig
