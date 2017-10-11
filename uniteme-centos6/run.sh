@@ -1,12 +1,7 @@
 #!/bin/sh -e
-FLAGS=${FLAGS:-"-td"}
+FLAGS=${FLAGS:-"-d"}
 NETWORK=${NETWORK:-"ezuce"}
-MONGODB=${MONGODB:-"mongodb.$NETWORK"}
-ELASTIC=${ELASTIC:-"elastic.$NETWORK"}
-SIPXCOM=${SIPXCOM:-"sipxcom.$NETWORK"}
-NAME=${NAME:-"reach-centos6.$NETWORK"}
-FSNODE=${FSNODE:-"freeswitch@freeswitch.$NETWORK"}
-NODE=${NODE:-"reach@$NAME"}
+NAME=${NAME:-"uniteme-centos6.$NETWORK"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -16,15 +11,22 @@ then
 	docker rm -f $NAME
 fi
 
+docker volume create --name etcSipxpbx
+docker volume create --name varLog
+docker volume create --name usrShareSipxecs
+docker volume create --name usrShareWww
+docker volume create --name varSipxdata
+
 echo -n "starting: $NAME "
 docker run $FLAGS \
 	--net $NETWORK \
+	--cap-add SYS_ADMIN \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
-	--env MONGODB=$MONGODB \
-	--env ELASTIC=$ELASTIC \
-	--env SIPXCOM=$SIPXCOM \
-	--env NODE=$NODE \
-	--env FSNODE=$FSNODE \
-	$NETWORK/reach
+	-v varSipxdata:/var/sipxdata \
+	-v etcSipxpbx:/etc/sipxpbx \
+	-v varLog:/var/log \
+	-v usrShareSipxecs:/usr/share/sipxecs \
+	-v usrShareWww:/usr/share/www \
+	$NETWORK/uniteme-centos6

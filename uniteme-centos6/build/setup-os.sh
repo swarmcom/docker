@@ -1,3 +1,3 @@
-#!/bin/bash
-adduser -d /home/user user
+#!/bin/sh -e
 yum update -y
+yum install -y yum-plugin-ovl
