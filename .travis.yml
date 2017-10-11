@@ -6,7 +6,6 @@ branches:
   only:
   - master
   - travis
-  - UC-4547
 addons:
   ssh_known_hosts: download.ezuce.com
 before_install:
