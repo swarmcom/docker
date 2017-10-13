@@ -80,7 +80,6 @@
         - "12000:12000"
       volumes:
         - ./sipxconfig/run/conf/:/usr/local/sipx/etc/sipxpbx/conf/
-        - fs_config:/usr/local/sipx/etc/sipxpbx/freeswitch/conf/autoload_configs/
         - ./bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini
         - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
         - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
@@ -150,4 +149,3 @@
 
   volumes:
     prompts:
-    fs_config:

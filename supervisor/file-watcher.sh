@@ -1,4 +1,15 @@
 #!/bin/bash
+
+machineIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/machine"
+machineIp=""
+if [ -f "$machineIpConfig" ]; then
+    machineIp=`cat $machineIpConfig`
+fi
+
+if [ -z "$machineIp" ]; then
+    echo "$MACHINE_IP" >> $machineIpConfig
+fi
+
 proxyConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipXproxy-config"
 registrarConfig="/usr/local/sipx/etc/sipxpbx/conf/1/registrar-config"
 cdrConfig="/usr/local/sipx/etc/sipxpbx/conf/1/callresolver-config"
@@ -33,9 +44,7 @@ if [ -f "$freeswitchIpConfig" ]; then
    freeswitchIp=`cat $freeswitchIpConfig`
 fi
 
-if [ -f "$proxyConfig" ] && [ -f "$registrarConfig" ] && [ -f "$cdrConfig" ] && [ -f "$freeswitchConfig" ] && { { [ -z "$registrarIp" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ]; } || { [ -z "$proxyIp" ] && [ ${PROCESS_PROXY:0:1} == "+" ]; } || { [ -z "$cdrIp" ] && [ ${PROCESS_CDR:0:1} == "+" ]; } || { [ -z "$freeswitchIp" ] && [ ${PROCESS_FREESWITCH:0:1} == "+" ]; }; }; then
-
-   echo "A INTRAT IN IF"
+if { { [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ]; } || { [ -f "$proxyConfig" ] && [ -z "$proxyIp" ] && [ ${PROCESS_PROXY:0:1} == "+" ]; } || { [ -f "$cdrConfig" ] && [ -z "$cdrIp" ] && [ ${PROCESS_CDR:0:1} == "+" ]; } || { [ -f "$freeswitchConfig" ] && [ -z "$freeswitchIp" ] && [ ${PROCESS_FREESWITCH:0:1} == "+" ]; }; }; then
 #  FREE PRIVATE SUBNET IPs for registrar
      cmd=`docker network inspect ezuce-private |grep IPv4 | awk -F":" '{print $2}'`
      result=$cmd
