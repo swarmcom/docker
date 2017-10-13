@@ -1,5 +1,15 @@
 #!/bin/bash
 
+machineIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/machine"
+machineIp=""
+if [ -f "$machineIpConfig" ]; then
+    machineIp=`cat $machineIpConfig`
+fi
+
+if [ -z "$machineIp" ]; then
+    echo "$MACHINE_IP" >> $machineIpConfig
+fi
+
 proxyConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipXproxy-config"
 registrarConfig="/usr/local/sipx/etc/sipxpbx/conf/1/registrar-config"
 cdrConfig="/usr/local/sipx/etc/sipxpbx/conf/1/callresolver-config"
