@@ -6,7 +6,7 @@ then
 fi
 REPO=${1:-"https://$TOKEN@github.com/ezuce/reach-app.git"}
 
-BRANCH=${BRANCH:-"master"}
+BRANCH=${BRANCH:-"release-17.10"}
 NETWORK=${NETWORK:-"ezuce"}
 
 echo Using repository:$REPO branch:$BRANCH
