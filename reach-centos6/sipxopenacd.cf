@@ -209,18 +209,22 @@ bundle edit_line sipxopenacd_sys_config() {
 ]},
 
 {lager, [
-	{handlers, [
-      {lager_console_backend, [info,
-        {lager_default_formatter, [time, \" \", pid, \" \", color, severity, \" \", {module,[module],\"\"}, {line,[\".\",line,\" \"],\"\"}, \"\e[0m\", message, \"\n\"]}
+      {handlers, [
+              {lager_console_backend, [
+                      {level, info},
+                      {formatter, lager_default_formatter},
+                      {formatter_config, [date, \" \", time, \" \", pid, \" \", color, severity, \" \", {module,[module],\"\"}, {line,[\".\",line,\" \"],\"\"}, \"\e[0m\", message, \"\n\"]}
+              ]},
+              {lager_file_backend, [
+                      {file, \"$(sipx.OPENACD_LOGDIR)/sipxreach.log\"},
+                      {level, $(sipx.OPENACD_LOG_LEVEL)},
+                      {formatter, lager_default_formatter},
+                      {formatter_config, [date, \" \", time, \" \", pid, \" \", severity, \" \", {module,[module],\"\"}, {line,[\".\",line,\" \"],\"\"}, message, \"\n\"]}
+              ]}
       ]},
-      {lager_file_backend, [
-        {file, \"$(sipx.OPENACD_LOGDIR)/sipxreach.log\"},
-        {level, $(sipx.OPENACD_LOG_LEVEL)},
-			]}
-	]},
-	{colored, true},
-	{error_logger_hwm, 5000}
-  ]},
+      {colored, true},
+      {error_logger_hwm, 5000}
+]}
 
 ]."
 ;
