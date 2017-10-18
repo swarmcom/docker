@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# chkconfig: 345 97 15
+# description: reach recordings service
+#
+. /etc/init.d/functions
+
+export PATH=$PATH:/usr/bin
+
+
+start(){
+        cd /usr/lib/reach/scripts-priv/reach-recordings
+        node_modules/forever/bin/forever start recording_streaming_server.js
+}
+
+stop(){
+        cd /usr/lib/reach/scripts-priv/reach-recordings
+        node_modules/forever/bin/forever stop recording_streaming_server.js
+}
+
+restart(){
+        cd /usr/lib/reach/scripts-priv/reach-recordings
+        node_modules/forever/bin/forever restart recording_streaming_server.js
+}
+
+case "$1" in
+        start)
+                echo "Start service reach_recordings"
+                start
+                ;;
+        stop)
+                echo "Stop service reach_recordings"
+                stop
+                ;;
+        restart)
+                echo "Restart service reach_recordings"
+                restart
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart}"
+                exit 1
+                ;;
+esac
