@@ -13,7 +13,7 @@ registrarHost = 'sipxregistrar' + '.' + sipDomain
 configuredIp = socket.gethostbyname(socket.gethostname())
 primaryIp = configuredIp
 primaryFqdn = fqdn
-secret = subprocess.call("`head -c 18 /dev/urandom | base64`", shell=True)
+secret = subprocess.getoutput("head -c 18 /dev/urandom | base64")
 
 
 ## Mihai - I've removed shardID and read preferences to be able to start sipxregistrar - probably this needs to be done in mongo init

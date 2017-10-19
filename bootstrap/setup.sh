@@ -2,7 +2,7 @@
 clear
 
 if [ ! -f /etc/systemd/system/docker.service.d/docker.conf  ] ; then
-sudo ./beforesetup.sh
+    sudo ./beforesetup.sh
 fi
 
 
