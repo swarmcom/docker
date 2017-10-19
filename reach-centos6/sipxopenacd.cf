@@ -444,7 +444,7 @@ RedirectMatch \"/reach/portal$\" \"/reach/portal/\"
     ProxyPassReverse http://127.0.0.1:8937/
 </Location>
 
-Alias /static \"/usr/lib/reach/site\"
+Alias /reach/static \"/usr/lib/reach/site\"
 
 <Directory \"/usr/lib/reach/site\">
     Options -Indexes
