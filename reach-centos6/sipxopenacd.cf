@@ -53,6 +53,12 @@ bundle agent sipxopenacd_config {
         edit_line => sipxopenacd_sys_config,
         classes => if_repaired("restart_reach");
 
+      "/usr/lib/reach/releases/<REACH_VERSION>/lager.config"
+        comment => "install reach config $(this.promiser)",
+        create => "true",
+        perms => m("644"),
+        edit_line => sipxopenacd_lager_config;
+
       "/usr/lib/reach/scripts-priv/reach-recordings/config.json"
         comment => "configure reach recordings process",
         create => "true",
@@ -75,7 +81,7 @@ bundle edit_line sipxopenacd_vm_args() {
     any::
 "
 ## Name of the node
--name reach@$(sipx.host).$(sipx.net_domain)
+-name reach
 
 ## Cookie for distributed erlang
 -setcookie ClueCon
@@ -85,14 +91,17 @@ bundle edit_line sipxopenacd_vm_args() {
 ##-heart
 
 ## Enable kernel poll and a few async threads
-+K true
-+A 5
+##+K true
+##+A 5
 
 ## Increase number of concurrent ports/sockets
 ##-env ERL_MAX_PORTS 4096
 
 ## Tweak GC to run more often
 ##-env ERL_FULLSWEEP_AFTER 10
+
+## Supported ssl protocol versions for the entire virtual machine
+-ssl protocol_version \"[\\'tlsv1.2\\',\\'tlsv1.1\\', tlsv1]\"
 "
 ;
 
@@ -105,127 +114,69 @@ bundle edit_line sipxopenacd_sys_config() {
   insert_lines:
     any::
 "
-[{reach_core,
+[
+ {reach_core,
   [
-   {rsakey, \"/usr/lib/reach/reach.key\"},
-
+   {rsakey, \"$(sipx.OPENACD_KEYDIR)/reach.key\"}
     %% Add plugins here
-    {plugins, [reach_freeswitch, reach_dialplan, reach_spx, reach_ouc]},
-
-    % Module to authenticate agents by login and password
-    {agent_auth_storage, spx_agent_auth},
-
-    {call_queue_config_storage, spx_call_queue_config},
-    {agent_bridge_delay, 250},
-
-    %% Add reach nodes here
-    {nodes, []},
-    {recording_format, mp3}
+    , {plugins, [reach_freeswitch, reach_dialplan, reach_spx, reach_ouc]}
+    , {agent_auth_storage, spx_agent_auth}
+    , {call_queue_config_storage, spx_call_queue_config}
+    , {nodes, [$(sipx.SYS_CONFIG_NODES)]}
+    , {recording_format, mp3}
   ]},
-
   %% Application-specific configuration here
-  {reach_freeswitch, [
-      {freeswitch_node, [\'freeswitch@$(sipx.host).$(sipx.net_domain)\']},
-      {cpx_managed, true}
-  ]},
+  {reach_dialplan,
+   [
+    {agent_login_announcement, \"$(sipx.SIPX_CONFDIR)/openacd/CannotLogin.wav\"}
+   ]},
+  {reach_freeswitch,
+   [
+    {freeswitch_node, 'freeswitch@127.0.0.1'},
+    {cpx_managed, true}
+   ]},
+  {reach_ouc,
+   [
+    {rstat,
+     [
+      {backend, mongo},
+      {refresh_latency, $(sipx.STATS_REFRESH_LATENCY)}
+     ]},
+    {ouc_web,
+     [
+      %% WebSocket start bind port;
+      %% wss_port = ws_port + 1;
+      {ws_port, 8936},
 
-  {reach_dialplan, [
-      {agent_login_announcement, \"$(sipx.SIPX_CONFDIR)/openacd/CannotLogin.wav\"}
-  ]},
+      %% Number of websocket workers (half for ws and half for wss)
+      %% If cowboy_workers = 100
+      %%   wss will get 50 workers
+      %%   ws  will get 50 workers
+      {cowboy_workers, 100},
+      {cowboy_ssl_versions, ['tlsv1.2','tlsv1.1',tlsv1]},
 
-  {reach_spx, [
-	    {replica_sets, [\"localhost:27017\"]}
-  ]},
-
-  {reach_ouc, [
-
-  	{rstat, [
-  		{backend, mongo},
-  		{refresh_latency, $(sipx.STATS_REFRESH_LATENCY)}
-  	]},
-
-    % Redis
-  	{redis, [
-  		{host, \"localhost\"},
-  		{port, 6379}
-  	]},
-
-  	%{reports, [
-  	%    {agent, [
-  	%        {coverage, 300} % should be rounded to a value from ouc_rstat:DEFAULT_CONF
-  	%    ]}
-  	%]},
-
-	{ouc_agent_state_change_store, [
-		{backend, mongo},
-
-		{ouc_agent_state_change_store_mongo, [
-			{database, reach_reports},
-			{collection, agent_state_events},
-			{indexes, [agent_id, timestamp]}
-		]}
-	]},
-
-	{ouc_web, [
-		% WebSocket start bind port;
-		% wss_port = ws_port + 1;
-		{ws_port, 8936},
-
-		% Number of websocket workers (half for ws and half for wss)
-		% If cowboy_workers = 100,
-		%   wss will get 50 workers
-		%   ws  will get 50 workers
-		{cowboy_workers, 100},
-		{cowboy_ssl_versions, ['tlsv1.2','tlsv1.1',tlsv1]},
-
-		% TLS/SSL certificates to use
+      %% TLS/SSL certificates to use
       {ssl_certfile, \"$(sipx.APACHE2_CONFDIR)/ssl/ssl-web.crt\"},
       {ssl_keyfile,  \"$(sipx.APACHE2_CONFDIR)/ssl/ssl-web.key\"}
+     ]},
+    {ouc_call_recordings_h,
+     [
+      %% Call recordings playback script port
+      {recordings_streaming_port, 8222}
+     ]},
+    {sipxconfig_rest_api, \"https://$(sipx.master_fqdn)/sipxconfig/rest\"},
+    {contact_info_resource, \"/my/contact-information\"},
+    {reports_server_url, \"https://$(sipx.master_fqdn)/jasperserver\"},
+    {root_uri, \"/reach/portal\"},
 
-	]},
+    %% enable js debug tools/logs
+    {frontend_debug, false},
 
-	{ouc_call_segment_report_job, [
-		%% Seconds interval between script run
-		{interval, 300}
-	]},
-
-	{ouc_call_recordings_h, [
-    %% Call recordings playback script port
-		{recordings_streaming_port, 8222}
-	]},
-
-	{sipxconfig_rest_api, \"https://$(sipx.master_fqdn)/sipxconfig/rest\"},
-	{contact_info_resource, \"/my/contact-information\"},
-  {reports_server_url, \"https://$(sipx.master_fqdn)/jasperserver\"},
-	{root_uri, \"/reach/portal\"},
-
-	% enable js debug tools/logs
-	{frontend_debug, true},
-
-	% static file server (no trailing slash)
-	{frontend_static_root_uri, \"/static\"},
-
-	{replica_sets, [\"localhost:27017\"]}
-]},
-
-{lager, [
-      {handlers, [
-              {lager_console_backend, [
-                      {level, info},
-                      {formatter, lager_default_formatter},
-                      {formatter_config, [date, \" \", time, \" \", pid, \" \", color, severity, \" \", {module,[module],\"\"}, {line,[\".\",line,\" \"],\"\"}, \"\e[0m\", message, \"\n\"]}
-              ]},
-              {lager_file_backend, [
-                      {file, \"$(sipx.OPENACD_LOGDIR)/sipxreach.log\"},
-                      {level, $(sipx.OPENACD_LOG_LEVEL)},
-                      {formatter, lager_default_formatter},
-                      {formatter_config, [date, \" \", time, \" \", pid, \" \", severity, \" \", {module,[module],\"\"}, {line,[\".\",line,\" \"],\"\"}, message, \"\n\"]}
-              ]}
-      ]},
-      {colored, true},
-      {error_logger_hwm, 5000}
-]}
-
+    %% static file server (no trailing slash)
+    {frontend_static_root_uri, \"/reach/static\"}
+   ]},
+  {lager, []},
+  \"/usr/lib/reach/releases/<REACH_VERSION>/lager.config\"
 ]."
 ;
 
@@ -233,6 +184,40 @@ bundle edit_line sipxopenacd_sys_config() {
     any::
       ".*";
 }
+
+bundle edit_line sipxopenacd_lager_config() {
+  insert_lines:
+    any::
+"
+[
+ {lager,
+  [
+   {handlers,
+    [
+     %% {lager_console_backend,
+     %%  [
+     %%   info,
+     %%   {lager_default_formatter,
+     %%    [time,\" [\",severity,\"] \",pid, node, \" - \", module, \":\", function,\":\", line,\" - \", message, \"\n\"]}
+     %%  ]},
+     {lager_file_backend,
+      [
+       {file, \"$(sipx.OPENACD_LOGDIR)/sipxreach.log\"},
+       {level, $(sipx.OPENACD_LOG_LEVEL)},
+       {size, 50485760},
+       {date, \"$D0\"},
+       {count, 15}
+      ]}
+    ]}
+  ]}
+]."
+;
+
+  delete_lines:
+    any::
+      ".*";
+}
+
 
 bundle edit_line reach_recordings_config() {
   insert_lines:
@@ -245,7 +230,7 @@ bundle edit_line reach_recordings_config() {
     \"files\": \"fs.files\",
     \"chunks\": \"fs.chunks\"
   },
-  \"privateKeyFile\": \"/usr/lib/reach/reach.key\",
+  \"privateKeyFile\": \"$(sipx.SIPX_VARDIR)/key/reach.key\",
   \"logFile\": \"$(sipx.OPENACD_LOGDIR)/reach-recordings-streaming.log\",
   \"linkExpiration\": $(sipx.RECORDINGS_LINK_EXPIRATION)
 }"
