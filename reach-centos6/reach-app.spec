@@ -10,6 +10,7 @@ URL:         http://ezuce.com
 Reach is a skills-based, Call Center software based on FreeSWITCH and built in erlang.
 %files
 /usr/lib/reach/*
+%dir %attr(700,sipx,sipx) /var/sipxdata/key
 %attr(755,root,root) /etc/init.d/reach
 %attr(755,root,root) /etc/init.d/reach_recordings
 %attr(644,root,root) /usr/share/sipxecs/cfinputs/plugin.d/sipxopenacd.cf

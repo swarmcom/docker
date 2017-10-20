@@ -23,6 +23,7 @@ install:
 - cp -R reach_build/prod/rel/reach/* ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/lib/reach/
 - rm -rf ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/lib/reach/releases/$REACH_VERSION/vm.args
 - rm -rf ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/usr/lib/reach/releases/$REACH_VERSION/sys.config
+- mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/var/sipxdata/key/
 - mkdir -p ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/etc/init.d/
 - cp reach ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/etc/init.d/
 - cp reach_recordings ~/rpmbuild/BUILDROOT/reach-app-17.10.$EPOCH-$REACH_VERSION.x86_64/etc/init.d/
