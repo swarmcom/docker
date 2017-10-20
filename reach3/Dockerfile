@@ -11,7 +11,7 @@ ENV ELASTIC=elastic.$NETWORK
 
 # override on build with --build-arg option
 ARG REPO=git@github.com:ezuce/reach-app.git
-ARG BRANCH=standalone
+ARG BRANCH=master
 
 USER root
 
