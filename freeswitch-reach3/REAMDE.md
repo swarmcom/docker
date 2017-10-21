@@ -11,5 +11,5 @@ In order to run it you need to provide ReachMe node name (as environment variabl
 
 
 ```sh
-REACHME_NODE=reach@172.17.0.1 ./run.sh
+REACH_NODE=reach@172.17.0.1 REACH_HOST=http://172.17.0.1:8937 ./run.sh
 ```

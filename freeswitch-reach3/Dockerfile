@@ -42,6 +42,7 @@ COPY build/run.sh run.sh
 ENTRYPOINT [ "./run.sh" ]
 
 ENV NODE freeswitch@freeswitch.ezuce
-ENV REACHME_NODE reachme@reachme.ezuce
+ENV REACH_NODE reach@reach.ezuce
+ENV REACH_HOST http://reach.ezuce:8937
 
 EXPOSE 5060/udp

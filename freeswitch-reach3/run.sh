@@ -3,8 +3,8 @@ FLAGS=${1:-"-td"}
 IMAGE=${2:-"ezuce/freeswitch-reach3"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"freeswitch.$NETWORK"}
-REACHME_NODE=${REACHME_NODE:-"reach@reach.$NETWORK"}
-REACHME_API=${REACHME_API:-"http://reach.$NETWORK:8937/fsapi"}
+REACH_NODE=${REACH_NODE:-"reach@reach.$NETWORK"}
+REACH_HOST=${REACH_HOST:-"http://reach.$NETWORK:8937"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -20,6 +20,6 @@ docker run $FLAGS \
 	-h $NAME \
 	--name $NAME \
 	--env NODE=freeswitch@$NAME \
-	--env REACHME_NODE=$REACHME_NODE \
-	--env REACHME_API=$REACHME_API \
+	--env REACH_NODE=$REACH_NODE \
+	--env REACH_HOST=$REACH_HOST \
 	$IMAGE
