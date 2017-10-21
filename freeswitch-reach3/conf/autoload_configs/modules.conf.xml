@@ -34,5 +34,6 @@
 
     <load module="mod_say_en"/>
     <load module="mod_erlang_event"/>
+    <load module="mod_lua"/>
   </modules>
 </configuration>

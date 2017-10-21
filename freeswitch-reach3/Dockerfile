@@ -28,6 +28,7 @@ RUN build/build.sh
 
 COPY conf build/conf
 COPY sounds build/sounds
+COPY scripts build/scripts
 COPY build/install.sh build/install.sh
 RUN build/install.sh
 

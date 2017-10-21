@@ -14,6 +14,9 @@ cp -a ../build/conf $TARGET/conf
 rm -rf $TARGET/sounds
 mv ../build/sounds $TARGET/sounds
 
+rm -rf $TARGET/scripts
+mv ../build/scripts $TARGET/scripts
+
 chown -R freeswitch:freeswitch $TARGET
 chmod -R ug=rwX,o= $TARGET
 chmod -R u=rwx,g=rx $TARGET/bin/*
