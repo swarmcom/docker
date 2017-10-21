@@ -3,7 +3,7 @@ function fs_err(...)
 	freeswitch.consoleLog("err", "LuaRPC " .. string.format(unpack{...}) .. "\n")
 end
 
-local lua_id = argv[1]
+local lua_id = table.remove(argv, 1)
 local uri = string.format("%s/lua/%s", os.getenv("REACH_HOST"), lua_id)
 
 local http = require("socket.http")
@@ -19,4 +19,4 @@ if not script then
 	return error
 end
 
-script()
+script(unpack(argv))
