@@ -5,6 +5,7 @@ MAINTAINER Roman Galeev <jamhedd@gmail.com>
 ENV NETWORK=ezuce
 ENV REACH=reach.$NETWORK
 ENV REACH_WS=ws://$REACH:8937/ws
+ENV REACH_HTTP=http://$REACH:8937
 
 # override on build with --build-arg option
 ARG REPO=https://github.com/swarmcom/reach-ui.git
