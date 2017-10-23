@@ -24,6 +24,9 @@ ENV PATH="${PATH}:/home/user:/home/user/node_modules/.bin"
 COPY build/setup-erlang.sh build/setup-erlang.sh
 RUN build/setup-erlang.sh
 
+COPY build/setup-rebar.sh build/setup-rebar.sh
+RUN build/setup-rebar.sh
+
 USER user
 COPY build/setup.sh build/setup.sh
 RUN build/setup.sh
