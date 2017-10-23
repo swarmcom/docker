@@ -1,5 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 git clone https://github.com/erlang/rebar3.git ./rebar
-ls
 . ~/erlang/activate
 cd rebar && ./bootstrap && cp rebar3 ../
