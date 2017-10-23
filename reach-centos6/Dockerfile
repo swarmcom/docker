@@ -1,4 +1,4 @@
-FROM centos:6.6
+FROM ezuce/reach-centos6-erlang
 MAINTAINER Roman Galeev <jamhedd@gmail.com>
 
 # override on run with --env option
@@ -13,21 +13,10 @@ ENV ELASTIC=elastic.$NETWORK
 ARG REPO=git@github.com:ezuce/reach-app.git
 ARG BRANCH=standalone
 
-USER root
-COPY build/setup-os.sh build/setup-os.sh
-RUN build/setup-os.sh
-
 USER user
 WORKDIR /home/user
 ENV PATH="${PATH}:/home/user:/home/user/node_modules/.bin"
 
-COPY build/setup-erlang.sh build/setup-erlang.sh
-RUN build/setup-erlang.sh
-
-COPY build/setup-rebar.sh build/setup-rebar.sh
-RUN build/setup-rebar.sh
-
-USER user
 COPY build/setup.sh build/setup.sh
 RUN build/setup.sh
 
