@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 COMMAND=${1:-"console"}
 . erlang/activate
 cd reach

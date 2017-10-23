@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 . ~/erlang/activate
 
 git clone $REPO reach && cd reach
