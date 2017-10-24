@@ -58,6 +58,7 @@ bundle agent sipxopenacd_config {
         create => "true",
         perms => m("644"),
         edit_line => sipxopenacd_lager_config;
+        classes => if_repaired("apply_reach_log")
 
       "/usr/lib/reach/scripts-priv/reach-recordings/config.json"
         comment => "configure reach recordings process",
@@ -74,6 +75,10 @@ bundle agent sipxopenacd_config {
           copy_from => copy_prompts("$(sipx.master_address)","$(sipx.SIPX_VARDIR)/configserver/phone/acd/audio"),
           file_select => wav_prompt,
           depth_search => recurse("1");
+  commands:
+    apply_reach_log::
+      "/usr/lib/reach/bin/reach rpcterms jh $(sipx.OPENACD_LOG_LEVEL)"
+        comment => "Apply Reach log level";     
 }
 
 bundle edit_line sipxopenacd_vm_args() {
