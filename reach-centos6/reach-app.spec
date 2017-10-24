@@ -1,6 +1,6 @@
 Name:        reach-app
-Version:     17.10.<EPOCH>-<COMMIT>
-Release:     <REACH_VERSION>
+Version:     17.10.<EPOCH>
+Release:     <COMMIT>
 Summary:     Contact Center
 Group:       Misc
 License: CPAL
