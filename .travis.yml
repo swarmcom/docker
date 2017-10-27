@@ -27,6 +27,8 @@ install:
 - rm -rf ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/lib/reach/releases/$REACH_VERSION/sys.config
 - mkdir -p ~/rpmbuild/BUILDROOT/$RPM_NAME/var/sipxdata/key/
 - mkdir -p ~/rpmbuild/BUILDROOT/$RPM_NAME/etc/init.d/
+- mkdir -p ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/bin/
+- cp apply-reach-log.sh ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/bin
 - cp reach ~/rpmbuild/BUILDROOT/$RPM_NAME/etc/init.d/
 - cp reach_recordings ~/rpmbuild/BUILDROOT/$RPM_NAME/etc/init.d/
 - mkdir -p ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/share/sipxecs/cfinputs/plugin.d/

@@ -13,4 +13,5 @@ Reach is a skills-based, Call Center software based on FreeSWITCH and built in e
 %dir %attr(700,sipx,sipx) /var/sipxdata/key
 %attr(755,root,root) /etc/init.d/reach
 %attr(755,root,root) /etc/init.d/reach_recordings
+%attr(755,root,root) /usr/bin/apply-reach-log.sh
 %attr(644,root,root) /usr/share/sipxecs/cfinputs/plugin.d/sipxopenacd.cf
