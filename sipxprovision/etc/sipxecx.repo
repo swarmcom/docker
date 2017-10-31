@@ -1,0 +1,6 @@
+[sipxecs]
+name= sipXecs
+baseurl=http://download.sipxcom.org/pub/17.08-unstable/CentOS_$releasever/$basearch
+enabled=1
+gpgcheck=0
+
