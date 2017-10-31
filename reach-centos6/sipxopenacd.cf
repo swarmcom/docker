@@ -14,6 +14,8 @@ bundle agent sipxopenacd {
       "any" usebundle => "reach_apache";
       "any" usebundle => "reach_clientrec_cleanup";
       "any" usebundle => "reach_mongo_cleanup";
+      "any" usebundle => "reach_elastic_agent_state_cleanup";
+      "any" usebundle => "reach_elastic_call_state_cleanup";
       "any" usebundle => "reach_recordings_cleanup";
       "any" usebundle => "reach_call_segments_facts";
       "any" usebundle => "reach_logwatcher";
@@ -268,6 +270,36 @@ bundle agent reach_mongo_cleanup {
     !sipxopenacd::
       "any" usebundle => remove_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)");
 }
+
+# Install cron schedules for elastic search realtime stats cleanup
+bundle agent reach_elastic_agent_state_cleanup {
+  vars:
+    # execute it every day after midnight
+    "cron" string => "10 0 * * * curl -X DELETE http://localhost:9200/agent/state/_query -d '{ \"query\" : { \"range\": { \"ts\": { \"lte\": \"now-1m\" } } } }'"
+    "cron_id" string => "agent/state/_query"; #regex
+
+  methods:
+    sipxopenacd::
+      "any" usebundle => add_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)", "$(cron)");
+
+    !sipxopenacd::
+      "any" usebundle => remove_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)");
+}
+
+bundle agent reach_elastic_call_state_cleanup {
+  vars:
+    # execute it every day after midnight
+    "cron" string => "10 0 * * * curl -X DELETE http://localhost:9200/call/call/_query -d '{ \"query\" : { \"range\": { \"ts\": { \"lte\": \"now-1m\" } } } }'"
+    "cron_id" string => "call/call/_query"; #regex
+
+  methods:
+    sipxopenacd::
+      "any" usebundle => add_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)", "$(cron)");
+
+    !sipxopenacd::
+      "any" usebundle => remove_crontab("$(cron_id)", "$(sipx.SIPXPBXUSER)");
+}
+
 
 # Install cron schedules for call segment_facts
 bundle agent reach_call_segments_facts {
