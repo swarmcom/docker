@@ -1,5 +1,7 @@
 #!/bin/sh -e
 CFG=conf/autoload_configs
+eval $(luarocks path --bin)
+
 
 echo Setting FreeSWITCH Erlang node name to $NODE
 xmlstarlet edit --inplace -u '/configuration/settings/param[@name="nodename"]/@value' -v "$NODE" $CFG/erlang_event.conf.xml

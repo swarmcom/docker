@@ -11,6 +11,9 @@ COPY etc/freeswitch.list /etc/apt/sources.list.d/
 COPY build/setup-os.sh build/setup-os.sh
 RUN build/setup-os.sh
 
+COPY build/setup-lua.sh build/setup-lua.sh
+RUN build/setup-lua.sh
+
 COPY etc/commit commit
 
 COPY build/setup.sh build/setup.sh

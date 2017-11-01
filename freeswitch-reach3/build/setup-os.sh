@@ -10,6 +10,6 @@ apt-get install -y --force-yes \
 	unixodbc-dev libssh2-1-dev libssl-dev libncurses5-dev \
 	ladspa-sdk tap-plugins swh-plugins libgsm1 libfftw3-3 autotalent \
 	librabbitmq-dev xmlstarlet \
-	lua5.2 lua-socket
+	lua5.2
 
 apt-get -y clean
