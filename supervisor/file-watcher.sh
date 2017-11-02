@@ -16,6 +16,7 @@ cdrConfig="/usr/local/sipx/etc/sipxpbx/conf/1/callresolver-config"
 proxyIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxproxy"
 natConfig="/usr/local/sipx/etc/sipxpbx/conf/1/nattraversalrules.xml"
 bridgeConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxbridge.xml"
+provisionConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxprovision-config"
 
 freeswitchConfig="/usr/local/sipx/etc/sipxpbx/conf/1/freeswitch.xml"
 registrarIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxregistrar"
@@ -23,6 +24,7 @@ cdrIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxcdr"
 freeswitchIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxfreeswitch"
 natIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxrelay"
 bridgeIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxbridge"
+provisionIpConfig="/usr/local/sipx/etc/sipxpbx/conf/1/sipxprovision"
 
 CFDAT_FILE_PROXY="/usr/local/sipx/etc/sipxpbx/conf/1/sipxproxy.cfdat"
 CFDAT_FILE_REGISTRAR="/usr/local/sipx/etc/sipxpbx/conf/1/sipxregistrar.cfdat"
@@ -30,6 +32,7 @@ CFDAT_FILE_SIPXCDR="/usr/local/sipx/etc/sipxpbx/conf/1/sipxcdr.cfdat"
 CFDAT_FILE_SIPXFREESWITCH="/usr/local/sipx/etc/sipxpbx/conf/1/sipxfreeswitch.cfdat"
 CFDAT_FILE_RELAY="/usr/local/sipx/etc/sipxpbx/conf/1/sipxrelay.cfdat"
 CFDAT_FILE_BRIDGE="/usr/local/sipx/etc/sipxpbx/conf/1/sipxbridge.cfdat"
+CFDAT_FILE_PROVISION="/usr/local/sipx/etc/sipxpbx/conf/1/sipxprovision.cfdat"
 
 PROCESS_PROXY=`cat $CFDAT_FILE_PROXY`
 PROCESS_REGISTRAR=`cat $CFDAT_FILE_REGISTRAR`
@@ -37,6 +40,7 @@ PROCESS_CDR=`cat $CFDAT_FILE_SIPXCDR`
 PROCESS_FREESWITCH=`cat $CFDAT_FILE_SIPXFREESWITCH`
 PROCESS_RELAY=`cat $CFDAT_FILE_RELAY`
 PROCESS_BRIDGE=`cat $CFDAT_FILE_BRIDGE`
+PROCESS_PROVISION=`cat $CFDAT_FILE_PROVISION`
 
 proxyIp=""
 registrarIp=""
@@ -44,6 +48,7 @@ cdrIp=""
 freeswitchIp=""
 natIp=""
 bridgeIp=""
+provisionIp=""
 
 if [ -f "$proxyIpConfig" ]; then
     proxyIp=`cat $proxyIpConfig`
@@ -65,7 +70,11 @@ if [ -f "$bridgeIpConfig" ]; then
    bridgeIp=`cat $bridgeIpConfig`
 fi
 
-if { { [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ]; } || { [ -f "$proxyConfig" ] && [ -z "$proxyIp" ] && [ ${PROCESS_PROXY:0:1} == "+" ]; } || { [ -f "$cdrConfig" ] && [ -z "$cdrIp" ] && [ ${PROCESS_CDR:0:1} == "+" ]; } || { [ -f "$freeswitchConfig" ] && [ -z "$freeswitchIp" ] && [ ${PROCESS_FREESWITCH:0:1} == "+" ]; } || { [ -f "$natConfig" ] && [ -z "$natIp" ] && [ ${PROCESS_RELAY:0:1} == "+" ]; } || { [ -f "$bridgeConfig" ] && [ -z "$bridgeIp" ] && [ ${PROCESS_BRIDGE:0:1} == "+" ]; }; }; then
+if [ -f "$provisionIpConfig" ]; then
+   provisionIp=`cat $provisionIpConfig`
+fi
+
+if { { [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] && [ ${PROCESS_REGISTRAR:0:1} == "+" ]; } || { [ -f "$proxyConfig" ] && [ -z "$proxyIp" ] && [ ${PROCESS_PROXY:0:1} == "+" ]; } || { [ -f "$cdrConfig" ] && [ -z "$cdrIp" ] && [ ${PROCESS_CDR:0:1} == "+" ]; } || { [ -f "$freeswitchConfig" ] && [ -z "$freeswitchIp" ] && [ ${PROCESS_FREESWITCH:0:1} == "+" ]; } || { [ -f "$natConfig" ] && [ -z "$natIp" ] && [ ${PROCESS_RELAY:0:1} == "+" ]; } || { [ -f "$bridgeConfig" ] && [ -z "$bridgeIp" ] && [ ${PROCESS_BRIDGE:0:1} == "+" ]; } || { [ -f "$provisionConfig" ] && [ -z "$provisionIp" ] && [ ${PROCESS_PROVISION:0:1} == "+" ]; }; }; then
 #  FREE PRIVATE SUBNET IPs for registrar
      cmd=`docker network inspect ezuce-private |grep IPv4 | awk -F":" '{print $2}'`
      result=$cmd
@@ -121,6 +130,9 @@ if { { [ -f "$registrarConfig" ] && [ -z "$registrarIp" ] && [ ${PROCESS_REGISTR
     fi
     if [ -z "$bridgeIp" ] && [ ${PROCESS_BRIDGE:0:1} == "+" ]; then
         echo "${rangeArrayPrivate[7]}" >> $bridgeIpConfig
+    fi
+    if [ -z "$provisionIp" ] && [ ${PROCESS_PROVISION:0:1} == "+" ]; then
+        echo "${rangeArrayPrivate[8]}" >> $provisionIpConfig
     fi
 
     cd /named
