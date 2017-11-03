@@ -6,6 +6,15 @@ Dependencies=`/usr/local/sipx/bin/java-dep -d /usr/local/sipx/share/java/sipXecs
 export CLASSPATH=`echo /usr/local/sipx/etc/sipxpbx ${Dependencies} /usr/local/sipx/share/java/sipXecs/sipXprovision/*.jar | sed -e 's/ /:/g'`
 
 StorePassword="changeit"
+X509Algorithm=`$JavaCmd org.sipfoundry.commons.x509selector.X509Selector`
+TrustStore="usr/local/sipx/etc/sipxpbx/authorities/authorities.jks"
+TrustStoreOpts="\
+    -Djavax.net.ssl.trustStore=$TrustStore \
+    -Djavax.net.ssl.trustStoreType=JKS \
+    -Djavax.net.ssl.trustStorePassword=$StorePassword"
+KeyStoreOpts="\
+    -Djavax.net.ssl.keyStore=usr/local/sipx/etc/sipxpbx/ssl.keystore \
+    -Djavax.net.ssl.keyStorePassword=$StorePassword"
 
 Command="$JavaCmd \
     $TrustStoreOpts \

@@ -18,7 +18,7 @@ if [ ! -z "$IP" ]; then
         fi
         # run your container
         echo "starting $1"
-        docker run --privileged -d --name $1 $2 --hostname $1 --dns $DNS_IP --dns-search $DOMAIN --dns-search $SIP_DOMAIN -v $HOST_PWD/sipxconfig/run/conf/1:/usr/local/sipx/etc/sipxpbx -v $HOST_PWD/bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini -v docker_prompts:/usr/local/sipx/share/www/doc/ --net $3 --ip="$IP" ezuce/$1
+        docker run --privileged -d --name $1 $2 --hostname $1 --dns $DNS_IP --dns-search $DOMAIN --dns-search $SIP_DOMAIN -v $HOST_PWD/sipxconfig/run/conf/1:/usr/local/sipx/etc/sipxpbx -v $HOST_PWD/bootstrap/mongo-client.ini:/usr/local/sipx/etc/sipxpbx/mongo-client.ini -v docker_prompts:/usr/local/sipx/share/www/doc/ -v docker_polycom:/usr/local/sipx/etc/sipxpbx/polycom -v docker_nortel:/usr/local/sipx/etc/sipxpbx/nortel -v docker_nortel12x0:/usr/local/sipx/etc/sipxpbx/nortel12x0 --net $3 --ip="$IP" ezuce/$1
       fi
     else
       if [ "$(docker ps -q -f name=$1)" ]; then

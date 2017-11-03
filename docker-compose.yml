@@ -85,6 +85,9 @@
         - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
         - ./bootstrap/ssl-web.keystore:/usr/local/sipx/etc/sipxpbx/ssl/ssl-web.keystore
         - prompts:/usr/local/sipx/share/www/doc/
+        - polycom:/usr/local/sipx/etc/sipxpbx/polycom
+        - nortel:/usr/local/sipx/etc/sipxpbx/nortel
+        - nortel12x0:/usr/local/sipx/etc/sipxpbx/nortel12x0
       depends_on:
         - bootstrap
         - postgres
@@ -149,3 +152,6 @@
 
   volumes:
     prompts:
+    polycom:
+    nortel:
+    nortel12x0:
