@@ -275,7 +275,7 @@ bundle agent reach_mongo_cleanup {
 bundle agent reach_elastic_agent_state_cleanup {
   vars:
     # execute it every day after midnight
-    "cron" string => "10 0 * * * TS=`perl -e 'print 1000*(time-$(sipx.STATS_TRUNCATE_DAYS)*24*3600)'` curl -X DELETE http://localhost:9200/agent/state/_query -d \"{ \"query\" : { \"range\": { \"ts\": { \"lte\": $TS } } } }\"";
+    "cron" string => "10 0 * * * curl -X DELETE http://localhost:9200/agent/state/_query -d \"{ \"query\" : { \"range\": { \"ts\": { \"lte\": `perl -e 'print 1000*(time-$(sipx.STATS_TRUNCATE_DAYS)*24*3600)'` } } } }\"";
     "cron_id" string => ".*agent/state/_query.*"; #regex
 
   methods:
@@ -289,7 +289,7 @@ bundle agent reach_elastic_agent_state_cleanup {
 bundle agent reach_elastic_call_state_cleanup {
   vars:
     # execute it every day after midnight
-    "cron" string => "10 0 * * * TS=`perl -e 'print 1000*(time-$(sipx.STATS_TRUNCATE_DAYS)*24*3600)'` curl -X DELETE http://localhost:9200/call/call/_query -d \"{ \"query\" : { \"range\": { \"ts\": { \"lte\": $TS } } } }\"";
+    "cron" string => "10 0 * * * curl -X DELETE http://localhost:9200/call/call/_query -d \"{ \"query\" : { \"range\": { \"ts\": { \"lte\": `perl -e 'print 1000*(time-$(sipx.STATS_TRUNCATE_DAYS)*24*3600)'` } } } }\"";
     "cron_id" string => ".*call/call/_query.*"; #regex
 
   methods:
