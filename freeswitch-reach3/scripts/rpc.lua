@@ -1,12 +1,9 @@
 -- call format: rpc.lua lua_id lua_token args...
+-- intended to be called from freeswitch directly and dynamically load and execute specified code piece
+-- scripts can execute a pre-defined set of commands, rpc is one of them
 
 local http = require("socket.http")
 local json = require("json")
-
--- retrieve the content of a URL
-function fs_err(...)
-	freeswitch.consoleLog("err", "LuaRPC " .. string.format(unpack{...}) .. "\n")
-end
 
 local lua_id = table.remove(argv, 1)
 local lua_token = table.remove(argv, 1)
@@ -24,6 +21,16 @@ local script, error = loadstring(body)
 if not script then
 	fs_err("lua script syntax error: %s", error)
 	return error
+end
+
+-- exported globals
+
+function fs_err(...)
+	freeswitch.consoleLog("err", "LuaRPC " .. string.format(unpack{...}) .. "\n")
+end
+
+function fs_info(...)
+	freeswitch.consoleLog("info", "LuaRPC " .. string.format(unpack{...}) .. "\n")
 end
 
 function rpc(F, ...)
