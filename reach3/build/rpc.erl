@@ -6,11 +6,11 @@ main([OurNode, Cookie, Node, M, F|A]) ->
 	Re = rpc:call(l2a(Node), l2a(M), l2a(F), fix_args(A)),
 	io:format("~p~n", [Re]);
 main(_) ->
-    usage().
+	usage().
 
 usage() ->
-    io:format("usage: OurNode Cookie RemoteNode Module Fun Arg...\n"),
-    halt(1).
+	io:format("usage: OurNode Cookie RemoteNode Module Fun Arg...\n"),
+	halt(1).
 
 l2a(L) -> erlang:list_to_atom(L).
 l2b(L) -> erlang:list_to_binary(L).
