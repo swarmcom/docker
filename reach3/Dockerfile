@@ -4,8 +4,6 @@ MAINTAINER Roman Galeev <jamhedd@gmail.com>
 # override on run with --env option
 ENV NETWORK=ezuce
 ENV NODE=reach@reach.$NETWORK
-ENV MONGODB=mongodb.$NETWORK
-ENV SIPXCOM=sipxcom.$NETWORK
 ENV FSNODE=freeswitch@freeswitch.$NETWORK
 ENV ELASTIC=elastic.$NETWORK
 

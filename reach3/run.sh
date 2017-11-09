@@ -1,9 +1,7 @@
 #!/bin/sh -e
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
-MONGODB=${MONGODB:-"mongodb.$NETWORK"}
 ELASTIC=${ELASTIC:-"elastic.$NETWORK"}
-SIPXCOM=${SIPXCOM:-"sipxcom.$NETWORK"}
 NAME=${NAME:-"reach.$NETWORK"}
 FSNODE=${FSNODE:-"freeswitch@freeswitch.$NETWORK"}
 NODE=${NODE:-"reach@$NAME"}
@@ -22,9 +20,7 @@ docker run $FLAGS \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
-	--env MONGODB=$MONGODB \
 	--env ELASTIC=$ELASTIC \
-	--env SIPXCOM=$SIPXCOM \
 	--env NODE=$NODE \
 	--env FSNODE=$FSNODE \
 	$NETWORK/reach
