@@ -11,6 +11,14 @@ local lua_token = table.remove(argv, 1)
 local uri = string.format("%s/lua/%s", os.getenv("REACH_HOST"), lua_id)
 local lua_rpc_uri = string.format("%s/lua/rpc", os.getenv("REACH_HOST"))
 
+function fs_err(...)
+	freeswitch.consoleLog("err", "LuaRPC " .. string.format(unpack{...}) .. "\n")
+end
+
+function fs_info(...)
+	freeswitch.consoleLog("info", "LuaRPC " .. string.format(unpack{...}) .. "\n")
+end
+
 local body, code = http.request(uri)
 if code ~= 200 then
 	fs_err("http lua script uri:%s error:%s", uri, code)
@@ -21,16 +29,6 @@ local script, error = loadstring(body)
 if not script then
 	fs_err("lua script syntax error: %s", error)
 	return error
-end
-
--- exported globals
-
-function fs_err(...)
-	freeswitch.consoleLog("err", "LuaRPC " .. string.format(unpack{...}) .. "\n")
-end
-
-function fs_info(...)
-	freeswitch.consoleLog("info", "LuaRPC " .. string.format(unpack{...}) .. "\n")
 end
 
 function rpc(F, ...)
@@ -55,4 +53,7 @@ function rpc(F, ...)
 	return response.reply
 end
 
-script(unpack(argv))
+local key, value = script(unpack(argv))
+if key then
+	rpc("result", key, value)
+end
