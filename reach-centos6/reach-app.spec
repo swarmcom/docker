@@ -6,6 +6,9 @@ Group:       Misc
 License: CPAL
 AutoReqProv: no
 URL:         http://ezuce.com
+
+Requires: nodejs
+
 %description
 Reach is a skills-based, Call Center software based on FreeSWITCH and built in erlang.
 %files
