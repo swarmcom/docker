@@ -24,6 +24,9 @@ COPY etc/commit commit
 COPY build/compile.sh build/compile.sh
 RUN build/compile.sh
 
+COPY build/setup-globals.sh build/setup-globals.sh
+RUN build/setup-globals.sh
+
 COPY build/run.sh run.sh
 ENTRYPOINT ./run.sh
 
