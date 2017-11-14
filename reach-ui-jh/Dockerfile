@@ -11,6 +11,7 @@ ENV REACH_RR=http://rr.$NETWORK:9090
 # override on build with --build-arg option
 ARG REPO=https://github.com/swarmcom/reach-ui.git
 ARG BRANCH=master
+ARG COMMIT
 
 RUN useradd -s /bin/bash -m user
 
