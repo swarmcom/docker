@@ -1,6 +1,7 @@
 #!/bin/sh -e
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
+PASSWORD=${PASSWORD:-"reachpass"}
 NAME=${NAME:-"timescale.$NETWORK"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
@@ -18,3 +19,7 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	$NETWORK/timescale
+
+sleep 5
+docker exec -it --user postgres $NAME psql -c "CREATE USER reach WITH PASSWORD '$PASSWORD'"
+docker exec -it --user postgres $NAME createdb -O reach reach
