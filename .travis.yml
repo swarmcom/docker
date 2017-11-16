@@ -28,7 +28,10 @@ install:
 - mkdir -p ~/rpmbuild/BUILDROOT/$RPM_NAME/var/sipxdata/key/
 - mkdir -p ~/rpmbuild/BUILDROOT/$RPM_NAME/etc/init.d/
 - mkdir -p ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/bin/
+- mkdir -p ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/bin/snapshot/
 - cp apply-reach-log.sh ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/bin
+- cp sipx-snapshot-reach ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/bin/snapshot
+- sed -i "s|<REACH_VERSION>|"$REACH_VERSION"|g" ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/bin/snapshot/sipx-snapshot-reach
 - cp reach ~/rpmbuild/BUILDROOT/$RPM_NAME/etc/init.d/
 - cp reach_recordings ~/rpmbuild/BUILDROOT/$RPM_NAME/etc/init.d/
 - mkdir -p ~/rpmbuild/BUILDROOT/$RPM_NAME/usr/share/sipxecs/cfinputs/plugin.d/

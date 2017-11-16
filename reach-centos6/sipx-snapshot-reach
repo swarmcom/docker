@@ -1,0 +1,3 @@
+#!/bin/sh
+
+mkdir -p $1/usr/lib/reach/releases/<REACH_VERSION>/ && cp -R /usr/lib/reach/releases/<REACH_VERSION>/ $1/usr/lib/reach/releases/
