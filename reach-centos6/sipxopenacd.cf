@@ -364,7 +364,7 @@ bundle agent reach_key {
 bundle agent sipxopenacd_running {
   vars:
     any::
-	  "service_command" string => "beam.smp.*bin\/reach";
+	  "service_command" string => ".*beam.smp.*bin/reach";
 
   classes:
     any::
