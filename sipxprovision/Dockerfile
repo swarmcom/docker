@@ -1,9 +1,9 @@
-FROM ezuce/basecentos
+FROM centos:6
 
 USER root
 
 COPY etc/sipxecx.repo /etc/yum.repos.d/
-RUN yum install -y java-1.7.0-openjdk-devel && yum clean all && yum clean metadata
+RUN yum install -y java-1.7.0-openjdk && yum clean all && yum clean metadata
 
 COPY tmp/sipx/ /usr/local/sipx/
 

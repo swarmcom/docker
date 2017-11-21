@@ -1,13 +1,12 @@
-FROM ezuce/basecentos
+FROM centos:6
 
 USER root
 
 COPY etc/sipxecx.repo /etc/yum.repos.d/
-RUN yum install -y postgresql-server java-1.7.0-openjdk-devel mongodb-server && yum clean all && yum clean metadata
+RUN yum install -y java-1.7.0-openjdk && yum clean all && yum clean metadata
 
 COPY tmp/sipx/ /usr/local/sipx/
 COPY conf/sipxconfig.sh /usr/local
-#COPY conf/ssl-web.keystore /usr/local/sipx/etc/sipxpbx/ssl/
 
 
 ENTRYPOINT ["/usr/local/sipxconfig.sh"]

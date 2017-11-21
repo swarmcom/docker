@@ -62,6 +62,21 @@
       networks:
         - ezuce-private
 
+    postgres-init:
+      image: ezuce/postgres-init
+      environment:
+        - MONGO_HOST=${MONGO_HOST}
+      container_name: postgres-init
+      volumes:
+        - ./sipxconfig/run/conf/:/usr/local/sipx/etc/sipxpbx/conf/
+        - ./bootstrap/sipxconfig.properties:/usr/local/sipx/etc/sipxpbx/sipxconfig.properties
+        - ./bootstrap/postgres-pwd.properties:/usr/local/sipx/etc/sipxpbx/postgres-pwd.properties
+      command: /usr/local/initialize-postgresdb.sh
+      depends_on:
+        - postgres
+      networks:
+        - ezuce-private
+
     postgres-sipxcdr:
       image: ezuce/postgres-cdr
       ports:

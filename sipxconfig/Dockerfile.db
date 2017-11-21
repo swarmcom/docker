@@ -1,0 +1,15 @@
+FROM centos:6
+
+USER root
+
+COPY etc/sipxecx.repo /etc/yum.repos.d/
+RUN yum install -y postgresql mongodb java-1.7.0 && yum clean all && yum clean metadata
+
+COPY tmp/sipx/etc/sipxpbx /usr/local/sipx/etc/sipxpbx
+COPY tmp/sipx/bin/sipx-config /usr/local/sipx/bin/sipx-config
+COPY tmp/sipx/bin/java-dep /usr/local/sipx/bin/java-dep
+COPY tmp/sipx/share/java/sipXecs/sipXconfig /usr/local/sipx/share/java/sipXecs/sipXconfig
+COPY tmp/sipx/share/java/sipXecs/sipXcommons /usr/local/sipx/share/java/sipXecs/sipXcommons
+COPY tmp/sipx/var/sipxdata/tmp /usr/local/sipx/var/sipxdata/tmp
+
+COPY conf/initialize-postgresdb.sh /usr/local

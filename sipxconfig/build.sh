@@ -13,6 +13,7 @@ mkdir -p tmp
 docker cp sipxconfig-build:/usr/local/sipx tmp/
 chmod 7777 tmp/*
 docker build $BUILD_FLAGS -t $NETWORK/sipxconfig .
+docker build -f Dockerfile.db $BUILD_FLAGS -t $NETWORK/postgres-init .
 docker rm sipxconfig-build
 docker rmi sipxconfig/build
 rm -rf tmp
