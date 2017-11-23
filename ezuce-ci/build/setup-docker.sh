@@ -6,6 +6,7 @@ apt-get -y install \
      ca-certificates \
      curl \
      gnupg2 \
+     jq vi \
      software-properties-common sudo
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
