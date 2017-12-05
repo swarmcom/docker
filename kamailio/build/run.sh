@@ -6,6 +6,11 @@ export GROUP=user
 
 /usr/bin/epmd -daemon
 
+CFG=etc/kamailio.cfg
+sed -i "s|reach@reach.ezuce|$REACH_NODE|g" $SYS
+sed -i "s|kamailio.ezuce|$NAME|g" $SYS
+sed -i "s|domain.ezuce|$SIP_DOMAIN|g" $SYS
+
 exec kamailio/sbin/kamailio -E -DD \
-	-f etc/kamailio.cfg \
+	-f $CFG \
 	-m $SHM_MEMORY -M $PKG_MEMORY -u $USER -g $GROUP

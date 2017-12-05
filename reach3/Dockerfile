@@ -5,7 +5,7 @@ MAINTAINER Roman Galeev <jamhedd@gmail.com>
 ENV NETWORK=ezuce
 ENV NODE=reach@reach.$NETWORK
 ENV FSNODE=freeswitch@freeswitch.$NETWORK
-ENV ELASTIC=elastic.$NETWORK
+ENV KAMNODE=kamailio@kamailio.$NETWORK
 
 # override on build with --build-arg option
 ARG REPO=git@github.com:ezuce/reach-app.git

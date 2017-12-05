@@ -1,9 +1,9 @@
 #!/bin/sh -e
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
-ELASTIC=${ELASTIC:-"elastic.$NETWORK"}
 NAME=${NAME:-"reach.$NETWORK"}
 FSNODE=${FSNODE:-"freeswitch@freeswitch.$NETWORK"}
+KAMNODE=${KAMNODE:-"kamailio@kamailio.$NETWORK"}
 NODE=${NODE:-"reach@$NAME"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
@@ -20,7 +20,7 @@ docker run $FLAGS \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
-	--env ELASTIC=$ELASTIC \
 	--env NODE=$NODE \
 	--env FSNODE=$FSNODE \
+	--env KAMNODE=$KAMNODE \
 	$NETWORK/reach
