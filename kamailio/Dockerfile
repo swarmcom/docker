@@ -23,7 +23,7 @@ COPY etc/ etc
 COPY build/run.sh ./run.sh
 
 USER root
-RUN mkdir -p /var/run/kamailio && chown user:user /var/run/kamailio
+RUN mkdir -p /var/run/kamailio && chown user:user /var/run/kamailio && chown -R user:user etc
 USER user
 
 ENTRYPOINT ./run.sh

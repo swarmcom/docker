@@ -17,6 +17,7 @@ echo -n "starting: $NAME "
 docker run $FLAGS \
 	--net $NETWORK \
 	-h $NAME \
+	-p 5060:5060/udp \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	--env REACH_NODE=$REACH_NODE \

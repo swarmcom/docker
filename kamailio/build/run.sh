@@ -7,9 +7,9 @@ export GROUP=user
 /usr/bin/epmd -daemon
 
 CFG=etc/kamailio.cfg
-sed -i "s|reach@reach.ezuce|$REACH_NODE|g" $SYS
-sed -i "s|kamailio.ezuce|$NAME|g" $SYS
-sed -i "s|domain.ezuce|$SIP_DOMAIN|g" $SYS
+sed -i "s|reach@reach.ezuce|$REACH_NODE|g" $CFG
+sed -i "s|kamailio.ezuce|$NAME|g" $CFG
+sed -i "s|domain.ezuce|$SIP_DOMAIN|g" $CFG
 
 exec kamailio/sbin/kamailio -E -DD \
 	-f $CFG \
