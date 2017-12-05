@@ -4,6 +4,7 @@ NETWORK=${NETWORK:-"ezuce"}
 REACH_NODE=${REACH_NODE:-"reach@reach.$NETWORK"}
 NAME=${NAME:-"kamailio.$NETWORK"}
 SIP_DOMAIN=${SIP_DOMAIN:-$NAME}
+EXT_IP=${EXT_IP:-"$(curl -s ifconfig.co)"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -23,4 +24,5 @@ docker run $FLAGS \
 	--env REACH_NODE=$REACH_NODE \
 	--env NAME=$NAME \
 	--env SIP_DOMAIN=$SIP_DOMAIN \
+	--env EXT_IP=$EXT_IP \
 	$NETWORK/kamailio
