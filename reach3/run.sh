@@ -14,6 +14,10 @@ then
 	docker rm -f $NAME
 fi
 
+STAMP=`date +%Y-%m-%d-%H-%M-%S`
+mkdir -p logs
+docker logs $NAME > logs/$STAMP
+
 echo -n "starting: $NAME "
 docker run $FLAGS \
 	--net $NETWORK \
