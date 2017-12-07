@@ -5,10 +5,12 @@ libfreetype6
 libgcc1
 libjbig0
 libjpeg62-turbo
+liblua5.2-0
 liblzma5
 libmp3lame0
 libmpg123-0
 libodbc1
+libopenal1
 libpcre3
 libpng16-16
 libshout3
