@@ -7,7 +7,7 @@ NODE=${NODE:-"ci@$NAME"}
 
 if [ -z $TOKEN ]
 then
-	echo Please provide a token to access private repo: $0 token
+	echo Please provide a token to access private repo
 	exit 1
 fi
 

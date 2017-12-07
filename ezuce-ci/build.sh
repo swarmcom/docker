@@ -1,15 +1,14 @@
 #!/bin/sh -e
-TOKEN=$1
-DOCKER_GROUP=${2:-"$(getent group docker | cut -d: -f3)"}
-if [ -z $DOCKER_GROUP ]
+if [ -z $TOKEN ]
 then
-	echo "Can't automatically deduce docker group, please provide: $0 token docker_gid"
+	echo "Please provide a token to access private repo"
 	exit 1
 fi
 
-if [ -z $TOKEN ]
+DOCKER_GROUP=${1:-"$(getent group docker | cut -d: -f3)"}
+if [ -z $DOCKER_GROUP ]
 then
-	echo Please provide a token to access private repo: $0 token [docker_gid]
+	echo "Can't automatically deduce docker group, please provide: $0 docker_gid"
 	exit 1
 fi
 
