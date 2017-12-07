@@ -1,4 +1,0 @@
-[openuc]
-name=eZuce OpenUC for CentOS/RHEL $releasever - $basearch
-baseurl=http://ezuce:Are687Xw@download.ezuce.com/openuc-stage/17.10-unstable/CentOS_$releasever/$basearch
-gpgcheck=0

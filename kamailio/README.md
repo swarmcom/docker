@@ -1,6 +1,6 @@
 # Kamailio
 
-This is a SIP registrar and Reach SIP ingress proxy.
+This is a SIP registrar and Reach instance SIP ingress proxy.
 
 ## Production
 

@@ -1,21 +1,57 @@
-eZuce containers
-================
+Reach3 docker environment
+=========================
+
+This is the development version meaning each container must be built from scratch,
+and each container has everything required to alter the code and compile it (inside a container).
+
+Production images are made out of these development containers, see [export](export/README.md)
 
 Notes
 =====
 
-In order to build ReachMe container it is required to have access to ReachMe repo, therefore
-an access token must be provided (https://github.com/settings/tokens) in form of TOKEN env variable.
+In order to build the environment it is required to have access to private Reach3 repo, therefore
+an access token must be [provided](https://github.com/settings/tokens) by setting TOKEN env variable.
 
-This is work in progress, see [TODO](TODO.md). [Centos 7 setup guide](doc/INSTALL.md)
+Reach3 instance must have following containers running:
 
-Init
-====
+1. [reach](reach/README.md)
+2. [rr](rr/README.md)
+3. [freeswitch](freeswitch-reach3/README.md)
+4. [timescale](timescale/README.md)
+
+If you want to have UI, then also one (or both, if you're curious) of:
+
+1. [reach-ui](reach-ui/README.md)
+2. [reach-ui-jh](reach-ui-js/README.md)
+
+In order to run automated test following containers must be running (in addition to above):
+
+1. [busytone](busytone/README.md)
+2. [freeswitch-agents](freeswitch-agents/README.md)
+
+Optional containers (but highly recommended):
+
+1. [kamailio](kamailio/README.md)
+2. [nginx-ingress](nginx-ingress/README.md)
+3. [grafana](grafana/README.md)
+
+Continous integration:
+
+1. [ezuce-ci](ezuce-ci/README.md)
+
+Architecture
+============
+
+All images are derived from [base-os](base-os/README.md) container, reach3 and busytone in turn are derived from [erlang](erlang/README.md) container.
+
+Installation
+============
 
 You need to have Docker version at least 1.9.0 (as this setup relies on docker network heavily).
 Also you probably want to add your local user to docker group with `usermod -aG docker $(whoami)`
 
 ```sh
+export TOKEN=... (see above)
 ./build.sh
 ./run.sh
 
@@ -23,32 +59,8 @@ Also you probably want to add your local user to docker group with `usermod -aG 
 ./hosts.sh >> /etc/hosts
 ```
 
-ReachMe
-=======
-
-Please see [ReachMe README](reach/README.md) how to run ReachMe.
-
-
-Meta container
-==============
-
-There is a docker meta container intended to build other containers in controlled environment named `ezuce-ci`.
-In theory it should be possible to build all components with it, the only thing you need to provide is
-access to hosts docker socket, see [run.sh](ezuce-ci/run.sh), and GitHub auth token to have
-access to private repo's.
-
-In ezuce-ci folder:
-
-```sh
-./build.sh $TOKEN
-./run.sh $TOKEN
-docker exec ezuce-ci ./build.sh
-or
-docker exec ezuce-ci 'cd reach && ./build.sh'
-```
-
-Environment variables
-=====================
+Use of environment variables
+============================
 
 The intent is to specify `docker build` flags e.g. to pass --no-cache to forcefully rebuild.
 
@@ -56,7 +68,5 @@ The intent is to specify `docker build` flags e.g. to pass --no-cache to forcefu
 BUILD_FLAGS -- flags to pass to `docker build` command.
 ```
 
-Check also README.md under each branch to understand better what's going on
-
-
+Check also README.md in each folder to understand the particular container.
 

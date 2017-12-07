@@ -1,7 +1,0 @@
-<include>
-<gateway name="agents">
-<param name="proxy" value="agents.ezuce"/>
-<param name="register" value="false"/>
-<param name="caller-id-in-from" value="true"/>
-</gateway>
-</include>

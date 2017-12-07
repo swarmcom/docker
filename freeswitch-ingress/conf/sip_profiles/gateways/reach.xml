@@ -1,6 +1,0 @@
-<include>
-<gateway name="reach">
-	<param name="proxy" value="freeswitch.ezuce"/>
-	<param name="register" value="false"/>
-</gateway>
-</include>

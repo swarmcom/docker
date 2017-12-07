@@ -1,7 +1,11 @@
 Busytone
 ========
 
+Automated functional tests.
+
 Usage
+=====
+
 ```shell
 ./run.sh
 

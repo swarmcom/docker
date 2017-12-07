@@ -1,2 +1,0 @@
-#!/bin/sh
-sipxecs-setup --noui --sip_domain $1 --sip_realm $1 --net_domain $1 --net_host $1
