@@ -1,6 +1,9 @@
 /token
-sipxcom/src/sipxecs
 /*/etc/commit
 /export/*/etc/commit
-export/freeswitch/freeswitch.tar
+/export/freeswitch/freeswitch.tar
+/export/agents/agents.tar
+/export/busytone/busytone.tar
+/export/reach3/reach3.tar
+/export/rr/rr.tar
 /*/logs

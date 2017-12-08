@@ -1,4 +1,4 @@
-FROM uniteme/freeswitch
+FROM reach3/freeswitch
 MAINTAINER Roman Galeev <jamhedd@gmail.com>
 
 RUN rm -rf conf

@@ -1,2 +1,2 @@
 #!/bin/sh -e
-docker build $BUILD_FLAGS -t uniteme/agents .
+docker build $BUILD_FLAGS -t reach3/agents .
