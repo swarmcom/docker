@@ -19,4 +19,4 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	--env REACH_WS=$REACH_WS \
-	$NETWORK/reach-ui
+	reach3/reach-ui

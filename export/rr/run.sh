@@ -19,4 +19,4 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	--env NODE=$NODE \
-	$NETWORK/rr
+	reach3/rr

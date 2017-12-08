@@ -1,7 +1,6 @@
 #!/bin/sh -e
 FLAGS=${1:-"-td"}
-IMAGE=${2:-"reach3/agents"}
-NETWORK=${NETWORK:-"ezuce"}
+NETWORK=${NETWORK:-"reach3"}
 NAME=${NAME:-"agents.$NETWORK"}
 NODE=${NODE:-"agents@$NAME"}
 BUSYTONE_NODE=${BUSYTONE_NODE:-"busytone.ezuce"}
@@ -23,4 +22,4 @@ docker run $FLAGS \
 	--env NODE=$NODE \
 	--env BUSYTONE_NODE=$BUSYTONE_NODE \
 	--env REACH_FREESWITCH=$REACH_FREESWITCH \
-	$IMAGE
+	reach3/agents

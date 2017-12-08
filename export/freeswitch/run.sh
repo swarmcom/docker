@@ -1,6 +1,5 @@
 #!/bin/sh -e
 FLAGS=${1:-"-td"}
-IMAGE=${2:-"reach3/freeswitch"}
 NETWORK=${NETWORK:-"reach3"}
 NAME=${NAME:-"freeswitch.$NETWORK"}
 REACH_NODE=${REACH_NODE:-"reach@reach.$NETWORK"}
@@ -22,4 +21,4 @@ docker run $FLAGS \
 	--env NODE=freeswitch@$NAME \
 	--env REACH_NODE=$REACH_NODE \
 	--env REACH_HOST=$REACH_HOST \
-	$IMAGE
+	reach3/freeswitch

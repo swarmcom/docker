@@ -31,4 +31,4 @@ docker run $FLAGS $PORTMAP \
 	--env SIP_DOMAIN=$SIP_DOMAIN \
 	--env EXT_IP=$EXT_IP \
 	--env NODE=$NODE \
-	$NETWORK/kamailio
+	reach3/kamailio

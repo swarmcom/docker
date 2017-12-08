@@ -27,4 +27,4 @@ docker run $FLAGS \
 	--env NODE=$NODE \
 	--env FSNODE=$FSNODE \
 	--env KAMNODE=$KAMNODE \
-	$NETWORK/reach
+	reach3/reach

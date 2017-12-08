@@ -23,4 +23,4 @@ docker run $FLAGS \
 	--env NODE=$NODE \
 	--env AGENTS_NODE=$AGENTS_NODE \
 	--env REACH_HOST=$REACH_HOST \
-	$NETWORK/busytone
+	reach3/busytone

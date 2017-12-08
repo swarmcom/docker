@@ -18,7 +18,7 @@ docker run $FLAGS \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
-	$NETWORK/timescale
+	reach3/timescale
 
 sleep 5
 docker exec -it --user postgres $NAME psql -c "CREATE USER reach WITH PASSWORD '$PASSWORD'"
