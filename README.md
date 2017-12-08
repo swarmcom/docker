@@ -70,3 +70,7 @@ BUILD_FLAGS -- flags to pass to `docker build` command.
 
 Check also README.md in each folder to understand the particular container.
 
+Production images
+=================
+
+It is possible to create so-called production images out of development images. See [export/README.md](export/README.md)
