@@ -11,5 +11,4 @@ Usage
 ```sh
 ./build.sh
 ./publish.sh
-./run.sh
 ```
