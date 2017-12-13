@@ -1,6 +1,6 @@
 #!/bin/sh -e
-FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
+FLAGS=${FLAGS:-"-td"}
 NAME=${NAME:-"dnsfwd.$NETWORK"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
@@ -14,8 +14,9 @@ fi
 echo -n "starting: $NAME "
 docker run $FLAGS \
 	--net $NETWORK \
-	-p 10053:53/udp \
+	--cap-add=NET_ADMIN \
+	--dns 8.8.8.8 \
+	-p 53:53/udp \
 	-h $NAME \
 	--name $NAME \
-	--env NETWORK=$NETWORK \
-	reach3/dnsfwd
+	ezuce/dnsfwd
