@@ -57,6 +57,13 @@ before_deploy:
 deploy:
 - provider: script
   skip_cleanup: true
+  script: ssh -i deploy.pem root@download.ezuce.com 'cd /vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64;
+    rm -rf reach-app-17.10*;
+    exit 0'
+  on:
+    branch: UC-4547
+- provider: script
+  skip_cleanup: true
   script: scp -i deploy.pem ~/rpmbuild/RPMS/x86_64/$RPM_NAME.rpm
     root@download.ezuce.com:/vol/download/openuc-stage/17.10-unstable/CentOS_6/x86_64/$RPM_NAME.rpm
   on:
