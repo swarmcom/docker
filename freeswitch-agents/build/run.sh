@@ -11,9 +11,9 @@ xmlstarlet edit --inplace -u '/include/context/extension/condition/action[@appli
 	-v "call_sup:! $BUSYTONE_NODE" \
 	conf/dialplan/dialplan.xml
 
-echo Setting ReachMe FreeSWITCH address to $REACH_FREESWITCH
+echo Setting Reach Kamailio address to $REACH_KAMAILIO
 
-xmlstarlet edit --inplace -u '/include/gateway[@name="reach"]/param[@name="proxy"]/@value' -v "$REACH_FREESWITCH" conf/sip_profiles/gateways/reach.xml
+xmlstarlet edit --inplace -u '/include/gateway[@name="reach"]/param[@name="proxy"]/@value' -v "$REACH_KAMAILIO" conf/sip_profiles/gateways/reach.xml
 
 /usr/bin/epmd -daemon
 exec /usr/local/freeswitch/bin/freeswitch -nf -np

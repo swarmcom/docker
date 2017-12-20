@@ -5,7 +5,7 @@ NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"agents.$NETWORK"}
 NODE=${NODE:-"agents@$NAME"}
 BUSYTONE_NODE=${BUSYTONE_NODE:-"busytone@busytone.$NETWORK"}
-REACH_FREESWITCH=${REACH_FREESWITCH:-"freeswitch.$NETWORK"}
+REACH_KAMAILIO=${REACH_KAMAILIO:-"kamailio.$NETWORK"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -22,5 +22,5 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NODE=$NODE \
 	--env BUSYTONE_NODE=$BUSYTONE_NODE \
-	--env REACH_FREESWITCH=$REACH_FREESWITCH \
+	--env REACH_KAMAILIO=$REACH_KAMAILIO \
 	$IMAGE
