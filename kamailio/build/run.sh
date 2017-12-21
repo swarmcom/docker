@@ -9,7 +9,6 @@ export GROUP=user
 CFG=etc/kamailio.cfg
 sed -i "s|reach@reach.ezuce|$REACH_NODE|g" $CFG
 sed -i "s|kamailio.ezuce|$NAME|g" $CFG
-sed -i "s|domain.ezuce|$SIP_DOMAIN|g" $CFG
 
 echo listen=udp:eth0:5060 advertise $EXT_IP:5060 > etc/kamailio-local.cfg
 

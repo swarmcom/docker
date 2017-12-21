@@ -4,7 +4,6 @@ NETWORK=${NETWORK:-"ezuce"}
 REACH_NODE=${REACH_NODE:-"reach@reach.$NETWORK"}
 NAME=${NAME:-"kamailio.$NETWORK"}
 NODE=${NODE:-"kamailio@$NAME"}
-SIP_DOMAIN=${SIP_DOMAIN:-$NAME}
 EXT_IP=${EXT_IP:-"$(curl -s ifconfig.co)"}
 PORTMAP=${PORTMAP:-"-p 5060:5060/udp"}
 
@@ -28,7 +27,6 @@ docker run $FLAGS $PORTMAP \
 	--env NETWORK=$NETWORK \
 	--env REACH_NODE=$REACH_NODE \
 	--env NAME=$NAME \
-	--env SIP_DOMAIN=$SIP_DOMAIN \
 	--env EXT_IP=$EXT_IP \
 	--env NODE=$NODE \
 	$NETWORK/kamailio
