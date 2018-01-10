@@ -6,4 +6,3 @@ git reset --hard $COMMIT
 git clean -fd
 yarn install
 yarn run build
-yarn add http-server
