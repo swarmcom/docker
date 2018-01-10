@@ -21,4 +21,4 @@ else
 	sed -i "s|reach_rr:.*|reach_rr:\ undefined,|" dist/config.js
 fi
 
-node_modules/.bin/http-server ./
+http-server ./

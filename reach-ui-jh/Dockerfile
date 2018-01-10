@@ -13,7 +13,7 @@ ARG REPO=https://github.com/swarmcom/reach-ui.git
 ARG BRANCH=master
 ARG COMMIT
 
-RUN useradd -s /bin/bash -m user
+RUN useradd -s /bin/bash -m user && npm install -g http-server
 
 USER user
 WORKDIR /home/user
