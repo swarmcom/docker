@@ -5,6 +5,7 @@ AGENTS_NODE=${AGENTS_NODE:-"agents@agents.$NETWORK"}
 NAME=${NAME:-"busytone.$NETWORK"}
 REACH_HOST=${REACH_HOST:-"reach.$NETWORK"}
 NODE=${NODE:-"busytone@$NAME"}
+TESTS=${TESTS:-"tests"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -18,6 +19,7 @@ echo -n "starting: $NAME "
 docker run $FLAGS \
 	--net $NETWORK \
 	-h $NAME \
+	-v $TESTS:/home/user/busytone/src/custom \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	--env NODE=$NODE \
