@@ -19,6 +19,9 @@ then
 	docker rm -f $NAME
 fi
 
+# file must exists
+touch $CFG_DB
+
 echo -n "starting: $NAME "
 docker run $FLAGS \
 	-v $CFG_DB:/home/user/reach/files/reach_db.json \
