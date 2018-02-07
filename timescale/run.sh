@@ -21,6 +21,6 @@ docker run $FLAGS \
 	$NETWORK/timescale
 
 sleep 5
-docker exec -it --user postgres $NAME psql -c "CREATE USER reach WITH PASSWORD '$PASSWORD'"
-docker exec -it --user postgres $NAME createdb -O reach reach
-docker exec -it --user postgres $NAME psql -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE" reach
+docker exec --user postgres $NAME psql -c "CREATE USER reach WITH PASSWORD '$PASSWORD'"
+docker exec --user postgres $NAME createdb -O reach reach
+docker exec --user postgres $NAME psql -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE" reach
