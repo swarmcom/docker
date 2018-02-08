@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
 PASSWORD=${PASSWORD:-"reachpass"}
@@ -20,7 +20,6 @@ docker run $FLAGS \
 	--env NETWORK=$NETWORK \
 	$NETWORK/timescale
 
-sleep 5
-docker exec --user postgres $NAME psql -c "CREATE USER reach WITH PASSWORD '$PASSWORD'"
-docker exec --user postgres $NAME createdb -O reach reach
-docker exec --user postgres $NAME psql -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE" reach
+docker exec $NAME /wait-for.sh "CREATE USER reach WITH PASSWORD '$PASSWORD'"
+docker exec $NAME /wait-for.sh "CREATE DATABASE reach OWNER reach"
+docker exec $NAME /wait-for.sh "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE" reach
