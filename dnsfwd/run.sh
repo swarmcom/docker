@@ -13,6 +13,7 @@ fi
 
 echo -n "starting: $NAME "
 docker run $FLAGS \
+	--restart=always \
 	--net $NETWORK \
 	--cap-add=NET_ADMIN \
 	--dns 8.8.8.8 \

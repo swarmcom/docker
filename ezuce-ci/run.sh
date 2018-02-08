@@ -22,6 +22,7 @@ fi
 echo -n "starting: $NAME "
 docker run \
 	--net $NETWORK \
+	--restart=always \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
