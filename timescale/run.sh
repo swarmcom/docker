@@ -20,6 +20,6 @@ docker run $FLAGS \
 	--env NETWORK=$NETWORK \
 	$NETWORK/timescale
 
-docker exec $NAME /wait-for.sh "CREATE USER reach WITH PASSWORD '$PASSWORD'"
+docker exec $NAME /wait-for.sh "CREATE USER reach WITH PASSWORD '$PASSWORD' SUPERUSER"
 docker exec $NAME /wait-for.sh "CREATE DATABASE reach OWNER reach"
-docker exec $NAME /wait-for.sh "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE" reach
+docker exec $NAME /wait-for.sh "GRANT ALL PRIVILEGES ON DATABASE reach to reach"
