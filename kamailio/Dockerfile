@@ -1,5 +1,7 @@
-FROM ezuce/base
+FROM ezuce/erlang
 MAINTAINER Roman Galeev <jamhedd@gmail.com>
+
+USER root
 
 COPY build/os.sh build/os.sh
 RUN build/os.sh

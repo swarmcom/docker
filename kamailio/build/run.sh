@@ -4,7 +4,7 @@ export PKG_MEMORY=8
 export USER=user
 export GROUP=user
 
-/usr/bin/epmd -daemon
+/home/user/erlang/bin/epmd -daemon
 
 CFG=etc/kamailio.cfg
 sed -i "s|reach@reach.ezuce|$REACH_NODE|g" $CFG
