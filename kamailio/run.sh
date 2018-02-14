@@ -1,5 +1,5 @@
 #!/bin/sh -e
-FLAGS=${FLAGS:-"-td"}
+FLAGS=${FLAGS:-"-t"}
 NETWORK=${NETWORK:-"ezuce"}
 REACH_NODE=${REACH_NODE:-"reach@reach.$NETWORK"}
 NAME=${NAME:-"kamailio.$NETWORK"}
@@ -20,8 +20,7 @@ then
 fi
 
 echo -n "starting: $NAME ext_ip: $EXT_IP "
-docker run $FLAGS $PORTMAP \
-	--net $NETWORK \
+docker create $FLAGS $PORTMAP \
 	-h $NAME \
 	--restart=always \
 	--name $NAME \
@@ -31,3 +30,6 @@ docker run $FLAGS $PORTMAP \
 	--env EXT_IP=$EXT_IP \
 	--env NODE=$NODE \
 	$NETWORK/kamailio
+
+docker network connect $NETWORK $NAME
+docker start $NAME
