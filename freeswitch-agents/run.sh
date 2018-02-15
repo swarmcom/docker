@@ -5,7 +5,7 @@ NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"agents.$NETWORK"}
 NODE=${NODE:-"agents@$NAME"}
 BUSYTONE_NODE=${BUSYTONE_NODE:-"busytone@busytone.$NETWORK"}
-REACH_KAMAILIO=${REACH_KAMAILIO:-"kamailio.$NETWORK"}
+REACH_KAMAILIO=${REACH_KAMAILIO:-"kamailio.$NETWORK:5080"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
