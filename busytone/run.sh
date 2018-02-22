@@ -6,6 +6,7 @@ NAME=${NAME:-"busytone.$NETWORK"}
 REACH_HOST=${REACH_HOST:-"reach.$NETWORK"}
 NODE=${NODE:-"busytone@$NAME"}
 TESTS=${TESTS:-"tests"}
+FILES=${FILES:-"$(pwd)/files"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -20,6 +21,7 @@ docker run $FLAGS \
 	--net $NETWORK \
 	-h $NAME \
 	-v $TESTS:/home/user/busytone/src/custom \
+	-v $FILES:/home/user/busytone/files \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	--env NODE=$NODE \
