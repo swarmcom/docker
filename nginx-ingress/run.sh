@@ -1,5 +1,5 @@
 #!/bin/sh -e
-FLAGS=${FLAGS:-"-td"}
+FLAGS=${FLAGS:-"-t"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"nginx.$NETWORK"}
 
@@ -12,13 +12,17 @@ then
 fi
 
 echo -n "starting: $NAME "
-docker run $FLAGS \
+docker create $FLAGS \
 	-p 80:80 \
 	-p 443:443 \
-	--net $NETWORK \
 	-h $NAME \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	-v /home/ezuce/keys-challenge:/challenge \
 	-v /home/ezuce/keys:/keys \
 	$NETWORK/nginx-ingress
+
+docker network connect $NETWORK $NAME
+docker network connect master $NAME
+docker network connect devel $NAME
+docker start $NAME
