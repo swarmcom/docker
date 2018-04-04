@@ -5,9 +5,10 @@ echo $COMMIT > etc/commit
 
 BRANCH=${BRANCH:-"master"}
 NETWORK=${NETWORK:-"ezuce"}
+HUB=${HUB:-"$NETWORK"}
 
 echo Using repository:$REPO branch:$BRANCH
-docker build $BUILD_FLAGS -t $NETWORK/reach-ui \
+docker build $BUILD_FLAGS -t $HUB/reach-ui \
 	--build-arg REPO=$REPO \
 	--build-arg BRANCH=$BRANCH \
 	.
