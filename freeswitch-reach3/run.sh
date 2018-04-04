@@ -1,7 +1,7 @@
 #!/bin/sh -e
 FLAGS=${1:-"-td"}
-IMAGE=${2:-"ezuce/freeswitch-reach3"}
 NETWORK=${NETWORK:-"ezuce"}
+IMAGE=${2:-"$NETWORK/freeswitch-reach3"}
 NAME=${NAME:-"freeswitch.$NETWORK"}
 REACH_NODE=${REACH_NODE:-"reach@reach.$NETWORK"}
 REACH_HOST=${REACH_HOST:-"http://reach.$NETWORK:8937"}

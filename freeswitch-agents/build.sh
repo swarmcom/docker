@@ -1,2 +1,3 @@
 #!/bin/sh -e
-docker build $BUILD_FLAGS -t ezuce/agents .
+NETWORK=${NETWORK:-"ezuce"}
+docker build $BUILD_FLAGS -t $NETWORK/agents .

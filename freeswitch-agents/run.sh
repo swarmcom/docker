@@ -1,7 +1,7 @@
 #!/bin/sh -e
 FLAGS=${1:-"-td"}
-IMAGE=${2:-"ezuce/agents"}
 NETWORK=${NETWORK:-"ezuce"}
+IMAGE=${2:-"$NETWORK/agents"}
 NAME=${NAME:-"agents.$NETWORK"}
 NODE=${NODE:-"agents@$NAME"}
 BUSYTONE_NODE=${BUSYTONE_NODE:-"busytone@busytone.$NETWORK"}
