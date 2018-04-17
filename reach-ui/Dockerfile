@@ -9,6 +9,7 @@ ENV REACH_WS=ws://$REACH:8937/ws
 # override on build with --build-arg option
 ARG REPO=https://github.com/swarmcom/reach-ui.git
 ARG BRANCH=master
+ARG COMMIT=HEAD
 
 RUN useradd -s /bin/bash -m user && npm install -g http-server
 
