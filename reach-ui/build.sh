@@ -8,6 +8,7 @@ echo $COMMIT > etc/commit
 
 echo Using repository:$REPO branch:$BRANCH commit:$COMMIT
 docker build $BUILD_FLAGS -t $HUB/reach-ui \
+	--build-arg COMMIT=$COMMIT \
 	--build-arg REPO=$REPO \
 	--build-arg BRANCH=$BRANCH \
 	.
