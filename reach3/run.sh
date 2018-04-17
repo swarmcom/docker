@@ -22,6 +22,7 @@ fi
 # file must exists
 mkdir -p $CFG_DB
 touch $CFG_DB/reach_db.json
+chmod o+w $CFG_DB/reach_db.json
 
 echo -n "starting: $NAME "
 docker run $FLAGS \
