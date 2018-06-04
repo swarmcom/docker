@@ -2,8 +2,6 @@
 FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"reach.$NETWORK"}
-FSNODE=${FSNODE:-"freeswitch@freeswitch.$NETWORK"}
-KAMNODE=${KAMNODE:-"kamailio@kamailio.$NETWORK"}
 NODE=${NODE:-"reach@$NAME"}
 CFG_DB=${CFG_DB:-"`pwd`/db"}
 
@@ -32,6 +30,4 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	--env NODE=$NODE \
-	--env FSNODE=$FSNODE \
-	--env KAMNODE=$KAMNODE \
 	$NETWORK/reach
