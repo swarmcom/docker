@@ -7,8 +7,9 @@ then
 	exit
 fi
 
-for FOLDER in freeswitch agents reach3 rr busytone timescale reach-ui reach-ui-dev kamailio
+for FOLDER in agents reach3 rr timescale reach-ui kamailio freeswitch
 do
+	echo BUILD: $FOLDER
 	cd $FOLDER
 	[ -f ./extract.sh ] && ./extract.sh
 	./build.sh

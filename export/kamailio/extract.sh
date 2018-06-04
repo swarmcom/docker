@@ -1,5 +1,6 @@
 #!/bin/sh -e
-CONTAINER=${1:-"kamailio.ezuce"}
+NETWORK=${NETWORK:-"master"}
+CONTAINER=${1:-"kamailio.$NETWORK"}
 rm -rf kamailio
 rm -rf kamailio.tar
 mkdir -p kamailio

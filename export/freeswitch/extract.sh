@@ -1,5 +1,6 @@
 #!/bin/sh -e
-CONTAINER=${1:-"freeswitch.ezuce"}
+NETWORK=${NETWORK:-"master"}
+CONTAINER=${1:-"freeswitch.$NETWORK"}
 rm -rf freeswitch
 rm -f freeswitch.tar
 docker cp build/find-debian-deps.sh $CONTAINER:/root

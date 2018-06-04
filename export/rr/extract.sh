@@ -1,5 +1,6 @@
 #!/bin/sh -e
-CONTAINER=${1:-"rr.ezuce"}
+NETWORK=${NETWORK:-"master"}
+CONTAINER=${1:-"rr.$NETWORK"}
 rm -rf rr
 rm -rf rr.tar
 mkdir rr

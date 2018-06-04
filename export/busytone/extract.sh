@@ -1,5 +1,6 @@
 #!/bin/sh -e
-CONTAINER=${1:-"busytone.ezuce"}
+NETWORK=${NETWORK:-"master"}
+CONTAINER=${1:-"busytone.$NETWORK"}
 rm -rf busytone
 rm -rf busytone.tar
 mkdir busytone
