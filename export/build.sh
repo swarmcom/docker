@@ -7,7 +7,7 @@ then
 	exit
 fi
 
-for FOLDER in agents reach3 rr timescale reach-ui kamailio freeswitch
+for FOLDER in agents reach3 rr timescale reach-ui kamailio freeswitch rrvol
 do
 	echo BUILD: $FOLDER
 	cd $FOLDER

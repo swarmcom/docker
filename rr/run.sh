@@ -3,6 +3,7 @@ FLAGS=${FLAGS:-"-td"}
 NETWORK=${NETWORK:-"ezuce"}
 NAME=${NAME:-"rr.$NETWORK"}
 NODE=${NODE:-"rr@$NAME"}
+HUB=${HUB:-"ezuce"}
 
 if [ -n "$(docker ps -aq -f name=$NAME)" ]
 then
@@ -20,4 +21,4 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	--env NODE=$NODE \
-	$NETWORK/rr
+	$HUB/rr
