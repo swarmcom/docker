@@ -9,5 +9,6 @@ docker exec --user root $CONTAINER /root/find-debian-deps.sh /home/user/kamailio
 docker exec --user root $CONTAINER rm -f /root/find-debian-deps.sh
 docker cp $CONTAINER:/home/user/kamailio kamailio/
 docker cp $CONTAINER:/home/user/etc kamailio/
+cp build/run.sh kamailio/
 cd kamailio && tar cf ../kamailio.tar ./ --owner=1000 --group=1000 && cd ../
 rm -rf kamailio
