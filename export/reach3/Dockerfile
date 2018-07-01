@@ -11,6 +11,7 @@ ENV KAMNODE=kamailio@kamailio.$NETWORK
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV APT_LISTCHANGES_FRONTEND=none
+ENV RELX_REPLACE_OS_VARS=true
 
 COPY etc/deps /root/deps
 ADD reach3.tar /home/user

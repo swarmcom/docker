@@ -1,2 +1,3 @@
 #!/bin/sh -e
-./rpc.erl rpc@$HOSTNAME ClueCon $NODE $*
+NETWORK=${NETWORK:-"reach3"}
+./rpc.erl rpc@reach.$NETWORK ClueCon $NODE $*
