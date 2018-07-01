@@ -1,5 +1,6 @@
 FROM nginx:mainline-alpine
-MAINTAINER Roman Galeev <jamhedd@gmail.com>
+LABEL author="Roman Galeev <jamhedd@gmail.com>"
+LABEL maintainer="Pavel Farkas <pavel.farkas@ezuce.com>"
 
 # override this (if needed) with run --env option
 ENV NETWORK=reach3
