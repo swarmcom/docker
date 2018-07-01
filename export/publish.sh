@@ -1,4 +1,5 @@
 #!/bin/bash -e
+HUB=$1
 if [ -z $HUB ]
 then
 	echo Usage: $0 hub
