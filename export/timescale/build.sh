@@ -1,3 +1,3 @@
 #!/bin/sh -e
-HUB=${HUB:-"reachme3"}
+HUB=${HUB:-"reach3"}
 docker build $BUILD_FLAGS -t $HUB/timescale .
