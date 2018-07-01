@@ -1,6 +1,11 @@
 #!/bin/bash -e
-for IMAGE in freeswitch agents reach rr timescale reach-ui kamailio rrvol
+if [ -z $HUB ]
+then
+	echo Usage: $0 hub
+	exit
+fi
+for IMAGE in freeswitch reach rr timescale reach-ui kamailio rrvol
 do
-	docker push reach3/$IMAGE
+	docker push $HUB/$IMAGE
 done
 exit
