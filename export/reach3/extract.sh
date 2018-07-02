@@ -10,6 +10,5 @@ docker exec --user root $CONTAINER /root/find-debian-deps.sh /home/user/reach/_b
 docker exec --user root $CONTAINER rm -f /root/find-debian-deps.sh
 docker cp -L $CONTAINER:/home/user/reach/_build/prod/rel/reach reach3
 cd reach3
-find ./ -name src -type d | xargs rm -r
 tar cf ../reach3.tar . --owner=1000 --group=1000
 cd ../ && rm -rf reach3

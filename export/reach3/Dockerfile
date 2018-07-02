@@ -18,7 +18,7 @@ ADD reach3.tar /home/user
 COPY build/run.sh /home/user
 COPY build/rpc.sh /home/user
 COPY build/rpc.erl /home/user
-COPY build/run.sh /home/user
+
 RUN groupadd user \
 	&& useradd -g user user \
 	&& apt-get -y update \
