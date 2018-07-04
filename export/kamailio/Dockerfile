@@ -24,6 +24,6 @@ RUN mkdir -p /var/run/kamailio && chown user:user /var/run/kamailio && chown -R 
 ENV HOME "/home/user"
 USER user
 WORKDIR "/home/user"
-COPY etc/kamailio.cfg etc
+COPY etc/kamailio.cfg etc/kamailio.cfg
 
 ENTRYPOINT [ "./run.sh" ]
