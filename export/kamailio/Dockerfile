@@ -15,7 +15,7 @@ ADD kamailio.tar /home/user
 RUN groupadd user \
 	&& useradd -g user user \
 	&& apt-get -y update \
-	&& apt-get -y install erlang-base $(cat /root/deps) \
+	&& apt-get -y install erlang-base net-tools $(cat /root/deps) \
 	&& apt-get -y clean \
 	&& apt-clean --aggressive 
 
@@ -25,5 +25,6 @@ ENV HOME "/home/user"
 USER user
 WORKDIR "/home/user"
 COPY etc/kamailio.cfg etc/kamailio.cfg
+RUN chown -R user:user /home/user
 
 ENTRYPOINT [ "./run.sh" ]
