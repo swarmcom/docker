@@ -19,7 +19,7 @@ RUN groupadd user \
 	&& apt-get -y clean \
 	&& apt-clean --aggressive 
 
-RUN mkdir -p /var/run/kamailio && chown user:user /var/run/kamailio && chown -R user:user /home/user
+RUN mkdir -p /var/run/kamailio && chown user:user /var/run/kamailio
 
 ENV HOME "/home/user"
 USER user
