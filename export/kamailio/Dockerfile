@@ -10,6 +10,7 @@ USER root
 WORKDIR "/root"
 
 COPY etc/deps /root/deps
+COPY etc/kamailio.cfg /home/user/etc/kamailio.cfg
 ADD kamailio.tar /home/user
 
 RUN groupadd user \
@@ -19,12 +20,10 @@ RUN groupadd user \
 	&& apt-get -y clean \
 	&& apt-clean --aggressive 
 
-RUN mkdir -p /var/run/kamailio && chown user:user /var/run/kamailio
+RUN mkdir -p /var/run/kamailio && chown user:user /var/run/kamailio && chown -R user:user /home/user
 
 ENV HOME "/home/user"
 USER user
 WORKDIR "/home/user"
-COPY etc/kamailio.cfg etc/kamailio.cfg
-RUN chown -R user:user /home/user
 
 ENTRYPOINT [ "./run.sh" ]
