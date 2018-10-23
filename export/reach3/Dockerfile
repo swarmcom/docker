@@ -1,6 +1,7 @@
 #FROM debian:jessie
 FROM tklx/base:0.1.1
-MAINTAINER Roman Galeev <jamhedd@gmail.com>
+LABEL author="Roman Galeev <jamhedd@gmail.com>"
+LABEL maintainer="Pavel Farkas <pavel.farkas@ezuce.com>"
 
 # override this (if needed) with run --env option
 ENV NETWORK=ezuce
@@ -10,10 +11,14 @@ ENV KAMNODE=kamailio@kamailio.$NETWORK
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV APT_LISTCHANGES_FRONTEND=none
+ENV RELX_REPLACE_OS_VARS=true
 
 COPY etc/deps /root/deps
 ADD reach3.tar /home/user
 COPY build/run.sh /home/user
+COPY build/rpc.sh /home/user
+COPY build/rpc.erl /home/user
+
 RUN groupadd user \
 	&& useradd -g user user \
 	&& apt-get -y update \

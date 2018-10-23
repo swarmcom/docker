@@ -1,2 +1,3 @@
 #!/bin/sh -e
-docker build $BUILD_FLAGS -t reach3/reach -t reach3/reach:3.1.0 .
+HUB=${HUB:-"reach3"}
+docker build $BUILD_FLAGS -t $HUB/reach -t $HUB/reach:3.1.0 .

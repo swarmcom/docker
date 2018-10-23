@@ -1,5 +1,5 @@
 #!/bin/sh -e
-cd /usr/share/nginx/html
+cd /usr/share/nginx/html/dist
 if [ -n $REACH_WS ]
 then
 	sed -i "s|reach_ws:.*|reach_ws:\ \"$REACH_WS\",|" ./config.js

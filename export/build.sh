@@ -1,4 +1,5 @@
 #!/bin/bash -e
+export HUB=${1:-"reach3"}
 INSTALLED=`docker version --format '{{.Server.Version}}'`
 REQUIRED="1.9.0"
 if [ "$(printf "$REQUIRED\n$INSTALLED" | sort -V | head -n1)" == "$INSTALLED" ] && [ "$INSTALLED" != "$REQUIRED" ]

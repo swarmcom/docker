@@ -1,2 +1,3 @@
 #!/bin/sh -e
-docker build $BUILD_FLAGS -t reach3/busytone .
+HUB=${HUB:-"reach3"}
+docker build $BUILD_FLAGS -t $HUB/busytone .

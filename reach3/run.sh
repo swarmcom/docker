@@ -30,4 +30,5 @@ docker run $FLAGS \
 	--name $NAME \
 	--env NETWORK=$NETWORK \
 	--env NODE=$NODE \
+	--env RELX_REPLACE_OS_VARS=true \
 	$NETWORK/reach
