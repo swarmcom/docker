@@ -1,12 +1,13 @@
 FROM ezuce/erlang
-MAINTAINER Roman Galeev <jamhedd@gmail.com>
+LABEL author="Roman Galeev <jamhedd@gmail.com>"
+LABEL maintainer="Pavel Farkas <pavel.farkas@ezuce.com>"
 
 # override on run with --env option
 ENV NETWORK=ezuce
 ENV NODE=rr@rr.$NETWORK
 
 # override on build with --build-arg option
-ARG REPO=https://github.com/jamhed/rr
+ARG REPO=https://github.com/ezuce/rr
 ARG BRANCH=master
 
 USER user
