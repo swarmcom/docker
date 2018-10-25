@@ -1,5 +1,5 @@
 #!/bin/sh -e
-REPO=${1:-"https://github.com/jamhed/rr"}
+REPO=${1:-"https://github.com/ezuce/rr"}
 COMMIT=${2:-"$(git ls-remote $REPO | grep master | sed 's/refs.*//')"}
 echo $COMMIT > etc/commit
 
