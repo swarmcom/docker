@@ -1,4 +1,3 @@
-#FROM debian:jessie
 FROM tklx/base:0.1.1
 LABEL author="Roman Galeev <jamhedd@gmail.com>"
 LABEL maintainer="Pavel Farkas <pavel.farkas@ezuce.com>"
@@ -29,4 +28,5 @@ RUN groupadd user \
 ENV PATH=$PATH:/home/user
 USER user
 WORKDIR "/home/user"
+RUN mkdir "reach/db-mnesia"
 ENTRYPOINT [ "./run.sh" ]
