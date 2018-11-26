@@ -17,7 +17,8 @@ RUN groupadd user \
 	&& apt-get -y update \
 	&& apt-get -y install $(cat /root/deps) \
 	&& apt-clean --aggressive \
-	&& chown user:user /home/user && chown user:user /home/user/run.sh
+	&& mkdir -p /home/user/rr/data \
+	&& chown -R user:user /home/user
 
 ENV PATH=$PATH:/home/user
 USER user
