@@ -16,8 +16,8 @@ ADD freeswitch.tar /usr/local/
 RUN groupadd freeswitch \
 	&& useradd --home-dir /usr/local/freeswitch -g freeswitch freeswitch \
 	&& cat /root/freeswitch.key.gpg | apt-key add - \
-	&& apt-get -y update \
-	&& apt-get -y install erlang-base wget curl xmlstarlet $(cat /root/deps) \
+	&& apt-get -y -o Acquire::Check-Valid-Until=false update \
+	&& apt-get -y install erlang-base wget curl xmlstarlet lua5.2 lua-socket lua-json $(cat /root/deps) \
 	&& apt-get -y clean \
 	&& apt-clean --aggressive
 
