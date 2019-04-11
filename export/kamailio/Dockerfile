@@ -1,4 +1,3 @@
-#FROM debian:jessie
 FROM tklx/base:0.1.1
 LABEL author="Roman Galeev <jamhedd@gmail.com>"
 LABEL maintainer="Pavel Farkas <pavel.farkas@ezuce.com>"
@@ -10,7 +9,7 @@ USER root
 WORKDIR "/root"
 
 COPY etc/deps /root/deps
-COPY etc/kamailio.cfg /home/user/etc/kamailio.cfg
+COPY etc/kamailio.cfg etc/inbound_routing.cfg etc/outbound_routing.cfg /home/user/etc/
 ADD kamailio.tar /home/user
 
 RUN groupadd user \
