@@ -1,3 +1,3 @@
 #!/bin/sh -e
-HUB=${HUB:-"reach3"}
+HUB=${HUB:-"reachme3"}
 docker build $BUILD_FLAGS -t $HUB/kamailio .
