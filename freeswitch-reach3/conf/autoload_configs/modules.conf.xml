@@ -18,6 +18,8 @@
     
     <load module="mod_http_cache"/>
     <load module="mod_shout"/>
+
+    <load module="mod_flite"/>
     
     <load module="mod_spandsp"/>
     <load module="mod_g723_1"/>
